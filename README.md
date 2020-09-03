@@ -24,13 +24,14 @@ These pieces of information must be read on a .txt file named "googlebot.txt", f
 0001,YouTube,900,https://www.youtube.com/,youtube,videos,online
 0002,Netflix,800, https://www.netflix.com/br/,netflix,videos,streaming
 ```
-### Project's features
-When executed,  the programme must show the following options:
-* **Insert a website**
-*  **Remove a website**
-* **Insert primary-key**
-* **Update Relevance**
-* **Exit**
-
+<!--
+  ### Project's features
+  When executed,  the programme must show the following options:
+  * **Insert a website**
+  *  **Remove a website**
+  * **Insert primary-key**
+  * **Update Relevance**
+  * **Exit**
+-->
 ## Extra
 For more details regarding this project (in pt-br), please read [this](https://ae4.tidia-ae.usp.br/access/content/group/a1128994-3797-49cb-8f1f-08ecfe0ced63/Projeto%20-%20parte%20I.pdf)
