@@ -1,3 +1,5 @@
+# check this for an awesome-looking makefile:  https://www.notion.so/Tutorial-Makefile-5a7fba7f5bae442b8b4677dd97b900d0
+
 FLAG = -Wall
 OBJ1 = Util/item.c -o Util/item.o
 OBJ2 = Util/pilha.c -o Util/pilha.o
