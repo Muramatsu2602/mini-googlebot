@@ -7,18 +7,24 @@
 
 struct item_
 {
-    char caractere;
-    /*Outros componentes*/
+    int ID;
+    char name[50];
+    int relevance;
+    char link[100];
+    int numKeyWord; // Limit = 10 key words
+    char *keyWord; //  Limit = 50 char
 };
 
-ITEM *item_criar(char c)
+ITEM *item_criar(int id, char *name, int rel, char *link, int kw, char *keyWord)
 {
     ITEM *item;
 
     item = (ITEM *)malloc(sizeof(ITEM));
 
     if (item != NULL)
-        item->caractere = c;
+        /* Setar o ID, nome, relevancia, link */
+        item->numKeyWord = 0;
+
 
     // it will return NULL if alocation doesnt work
     return (item);
@@ -46,26 +52,57 @@ void item_imprimir(ITEM *item)
     }
 }
 
-char item_get_caractere(ITEM *item)
+int item_get_id(ITEM *item)
 {
     if (item != NULL)
-        return (item->caractere);
+        return (item->ID);
     else
     {
-        printf("\nERROR: item_get_caractere()\n");
+        printf("\nERROR: item_get_id()\n");
         exit(1); // ERROR: abort it! , there's not such int such that we can use it exclusively to represent an error (id is all INT)
                  // exit(0) --> 0 means regular exit
     }
 }
 
-boolean item_set_caractere(ITEM **item, char caractere)
+boolean item_set_id(ITEM **item, int id)
 {
     if (*item != NULL)
     {
         // we use (*item) to force the system to first analyse the item content (pointer) before the -> operator
-        (*item)->caractere = caractere;
+        (*item)->ID = id;
         
         return TRUE;
     }
     return FALSE;
+}
+
+// Permite a inserção de novas palavras-chave
+boolean item_set_keyWord(ITEM **item,char *word)
+{
+    // Controla o limite de 10 palavras-chave
+    if((*item) != NULL && (*item)->numKeyWord < 10)
+    {
+        strcpy(word,(*item)->keyWord[numKeyWord]);
+        return TRUE;
+    }
+    return FALSE;
+}
+
+boolean item_set_relevance(ITEM **item, int rel)
+{
+    if((*item) != NULL)
+    {
+        (*item)->relevance = rel;
+        return TRUE;
+    }
+    return FALSE;
+}
+
+int item_get_relevance(ITEM *item)
+{
+    if(item != NULL)
+    {
+        return item->relevance;
+    }
+    return ERROR;
 }
