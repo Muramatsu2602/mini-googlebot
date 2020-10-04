@@ -76,6 +76,7 @@ boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 
 boolean lista_remover(LISTA *lista, int chave)
 {
+    return FALSE;
 }
 
 void lista_apagar(LISTA **lista)
@@ -99,7 +100,7 @@ boolean lista_vazia(LISTA *lista)
 
 boolean lista_cheia(LISTA *lista)
 {
-    if ((lista != NULL) &&)
-    {
-    }
+    // if ((lista != NULL) &&)
+    // {
+    // }
 }

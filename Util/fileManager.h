@@ -9,12 +9,12 @@
 	    #define DIRECTORY_NAME ".\\Data\\"
 	#endif
 
+	#define TRUE 1
+	#define FALSE 0
+
 	#define FILE_EXTENSION ".txt"
 	#define boolean int
 	#define READLINE_BUFFER 16
-
-	#define TRUE 1
-	#define FALSE 0
 
 	#include <stdlib.h>
 	#include <stdio.h>

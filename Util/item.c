@@ -70,7 +70,7 @@ boolean item_set_id(ITEM **item, int id)
     if (*item != NULL)
     {
         // we use (*item) to force the system to first analyse the item content (pointer) before the -> operator
-        (*item)->ID = id;
+        (*item)->id = id;
         
         return TRUE;
     }
@@ -83,7 +83,7 @@ boolean item_set_keyWord(ITEM **item,char *word)
     // Controla o limite de 10 palavras-chave
     if((*item) != NULL && (*item)->numKeyWord < 10)
     {
-        strcpy(word,(*item)->keyWord[numKeyWord]);
+        strcpy(word,(*item)->keyWord[numKeyWord]); // FIX ME!
         return TRUE;
     }
     return FALSE;
