@@ -48,7 +48,7 @@ void item_imprimir(ITEM *item)
 {
     if (item != NULL)
     {
-        printf("\n --> item: %c", item->caractere);
+        printf("\n --> item: %d", item->chave);
     }
 }
 
