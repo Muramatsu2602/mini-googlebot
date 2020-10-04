@@ -22,7 +22,7 @@ This project is developed using the C language, according to the C99 pattern.
 These pieces of information must be read on a .txt file named "googlebot.txt", following the CSV format (*Comma Separated Value*) - meaning that all the data on a website is separated using commas. Here's an example:
 ```
 0001,YouTube,900,https://www.youtube.com/,youtube,videos,online
-0002,Netflix,800, https://www.netflix.com/br/,netflix,videos,streaming
+0002,Netflix,800,https://www.netflix.com/br/,netflix,videos,streaming
 ```
 <!--
   ### Project's features

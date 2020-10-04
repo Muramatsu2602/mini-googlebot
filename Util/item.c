@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "item.h"
 
 // REMEMBER ME: typedef struct item_ ITEM;
 
-struct item_
+struct item_ // each item represents a website
 {
-    int ID;
+    int id;
     char name[50];
     int relevance;
     char link[100];
@@ -48,14 +49,14 @@ void item_imprimir(ITEM *item)
 {
     if (item != NULL)
     {
-        printf("\n --> item: %d", item->chave);
+        printf("\n --> item: %d", item->id);
     }
 }
 
 int item_get_id(ITEM *item)
 {
     if (item != NULL)
-        return (item->ID);
+        return (item->id);
     else
     {
         printf("\nERROR: item_get_id()\n");
@@ -104,5 +105,5 @@ int item_get_relevance(ITEM *item)
     {
         return item->relevance;
     }
-    return ERROR;
+    return ERROR; 
 }

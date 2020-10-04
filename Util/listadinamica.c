@@ -78,11 +78,8 @@ boolean lista_remover(LISTA *lista, int chave)
 {
 }
 
-boolean lista_cheia(LISTA *lista)
+void lista_apagar(LISTA **lista)
 {
-    if ((lista != NULL) &&)
-    {
-    }
 }
 
 int lista_tamanho(LISTA *lista)
@@ -90,4 +87,19 @@ int lista_tamanho(LISTA *lista)
     if (lista)
         return lista->tamanho;
     exit(1);
+}
+
+boolean lista_vazia(LISTA *lista)
+{
+    if ((lista != NULL) && lista->inicio == NULL)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+boolean lista_cheia(LISTA *lista)
+{
+    if ((lista != NULL) &&)
+    {
+    }
 }

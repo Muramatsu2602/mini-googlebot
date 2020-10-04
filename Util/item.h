@@ -18,9 +18,10 @@
     // GETTERS AND SETTERS
     int item_get_id(ITEM *item); // (ITEM *) (*item)
     boolean item_set_id(ITEM **item, int id); // (ITEM *) (*item)
+    int item_get_keyWord(ITEM *item);
     boolean item_set_keyWord(ITEM **item,char *word);
-    boolean item_set_relevance(ITEM **item, int rel);
     int item_get_relevance(ITEM *item);
+    boolean item_set_relevance(ITEM **item, int rel);
 
 
 #endif
