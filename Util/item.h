@@ -8,6 +8,8 @@
     #define FALSE 0
     #define boolean int
 
+    #define ERROR 32000
+
     typedef struct item_ ITEM;
 
     // defining all operations related to the ITEM_H

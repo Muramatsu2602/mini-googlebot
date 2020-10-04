@@ -2,7 +2,7 @@
 #define _LISTA_H
 
 #define TRUE 1
-#define FALSE 1
+#define FALSE 0
 #define boolean int
 #define inicial 0
 #define TAM_MAX 100
