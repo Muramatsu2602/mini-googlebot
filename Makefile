@@ -7,6 +7,8 @@ MAIN=main-palindromo.c
 UTIL= Util/*.o
 BINARY=main
 
+greetings:
+	@echo "Welcome to Part 1 of the Google MiniBot Project"
 all:
 	gcc $(FLAG) -c $(OBJ1) -I Util/
 	gcc $(FLAG) -c $(OBJ2) -I Util/

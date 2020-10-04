@@ -76,7 +76,6 @@ boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 
 boolean lista_remover(LISTA *lista, int chave)
 {
-    
 }
 
 boolean lista_cheia(LISTA *lista)
@@ -88,4 +87,7 @@ boolean lista_cheia(LISTA *lista)
 
 int lista_tamanho(LISTA *lista)
 {
+    if (lista)
+        return lista->tamanho;
+    exit(1);
 }
