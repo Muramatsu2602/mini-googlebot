@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "listadinamica.h"
+
+#include "list.h"
 #include "item.h"
 
 typedef struct no_ NO;

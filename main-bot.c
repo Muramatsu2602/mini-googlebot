@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "list.h"
+
 /*
 1. Inserir um site: a inserção deve ser ordenada pela chave primária, isto é, o código do
 site. O sistema não deve aceitar valores de código já existentes;
