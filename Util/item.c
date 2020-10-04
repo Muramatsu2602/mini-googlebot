@@ -11,12 +11,12 @@ struct item_ // each item represents a website
     int id;
     char name[50];
     int relevance;
-    char link[100];
-    int numKeyWord; // Limit = 10 key words
+    char mainUrl[100];
+    int numKeyWords; // Limit = 10 key words
     char *keyWord; //  Limit = 50 char
 };
 
-ITEM *item_criar(int id, char *name, int rel, char *link, int kw, char *keyWord)
+ITEM *item_criar(int id, char *name, int rel, char *mainUrl, int numKeyWords, char *keyWord)
 {
     ITEM *item;
 
@@ -24,7 +24,7 @@ ITEM *item_criar(int id, char *name, int rel, char *link, int kw, char *keyWord)
 
     if (item != NULL)
         /* Setar o ID, nome, relevancia, link */
-        item->numKeyWord = 0;
+        item->numKeyWords = 0;
 
 
     // it will return NULL if alocation doesnt work
@@ -81,9 +81,9 @@ boolean item_set_id(ITEM **item, int id)
 boolean item_set_keyWord(ITEM **item,char *word)
 {
     // Controla o limite de 10 palavras-chave
-    if((*item) != NULL && (*item)->numKeyWord < 10)
+    if((*item) != NULL && (*item)->numKeyWords < 10)
     {
-        strcpy(word,(*item)->keyWord[numKeyWord]); // FIX ME!
+        strcpy(word,(*item)->keyWord[(*item)->numKeyWords]); // FIX ME!
         return TRUE;
     }
     return FALSE;
