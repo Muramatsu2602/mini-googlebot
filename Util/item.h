@@ -11,13 +11,14 @@
     typedef struct item_ ITEM;
 
     // defining all operations related to the ITEM_H
-    ITEM * item_criar(char c);
+    ITEM * item_criar(int chave);
     boolean item_apagar ( ITEM ** item); // alteracao da variavel (por referencia)
     void item_imprimir(ITEM * item);
     
     // GETTERS AND SETTERS
-    char item_get_caractere(ITEM *); // (ITEM *) (*item)
-    int item_set_caractere(ITEM ** item, char c); // (ITEM *) (*item)
+    int item_get_chave(ITEM *); // (ITEM *) (*item)
+    int item_set_chave(ITEM ** item, int chave); // (ITEM *) (*item)
 
 
 #endif
+

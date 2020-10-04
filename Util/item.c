@@ -7,18 +7,18 @@
 
 struct item_
 {
-    char caractere;
+    int chave;
     /*Outros componentes*/
 };
 
-ITEM *item_criar(char c)
+ITEM *item_criar(int key)
 {
     ITEM *item;
 
     item = (ITEM *)malloc(sizeof(ITEM));
 
     if (item != NULL)
-        item->caractere = c;
+        item->chave = key;
 
     // it will return NULL if alocation doesnt work
     return (item);
@@ -42,28 +42,28 @@ void item_imprimir(ITEM *item)
 {
     if (item != NULL)
     {
-        printf("\n --> item: %c", item->caractere);
+        printf("\n --> item: %d", item->chave);
     }
 }
 
-char item_get_caractere(ITEM *item)
+int item_get_chave(ITEM *item)
 {
     if (item != NULL)
-        return (item->caractere);
+        return (item->chave);
     else
     {
-        printf("\nERROR: item_get_caractere()\n");
+        printf("\nERROR: item_get_chave()\n");
         exit(1); // ERROR: abort it! , there's not such int such that we can use it exclusively to represent an error (id is all INT)
                  // exit(0) --> 0 means regular exit
     }
 }
 
-boolean item_set_caractere(ITEM **item, char caractere)
+boolean item_set_chave(ITEM **item, int chave)
 {
     if (*item != NULL)
     {
         // we use (*item) to force the system to first analyse the item content (pointer) before the -> operator
-        (*item)->caractere = caractere;
+        (*item)->chave = chave;
         
         return TRUE;
     }
