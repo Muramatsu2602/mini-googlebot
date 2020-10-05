@@ -10,7 +10,8 @@ CFLAGS = -Wall =Werror
 VFLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes
 
 greetings:
-	@echo "Welcome to Part 1 of the Google MiniBot Project"
+	@echo "Welcome to Part 1 of the Google MiniBot Project!"
+	@echo "Proudly made by: Pedro Kenzo Muramatsu Carmo & Giovanni Shibaki Camargo, from BCC 020 ICMC-USP"
 
 all:
 	@echo "Compiling all ./Util!"
@@ -29,7 +30,7 @@ valval: all
 clean:
 	@echo "Cleaning the binary file!"
 	@rm *.o
-	
+
 zip:
 	@echo "Creating a zip folder with all files!"
 	@zip -r proj1part1-bcc020.zip /Util/*.c /Util/*.h Makefile
