@@ -13,7 +13,7 @@ struct item_ // each item represents a website
     int relevance;
     char mainUrl[100];
     int numKeyWords; // Limit = 10 key words
-    char *keyWord; //  Limit = 50 char
+    char **keyWords; //  Limit = 50 char per word
 };
 
 ITEM *item_criar(int id, char *name, int rel, char *mainUrl, int numKeyWords, char *keyWord)
