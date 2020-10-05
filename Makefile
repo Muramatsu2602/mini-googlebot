@@ -10,7 +10,7 @@ BINARY=main
 greetings:
 	@echo "Welcome to Part 1 of the Google MiniBot Project"
 all:
-	@echo "Compiling all .c in ./Util!"
+	@echo "Compiling all ./Util!"
 	@gcc $(FLAG) -c $(OBJ1) -I Util/
 	@gcc $(FLAG) -c $(OBJ2) -I Util/
 	@gcc $(FLAG) $(MAIN) $(UTIL) -o $(BINARY) -I Util/
