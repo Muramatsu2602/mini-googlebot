@@ -11,6 +11,7 @@ VFLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes
 
 greetings:
 	@echo "Welcome to Part 1 of the Google MiniBot Project"
+
 all:
 	@echo "Compiling all ./Util!"
 	@gcc $(CFLAGS) -c $(OBJ1) -I Util/
@@ -23,12 +24,12 @@ run:
 
 valval: all
 	@echo "Looking for leaks!"
-	@valgrind ./$(BINARY) $(VFLAGS)
+	@valgrind $(VFLAGS) ./$(BINARY)
 
 clean:
 	@echo "Cleaning the binary file!"
 	@rm *.o
-
+	
 zip:
 	@echo "Creating a zip folder with all files!"
 	@zip -r proj1part1-bcc020.zip /Util/*.c /Util/*.h Makefile
