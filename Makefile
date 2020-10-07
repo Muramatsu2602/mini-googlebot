@@ -33,4 +33,4 @@ clean:
 
 zip:
 	@echo "Creating a zip folder with all files!"
-	@zip -r proj1part1-bcc020.zip /Util/*.c /Util/*.h Makefile
+	@zip -r proj1part1-bcc020.zip Util/*.c Util/*.h Makefile
