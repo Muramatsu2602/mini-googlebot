@@ -11,7 +11,7 @@ VFLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes
 
 greetings:
 	@echo "Welcome to Part 1 of the Google MiniBot Project!"
-	@echo "Proudly made by: Pedro Kenzo Muramatsu Carmo & Giovanni Shibaki Camargo, from BCC 020 ICMC-USP"
+	@echo "Proudly made by: Giovanni Shibaki Camargo & Pedro Kenzo Muramatsu Carmo, from BCC 020 ICMC-USP"
 
 all:
 	@echo "Compiling all ./Util!"

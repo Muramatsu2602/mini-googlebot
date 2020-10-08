@@ -15,6 +15,12 @@ seja inserido, uma mensagem deve ser printada ao usuário a respeito disso;
 
 int main(int argc, char const *argv[])
 {
-    /* code */
+    LISTA * list;
+    FILE * fp;
+
+    
+
+    // lista_apagar(list);
+    // fclose(fp);
     return 0;
 }

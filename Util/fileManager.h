@@ -20,7 +20,7 @@
 	#include <stdio.h>
 	#include <string.h>
 
-	boolean openReadFile(char *fileName);
-	boolean openWriteFile(char *fileName);
+	boolean openReadFile(char *fileName, FILE *fp);
+	boolean openWriteFile(char *fileName, FILE*fp);
 	char *readline(FILE *stream);
 #endif
