@@ -30,7 +30,8 @@ valval: all
 clean:
 	@echo "Cleaning the binary file!"
 	@rm *.o
+	@rm $(BINARY)
 
 zip:
-	@echo "Creating a zip folder with all files!"
-	@zip -r proj1part1-bcc020.zip Util/*.c Util/*.h Makefile
+	@echo "Creating a zip folder with all important files!"
+	@zip -r proj1part1-bcc020.zip Util/*.c Util/*.h $(MAIN) Makefile
