@@ -226,11 +226,9 @@ void inserirPalavraChave(LISTA *lista)
         free(string);
         return;
     }
-    item_imprimir(lista_busca(lista,id));
-    getchar();
+
     if(item_set_keyWords(lista_busca(lista, id), string)) 
     {
-        item_imprimir(lista_busca(lista,id));
         printf("Palavra-Chave adicionada com sucesso!\n\nPressione qualquer botão para continuar...");
         getchar();
     }
