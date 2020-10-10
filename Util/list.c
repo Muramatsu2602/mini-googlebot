@@ -295,66 +295,6 @@ ITEM *lista_busca(LISTA *lista, int chave)
     return x;
 }
 
-/*
-// Versão 1 do lista_remover
-boolean lista_remover(LISTA *lista, int chave)
-{
-    NO *noAtual;
-    NO *noAnterior = NULL;
-    NO *noProximo = NULL;
-
-    noAtual = lista->inicio;
-    while(noAtual != NULL && item_get_chave(noAtual->item) !=  chave)
-    {
-        noAnterior = noAtual;
-        noAtual = noAtual->proximo;
-    }
-
-    if(noAtual != NULL)
-    {
-        // Achou o nó a ser removido
-        if(noAtual == lista->inicio)
-        {
-            noAnterior = noAtual;
-            noAtual = noAtual->proximo;
-
-            lista->inicio = noAtual;
-
-            // Excluir o nó anterior
-            item_apagar(&noAnterior->item);
-            free(noAnterior);
-            noAnterior = NULL;
-            lista->tamanho--;
-            return TRUE;
-        }
-        else if(noAtual == lista->fim)
-        {
-            lista->fim = noAnterior;
-
-            // Excluir o nó
-            item_apagar(&noAtual->item);
-            free(noAtual);
-            noAtual = NULL;
-            lista->tamanho--;
-            return TRUE;
-        }
-        else
-        {
-            // É um nó no meio da lista
-            noProximo = noAtual->proximo;
-
-            noAnterior->proximo = noProximo;
-            item_apagar(&noAtual->item);
-            free(noAtual);
-            noAtual = NULL;
-            lista->tamanho--;
-            return TRUE;
-        }
-    }
-    return FALSE;
-}
-*/
-
 // Versão 2 do lista_remover -> mais eficiente!
 boolean lista_remover(LISTA *lista, int chave)
 {

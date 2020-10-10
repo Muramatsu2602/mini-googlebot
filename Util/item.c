@@ -19,8 +19,8 @@ struct item_ // each item represents a website
 boolean item_inserir_dados(char *string, ITEM *item)
 {
     char *ptr = NULL;
-    item_set_keyWords(item,NULL);
-    item_set_numKeyWords(item,0);
+    item_set_keyWords(item, NULL);
+    item_set_numKeyWords(item, 0);
 
     // 1 - Código
     ptr = strtok(string, ",");
@@ -29,7 +29,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         printf("STRTOK1!\n");
         return FALSE;
     }
-    item_set_id(item,atoi(ptr));
+    item_set_id(item, atoi(ptr));
 
     // 2 - Nome
     ptr = strtok(NULL, ",");
@@ -38,7 +38,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         printf("STRTOK2!\n");
         return FALSE;
     }
-    item_set_name(item,ptr);
+    item_set_name(item, ptr);
 
     // 3 - Relevancia
     ptr = strtok(NULL, ",");
@@ -47,7 +47,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         printf("STRTOK3!\n");
         return FALSE;
     }
-    item_set_relevance(item,atoi(ptr));
+    item_set_relevance(item, atoi(ptr));
 
     // 4 - URL
     ptr = strtok(NULL, ",");
@@ -56,7 +56,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         printf("STRTOK4!\n");
         return FALSE;
     }
-    item_set_mainUrl(item,ptr);
+    item_set_mainUrl(item, ptr);
 
     // 5 - Palavras-Chave
     // Ler as palavras chave até que strtok retorne NULO
@@ -119,10 +119,27 @@ boolean item_apagar(ITEM **item) // pointer to a pointer
 
 void item_imprimir(ITEM *item)
 {
-    if (item != NULL)
+    char **aux = NULL;
+
+    if (item == NULL)
     {
-        printf("\n --> item: %d", item->id);
+        printf("CANNOT PRINT! Item is empty!\n");
+        return;
     }
+
+    printf("ID:%d\n", item_get_id(item));
+    printf("NAME:%s\n", item_get_name(item));
+    printf("RELEVANCE:%04d\n", item_get_relevance(item));
+    printf("URL:%s\n", item_get_mainUrl(item));
+    printf("NUM KEYWORDS:%02d\n", item_get_numKeyWords(item));
+    printf("KEYWORDS:\n");
+
+    aux = item_get_keyWords(item);
+    for (int j = 0; j < item_get_numKeyWords(item); j++)
+    {
+        printf("\t[%d]%s\n", j, aux[j]);
+    }
+    printf("\n");
 }
 
 // GETTERS
@@ -252,9 +269,10 @@ boolean item_set_numKeyWords(ITEM *item, int num)
 }
 
 boolean item_set_keyWords(ITEM *item, char *word)
-{   
+{
     // initializing the field
-    if(word==NULL){
+    if (word == NULL)
+    {
         item->keyWords = NULL;
         return FALSE;
     }
