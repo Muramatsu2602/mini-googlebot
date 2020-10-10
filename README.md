@@ -20,27 +20,23 @@ We decided to utilized the concept of Simple Linked List to implement an ADT to 
  * ...
 
 ## User Manual
-In the project's repository, there are two folders, allong with the main .c file (called "main-bot.c"). In the **Data**, we can find all the url-related data acquired from the input. Whereas in the **Util**, we can find all ".c" and ".h" files regarding the implementation of the chosen ADT and a auxiliary file called "fileManager". This last one is tasked with dealing with the input, thus not overloading the main file with too many functions.
+In the project's repository, there are two folders, along with the main .c file (called "main-bot.c"). In the **Data**, we can find the input file: **googlebot.txt** . Whereas in the **Util**, we can find all ".c" and ".h" files regarding the implementation of the chosen ADT and a auxiliary file called "fileManager". This last one is tasked with dealing with the input, thus not overloading the main file with too many functions.
 
-We can also point out ...
+In order to compile and execute the program, you should use the following Makefile commands:
+```
+make
+make run
+```
 
 ## Tools, Development Model and Presentation
 This project is developed using the C language, according to the C99 pattern.
 
-### Observation
+### Input Format
 These pieces of information must be read on a .txt file named "googlebot.txt", following the CSV format (*Comma Separated Value*) - meaning that all the data on a website is separated using commas. Here's an example:
 ```
 0001,YouTube,900,https://www.youtube.com/,youtube,videos,online
 0002,Netflix,800,https://www.netflix.com/br/,netflix,videos,streaming
 ```
-<!--
-  ### Project's features
-  When executed,  the programme must show the following options:
-  * **Insert a website**
-  *  **Remove a website**
-  * **Insert primary-key**
-  * **Update Relevance**
-  * **Exit**
--->
+
 ## Extra
 For more details regarding this project (in pt-br), please read [this](https://ae4.tidia-ae.usp.br/access/content/group/a1128994-3797-49cb-8f1f-08ecfe0ced63/Projeto%20-%20parte%20I.pdf)
