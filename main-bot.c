@@ -118,7 +118,7 @@ void inserirPalavraChave(LISTA *lista)
         return;
     }
 
-    if(item_set_keyWords(&lista_busca(lista, id), string))
+    if(item_set_keyWords(lista_busca(lista, id), string))
     {
         printf("Palavra-Chave adicionada com sucesso!\n");
     }
@@ -153,7 +153,7 @@ void atualizarRelevancia(LISTA *lista)
         return;
     }*/
 
-    if(item_set_relevance(&lista_busca(lista, id), relevancia))
+    if(item_set_relevance(lista_busca(lista, id), relevancia))
     {
         printf("Relevancia atualizada com sucesso!\n");
     }
