@@ -28,7 +28,7 @@
     // SETTERS
     boolean item_set_id(ITEM **item, int id);
     boolean item_set_name(ITEM **item, char *name);
-    boolean item_set_relevance(ITEM **item, int rel);
+    boolean item_set_relevance(ITEM *item, int rel);
     boolean item_set_mainUrl(ITEM **item, char *url);
     boolean item_set_numKeyWords(ITEM **item, int num);
     boolean item_set_keyWords(ITEM *item, char *word);

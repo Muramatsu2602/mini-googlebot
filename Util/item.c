@@ -205,7 +205,7 @@ boolean item_set_name(ITEM **item, char *name)
     return FALSE;
 }
 
-boolean item_set_relevance(ITEM **item, int rel)
+boolean item_set_relevance(ITEM *item, int rel)
 {
     if (rel < 0 || rel > 1000)
     {
@@ -213,9 +213,9 @@ boolean item_set_relevance(ITEM **item, int rel)
         return FALSE;
     }
 
-    if ((*item) != NULL)
+    if ((item) != NULL)
     {
-        (*item)->relevance = rel;
+        (item)->relevance = rel;
         return TRUE;
     }
     return FALSE;

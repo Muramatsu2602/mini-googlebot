@@ -118,7 +118,7 @@ void inserirPalavraChave(LISTA *lista)
         return;
     }
 
-    if(item_set_keyWords(lista_busca(lista, id), string))
+    if(item_set_keyWords(lista_busca(lista, id), string)) 
     {
         printf("Palavra-Chave adicionada com sucesso!\n");
     }
@@ -192,8 +192,9 @@ int main(int argc, char const *argv[])
         printf("3 - Inserir Palavra-Chave um site;\n");
         printf("4 - Atualizar relevância um site;\n");
         printf("5 - Sair.\n");
-
-        scanf("%d",&opcao);
+        
+        printf("Insira a Opção: ");
+        scanf("%d ",&opcao);
 
         switch(opcao)
         {
