@@ -69,14 +69,24 @@ int lista_tamanho(LISTA *lista)
 void lista_imprimir(LISTA *l)
 {
     NO *noAtual = l->inicio;
+    char **aux = NULL;
+
     for (int i = 0; i < l->tamanho; i++)
     {
         printf("ID:%d\n", item_get_id(noAtual->item));
-        printf("%s\t%04hu\t%s\t%s", item_ge(noAtual->item));
+        printf("%s\t%04d\t%s\t%d\t", item_get_name(noAtual->item), item_get_relevance(noAtual->item), item_get_mainUrl(noAtual->item), item_get_numKeyWords(noAtual->item));
+
+        aux = item_get_keyWords(noAtual->item);
+        for (int j = 0; j < item_get_numKeyWords(noAtual->item); j++)
+        {
+            printf("%s ", aux[j]);
+        }
+        printf("\n");
 
         noAtual = noAtual->proximo;
     }
     printf("\n");
+
     return;
 }
 
