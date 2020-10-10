@@ -20,9 +20,9 @@ struct Lista
 
 NO *no_criar(ITEM *item)
 {
-    NO *n = (NO *) malloc(sizeof(NO));
+    NO *n = (NO *)malloc(sizeof(NO));
 
-    if((n != NULL) && (item != NULL))
+    if ((n != NULL) && (item != NULL))
     {
         n->item = item;
         n->proximo = NULL;
@@ -34,9 +34,10 @@ NO *no_criar(ITEM *item)
 /*
     Verifica se a lista está vazia. Retorna TRUE em caso positivo e FALSE
     caso contrário
-*/    
-boolean lista_vazia(LISTA *lista){
-    if((lista != NULL) && lista->inicio == NULL)
+*/
+boolean lista_vazia(LISTA *lista)
+{
+    if ((lista != NULL) && lista->inicio == NULL)
     {
         return TRUE;
     }
@@ -47,10 +48,11 @@ boolean lista_vazia(LISTA *lista){
     Verifica se a lista está cheia. Retorna TRUE em caso positivo e FALSE
     caso contrário
 */
-boolean lista_cheia(LISTA *lista){
+boolean lista_cheia(LISTA *lista)
+{
     // Verifica se consegue criar outro nó, senão a lista está cheia
-    NO *no = (NO *) malloc(sizeof(NO));
-    if(no != NULL)
+    NO *no = (NO *)malloc(sizeof(NO));
+    if (no != NULL)
     {
         free(no);
         no = NULL;
@@ -61,28 +63,30 @@ boolean lista_cheia(LISTA *lista){
 
 int lista_tamanho(LISTA *lista)
 {
-    return(lista->tamanho);
+    return (lista->tamanho);
 }
 
 void lista_imprimir(LISTA *l)
 {
     NO *noAtual = l->inicio;
-    for (int i=0; i < l->tamanho; i++)
+    for (int i = 0; i < l->tamanho; i++)
     {
-        printf("[%d]; ", item_get_id(noAtual->item));
+        printf("ID:%d\n", item_get_id(noAtual->item));
+        printf("%s\t%04hu\t%s\t%s", item_ge(noAtual->item));
+
         noAtual = noAtual->proximo;
     }
     printf("\n");
     return;
 }
 
-LISTA* lista_criar(void)
+LISTA *lista_criar(void)
 {
     // Alocar espaço na memória para os itens
-    LISTA* lista;
-    lista = (LISTA *) malloc (sizeof(LISTA));
-    
-    if(lista != NULL)
+    LISTA *lista;
+    lista = (LISTA *)malloc(sizeof(LISTA));
+
+    if (lista != NULL)
     {
         lista->inicio = NULL;
         lista->fim = NULL;
@@ -91,16 +95,17 @@ LISTA* lista_criar(void)
     return lista;
 }
 
-boolean lista_inserir_ordenado(LISTA *lista, ITEM *item){
+boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
+{
 
-    if (lista == NULL || item == NULL) 
+    if (lista == NULL || item == NULL)
         return FALSE;
 
-    NO *pnovo = (NO *) malloc (sizeof(NO));
+    NO *pnovo = (NO *)malloc(sizeof(NO));
     pnovo->item = item;
     pnovo->proximo = NULL;
 
-    if (pnovo == NULL) 
+    if (pnovo == NULL)
         return FALSE;
 
     if (lista_vazia(lista))
@@ -112,7 +117,8 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item){
     }
     else
     {
-        if (item_get_id(pnovo->item) < item_get_id(lista->inicio->item)){
+        if (item_get_id(pnovo->item) < item_get_id(lista->inicio->item))
+        {
 
             NO *aux = lista->inicio;
             lista->inicio = pnovo;
@@ -125,13 +131,16 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item){
         NO *noAnterior = lista->inicio;
         NO *temp = lista->inicio->proximo;
 
-        while (temp != NULL && item_get_id(pnovo->item) >= item_get_id(temp->item)){
+        while (temp != NULL && item_get_id(pnovo->item) >= item_get_id(temp->item))
+        {
             noAnterior = temp;
             temp = temp->proximo;
         }
-        
-        if (temp == NULL) noAnterior->proximo = pnovo;
-        else{
+
+        if (temp == NULL)
+            noAnterior->proximo = pnovo;
+        else
+        {
             pnovo->proximo = temp;
             noAnterior->proximo = pnovo;
         }
@@ -142,11 +151,11 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item){
 
 boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 {
-    if((!lista_cheia(lista)) && (lista !=NULL))
+    if ((!lista_cheia(lista)) && (lista != NULL))
     {
-        NO *pnovo = (NO *) malloc(sizeof(NO));
+        NO *pnovo = (NO *)malloc(sizeof(NO));
         // Testar se a lista está vazia
-        if(lista->inicio == NULL)
+        if (lista->inicio == NULL)
         {
             pnovo->item = item;
             lista->inicio = pnovo;
@@ -170,13 +179,18 @@ boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 // Enviar o primeiro nó da lista
 void lista_apagar(LISTA **lista)
 {
+
     NO *noAtual = (*lista)->inicio;
     // Caso base: no Atual é nulo, ou seja, a lista inteira já foi apagada
     NO *noProximo;
-    if(noAtual !=NULL)
+    if (noAtual != NULL)
     {
         noProximo = noAtual->proximo;
-        item_apagar(&noAtual->item);
+        if (!item_apagar(&noAtual->item))
+        {
+            printf("Erro ao apagar item!\n");
+            return;
+        }
         free(noAtual);
         noAtual = NULL;
         (*lista)->tamanho--;
@@ -198,7 +212,7 @@ void lista_inverter(LISTA **lista)
     NO *noAnterior = NULL;
     NO *noProximo = NULL;
 
-    while(noAtual != NULL)
+    while (noAtual != NULL)
     {
         noProximo = noAtual->proximo; // Pega o próximo nó da lista (1 iteração: será NULL)
         /*
@@ -207,7 +221,7 @@ void lista_inverter(LISTA **lista)
         */
         noAtual->proximo = noAnterior;
         noAnterior = noAtual; // Pega o nó atual para que seja utilizado na proximo iteração do while
-        noAtual = noProximo; // O nó a ser manipulado agora será o proximo da lista original
+        noAtual = noProximo;  // O nó a ser manipulado agora será o proximo da lista original
     }
 
     // Redefine o inicio da lista como o último nó da original
@@ -218,12 +232,12 @@ void lista_inverter(LISTA **lista)
 ITEM *lista_busca_sequencial(LISTA *lista, int chave)
 {
     NO *aux;
-    if(lista !=NULL)
+    if (lista != NULL)
     {
         aux = lista->inicio;
-        while(aux !=NULL)
+        while (aux != NULL)
         {
-            if(item_get_id(aux->item) == chave)
+            if (item_get_id(aux->item) == chave)
             {
                 return aux->item;
             }
@@ -236,12 +250,12 @@ ITEM *lista_busca_sequencial(LISTA *lista, int chave)
 ITEM *lista_busca_ordenada(LISTA *lista, int chave)
 {
     NO *aux;
-    if(lista!=NULL)
+    if (lista != NULL)
     {
         aux = lista->inicio;
-        while(aux != NULL && item_get_id(aux->item) <= chave)
+        while (aux != NULL && item_get_id(aux->item) <= chave)
         {
-            if(item_get_id(aux->item) == chave)
+            if (item_get_id(aux->item) == chave)
             {
                 return aux->item;
             }
@@ -255,7 +269,7 @@ ITEM *lista_busca(LISTA *lista, int chave)
 {
     ITEM *x;
 
-    if(!ORDENADA)
+    if (!ORDENADA)
     {
         x = lista_busca_sequencial(lista, chave);
     }
@@ -334,16 +348,16 @@ boolean lista_remover(LISTA *lista, int chave)
     NO *noProximo = NULL;
 
     noAtual = lista->inicio;
-    while(noAtual != NULL && item_get_id(noAtual->item) !=  chave)
+    while (noAtual != NULL && item_get_id(noAtual->item) != chave)
     {
         noAnterior = noAtual;
         noAtual = noAtual->proximo;
     }
 
-    if(noAtual != NULL)
+    if (noAtual != NULL)
     {
         // Achou o nó a ser removido
-        if(noAtual == lista->inicio)
+        if (noAtual == lista->inicio)
         {
             // É o primeiro nó da lista
 
@@ -361,7 +375,7 @@ boolean lista_remover(LISTA *lista, int chave)
         }
         else
         {
-            if(noAtual == lista->fim)
+            if (noAtual == lista->fim)
             {
                 // É o último nó da lista
 
@@ -390,13 +404,13 @@ boolean lista_remover(LISTA *lista, int chave)
 boolean lista_verifica_no(NO *n1, NO *n2)
 {
     // Os 2 nós tem que terminar juntos
-    if(n1 == NULL && n2 == NULL)
+    if (n1 == NULL && n2 == NULL)
     {
         return TRUE;
     }
 
     // Verifica se as chaves de cada item são iguais
-    if(item_get_id(n1->item) != item_get_id(n2->item))
+    if (item_get_id(n1->item) != item_get_id(n2->item))
     {
         return FALSE;
     }
@@ -411,7 +425,7 @@ boolean lista_verifica_no(NO *n1, NO *n2)
 boolean lista_verifica_igual(LISTA *lista1, LISTA *lista2)
 {
     // Verificar se o tamanho das listas são iguais
-    if(lista1->tamanho != lista2->tamanho)
+    if (lista1->tamanho != lista2->tamanho)
     {
         return FALSE;
     }
@@ -420,7 +434,7 @@ boolean lista_verifica_igual(LISTA *lista1, LISTA *lista2)
     NO *noAtual2 = lista2->inicio;
 
     // A função lista_verifica_no é uma função recursiva que verifica os nós a partir do primeiro nó
-    if(lista_verifica_no(noAtual1,noAtual2))
+    if (lista_verifica_no(noAtual1, noAtual2))
     {
         return TRUE;
     }

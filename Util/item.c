@@ -93,8 +93,15 @@ ITEM *item_criar(char *string)
 boolean item_apagar(ITEM **item) // pointer to a pointer
 {
     // we can only erase existing items
-    if (*item != NULL)
+    if ((*item) != NULL)
     {
+        for (int i = 0; i < (*item)->numKeyWords; i++)
+        {
+            free((*item)->keyWords[i]);
+        }
+        free((*item)->keyWords);
+        (*item)->keyWords = NULL;
+
         free(*item);
         *item = NULL; // --> variable still exists, so it will be NULL (disables its future usage post-erase)
                       // this is why we use a double pointer, so we can alter its value (by reference) too
@@ -112,17 +119,63 @@ void item_imprimir(ITEM *item)
     }
 }
 
+// GETTERS
+
 int item_get_id(ITEM *item)
 {
     if (item != NULL)
         return (item->id);
-    else
-    {
-        printf("\nERROR: item_get_chave()\n");
-        exit(1); // ERROR: abort it! , there's not such int such that we can use it exclusively to represent an error (id is all INT)
-                 // exit(0) --> 0 means regular exit
-    }
+
+    printf("\nERROR: item_get_chave()\n");
+    return ERROR;
 }
+
+char *item_get_name(ITEM *item)
+{
+    if (item != NULL)
+        return (item->name);
+
+    printf("\nERROR: item_get_name()\n");
+    return NULL;
+}
+
+int item_get_relevance(ITEM *item)
+{
+    if (item != NULL)
+        return item->relevance;
+
+    printf("\nERROR: item_get_relevance()\n");
+    return ERROR;
+}
+
+char *item_get_mainUrl(ITEM *item)
+{
+    if (item != NULL)
+        return item->mainUrl;
+
+    printf("\nERROR: item_get_mainUrl()\n");
+    return NULL;
+}
+
+int item_get_numKeyWords(ITEM *item)
+{
+    if (item != NULL)
+        return item->numKeyWords;
+
+    printf("\nERROR: item_get_numKeyWords()\n");
+    return ERROR;
+}
+
+char **item_get_keyWords(ITEM *item)
+{
+    if (item != NULL)
+        return item->keyWords;
+
+    printf("\nERROR: item_get_keyWords()\n");
+    return NULL;
+}
+
+// SETTERS
 
 boolean item_set_id(ITEM **item, int id)
 {
@@ -136,13 +189,11 @@ boolean item_set_id(ITEM **item, int id)
     return FALSE;
 }
 
-// Permite a inserção de novas palavras-chave
-boolean item_set_keyWord(ITEM **item, char *word)
+boolean item_set_name(ITEM **item, char *name)
 {
-    // Controla o limite de 10 palavras-chave
-    if ((*item) != NULL && (*item)->numKeyWords < 10)
+    if ((*item) != NULL)
     {
-        strcpy(word, (*item)->keyWords[(*item)->numKeyWords]); // FIX ME!
+        strcpy((*item)->name, name);
         return TRUE;
     }
     return FALSE;
@@ -158,11 +209,45 @@ boolean item_set_relevance(ITEM **item, int rel)
     return FALSE;
 }
 
-int item_get_relevance(ITEM *item)
+boolean item_set_mainUrl(ITEM **item, char *url)
 {
-    if (item != NULL)
+    if (url == NULL || strlen(url) > 100)
     {
-        return item->relevance;
+        printf("50 characters max per keyword!\n");
+        return FALSE;
     }
-    return ERROR;
+
+    strcpy((*item)->mainUrl, url);
+    return TRUE;
+}
+
+boolean item_set_numKeyWords(ITEM **item, int num)
+{
+    if (num > 10)
+    {
+        printf("10 is the max number for keywords!");
+        return FALSE;
+    }
+
+    (*item)->numKeyWords = num;
+    return TRUE;
+}
+
+boolean item_set_keyWords(ITEM **item, char *word)
+{
+    // max 50carac na keyword
+    if (strlen(word) > 50)
+    {
+        printf("50 characters max per keyword!\n");
+        return FALSE;
+    }
+
+    // Sets the limit of 10 keywords max
+    if ((*item) != NULL && (*item)->numKeyWords <= 10)
+    {
+        strcpy((*item)->keyWords[(*item)->numKeyWords], word); // FIX ME!
+        (*item)->numKeyWords++;
+        return TRUE;
+    }
+    return FALSE;
 }

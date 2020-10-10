@@ -17,14 +17,20 @@
     boolean item_apagar ( ITEM ** item); // alteracao da variavel (por referencia)
     void item_imprimir(ITEM * item);
     
-    // GETTERS AND SETTERS
-    int item_get_id(ITEM *item); // (ITEM *) (*item)
-    boolean item_set_id(ITEM **item, int id); // (ITEM *) (*item)
-    int item_get_keyWord(ITEM *item);
-    boolean item_set_keyWord(ITEM **item,char *word);
+    // GETTERS
+    int item_get_id(ITEM *item); 
+    char * item_get_name(ITEM * item);
     int item_get_relevance(ITEM *item);
+    char * item_get_mainUrl(ITEM *item);
+    int item_get_numKeyWords(ITEM *item);
+    char ** item_get_keyWords(ITEM *item);
+
+    // SETTERS
+    boolean item_set_id(ITEM **item, int id);
+    boolean item_set_name(ITEM **item, char *name);
     boolean item_set_relevance(ITEM **item, int rel);
-
-
+    boolean item_set_mainUrl(ITEM **item, char *url);
+    boolean item_set_numKeyWords(ITEM **item, int num);
+    boolean item_set_keyWords(ITEM **item, char *word);
 #endif
 
