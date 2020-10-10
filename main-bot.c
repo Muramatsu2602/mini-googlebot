@@ -66,6 +66,7 @@ void inserirSite(LISTA *lista)
     printf("<Código>,<Nome do Site>,<URL>,<palavra-chave 1>,<palavra-chave 2>,<palavra-chave n>\n\n");
 
     printf("Digite a inserção do novo site conforme a estrutura: \n");
+    getchar(); // Consome o \n do scanf anterior
     string = readline(stdin);
 
     lista_inserir_fim(lista,item_criar(string));
@@ -109,6 +110,7 @@ void inserirPalavraChave(LISTA *lista)
     }
 
     printf("Digite a palavra-chave a ser adicionada: ");
+    getchar(); // Consome o \n do scanf anterior
     string = readline(stdin);
 
     if(strlen(string) > 50)
