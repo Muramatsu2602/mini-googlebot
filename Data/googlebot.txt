@@ -1,0 +1,4 @@
+0001,YouTube,900,https://www.youtube.com/,youtube,videos,online
+0002,Netflix,800, https://www.netflix.com/br/,netflix,videos,streaming
+0003,FolhaDeSaoPaulo,900,https://www.folha.uol.com.br/,youtube,videos,online
+0004,Netflix,800, https://www.netflix.com/br/,netflix,videos,streaming
