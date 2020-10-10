@@ -179,7 +179,8 @@ char **item_get_keyWords(ITEM *item)
 
 boolean item_set_id(ITEM **item, int id)
 {
-    if(id<0){
+    if (id < 0)
+    {
         printf("ID cannot be negative!");
         return FALSE;
     }
@@ -206,7 +207,8 @@ boolean item_set_name(ITEM **item, char *name)
 
 boolean item_set_relevance(ITEM **item, int rel)
 {
-    if(rel<0 ||rel>1000){
+    if (rel < 0 || rel > 1000)
+    {
         printf("0-1000 is the range for relevance!");
         return FALSE;
     }
@@ -233,7 +235,7 @@ boolean item_set_mainUrl(ITEM **item, char *url)
 
 boolean item_set_numKeyWords(ITEM **item, int num)
 {
-    if (num<0 ||num > 10)
+    if (num < 0 || num > 10)
     {
         printf("10 is the max number for keywords!");
         return FALSE;
@@ -243,7 +245,7 @@ boolean item_set_numKeyWords(ITEM **item, int num)
     return TRUE;
 }
 
-boolean item_set_keyWords(ITEM **item, char *word)
+boolean item_set_keyWords(ITEM *item, char *word)
 {
     // max 50carac na keyword
     if (strlen(word) > 50)
@@ -253,10 +255,10 @@ boolean item_set_keyWords(ITEM **item, char *word)
     }
 
     // Sets the limit of 10 keywords max
-    if ((*item) != NULL && (*item)->numKeyWords <= 10)
+    if ((item) != NULL && (item)->numKeyWords <= 10)
     {
-        strcpy((*item)->keyWords[(*item)->numKeyWords], word); // FIX ME!
-        (*item)->numKeyWords++;
+        strcpy((item)->keyWords[(item)->numKeyWords], word); // FIX ME!
+        (item)->numKeyWords++;
         return TRUE;
     }
     return FALSE;
