@@ -153,7 +153,7 @@ void atualizarRelevancia(LISTA *lista)
         return;
     }*/
 
-    if(item_set_relevance(&lista_busca(lista, id), relevancia))
+    if(item_set_relevance(lista_busca(lista, id), relevancia))
     {
         printf("Relevancia atualizada com sucesso!\n");
     }
