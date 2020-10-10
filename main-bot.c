@@ -149,12 +149,6 @@ void atualizarRelevancia(LISTA *lista)
     scanf("%d",&relevancia);
     printf("\n");
 
-    /*if(relevancia < 0 || relevancia > 1000)
-    {
-        printf("Valor de relevância inválido!");
-        return;
-    }*/
-
     if(item_set_relevance(lista_busca(lista, id), relevancia))
     {
         printf("Relevancia atualizada com sucesso!\n");

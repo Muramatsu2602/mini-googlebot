@@ -19,9 +19,8 @@ struct item_ // each item represents a website
 boolean item_inserir_dados(char *string, ITEM *item)
 {
     char *ptr = NULL;
-    int id = 0;
-    int relevance = 0;
-    item->numKeyWords = 0;
+    item_set_keyWords(item,NULL);
+    item_set_numKeyWords(item,0);
 
     // 1 - Código
     ptr = strtok(string, ",");
@@ -30,9 +29,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         printf("STRTOK1!\n");
         return FALSE;
     }
-
-    id = atoi(ptr);
-    item->id = id;
+    item_set_id(item,atoi(ptr));
 
     // 2 - Nome
     ptr = strtok(NULL, ",");
@@ -41,9 +38,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         printf("STRTOK2!\n");
         return FALSE;
     }
-
-
-    strcpy(item->name, ptr);
+    item_set_name(item,ptr);
 
     // 3 - Relevancia
     ptr = strtok(NULL, ",");
@@ -52,10 +47,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         printf("STRTOK3!\n");
         return FALSE;
     }
-
-
-    relevance = atoi(ptr);
-    item->relevance = relevance;
+    item_set_relevance(item,atoi(ptr));
 
     // 4 - URL
     ptr = strtok(NULL, ",");
@@ -64,9 +56,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         printf("STRTOK4!\n");
         return FALSE;
     }
-
-
-    strcpy(item->mainUrl, ptr);
+    item_set_mainUrl(item,ptr);
 
     // 5 - Palavras-Chave
     // Ler as palavras chave até que strtok retorne NULO
@@ -193,7 +183,7 @@ char **item_get_keyWords(ITEM *item)
 
 // SETTERS
 
-boolean item_set_id(ITEM **item, int id)
+boolean item_set_id(ITEM *item, int id)
 {
     if (id < 0)
     {
@@ -201,21 +191,21 @@ boolean item_set_id(ITEM **item, int id)
         return FALSE;
     }
 
-    if (*item != NULL)
+    if (item != NULL)
     {
         // we use (*item) to force the system to first analyse the item content (pointer) before the -> operator
-        (*item)->id = id;
+        (item)->id = id;
 
         return TRUE;
     }
     return FALSE;
 }
 
-boolean item_set_name(ITEM **item, char *name)
+boolean item_set_name(ITEM *item, char *name)
 {
-    if ((*item) != NULL)
+    if ((item) != NULL)
     {
-        strcpy((*item)->name, name);
+        strcpy((item)->name, name);
         return TRUE;
     }
     return FALSE;
@@ -237,7 +227,7 @@ boolean item_set_relevance(ITEM *item, int rel)
     return FALSE;
 }
 
-boolean item_set_mainUrl(ITEM **item, char *url)
+boolean item_set_mainUrl(ITEM *item, char *url)
 {
     if (url == NULL || strlen(url) > 100)
     {
@@ -245,11 +235,11 @@ boolean item_set_mainUrl(ITEM **item, char *url)
         return FALSE;
     }
 
-    strcpy((*item)->mainUrl, url);
+    strcpy((item)->mainUrl, url);
     return TRUE;
 }
 
-boolean item_set_numKeyWords(ITEM **item, int num)
+boolean item_set_numKeyWords(ITEM *item, int num)
 {
     if (num < 0 || num > 10)
     {
@@ -257,12 +247,18 @@ boolean item_set_numKeyWords(ITEM **item, int num)
         return FALSE;
     }
 
-    (*item)->numKeyWords = num;
+    (item)->numKeyWords = num;
     return TRUE;
 }
 
 boolean item_set_keyWords(ITEM *item, char *word)
-{
+{   
+    // initializing the field
+    if(word==NULL){
+        item->keyWords = NULL;
+        return FALSE;
+    }
+
     // max 50carac na keyword
     if (strlen(word) > 50)
     {
