@@ -13,7 +13,7 @@
     typedef struct item_ ITEM;
 
     // defining all operations related to the ITEM_H
-    ITEM *item_criar(int id, char *name, int rel, char *link, int kw, char *keyWord);
+    ITEM *item_criar(char *string);
     boolean item_apagar ( ITEM ** item); // alteracao da variavel (por referencia)
     void item_imprimir(ITEM * item);
     

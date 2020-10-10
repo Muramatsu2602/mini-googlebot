@@ -91,6 +91,55 @@ LISTA* lista_criar(void)
     return lista;
 }
 
+boolean lista_inserir_ordenado(LISTA *lista, ITEM *item){
+
+    if (lista == NULL || item == NULL) 
+        return FALSE;
+
+    NO *pnovo = (NO *) malloc (sizeof(NO));
+    pnovo->item = item;
+    pnovo->proximo = NULL;
+
+    if (pnovo == NULL) 
+        return FALSE;
+
+    if (lista_vazia(lista))
+    {
+        pnovo->proximo = lista->inicio;
+        lista->inicio = pnovo;
+        lista->tamanho++;
+        return TRUE;
+    }
+    else
+    {
+        if (item_get_chave(pnovo->item) < item_get_chave(lista->inicio->item)){
+
+            NO *aux = lista->inicio;
+            lista->inicio = pnovo;
+            lista->inicio->proximo = aux;
+            aux = NULL;
+            lista->tamanho++;
+            return TRUE;
+        }
+
+        NO *noAnterior = lista->inicio;
+        NO *temp = lista->inicio->proximo;
+
+        while (temp != NULL && item_get_chave(pnovo->item) >= item_get_chave(temp->item)){
+            noAnterior = temp;
+            temp = temp->proximo;
+        }
+        
+        if (temp == NULL) noAnterior->proximo = pnovo;
+        else{
+            pnovo->proximo = temp;
+            noAnterior->proximo = pnovo;
+        }
+    }
+    lista->tamanho++;
+    return TRUE;
+}
+
 boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 {
     if((!lista_cheia(lista)) && (lista !=NULL))

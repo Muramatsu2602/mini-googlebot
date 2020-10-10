@@ -16,16 +16,77 @@ struct item_ // each item represents a website
     char **keyWords; //  Limit = 50 char per word
 };
 
-ITEM *item_criar(int id, char *name, int rel, char *mainUrl, int numKeyWords, char *keyWord)
+boolean item_inserir_dados(char *string, ITEM *item)
+{
+    char *ptr;
+    int id;
+    int relevance;
+    item->numKeyWords = 0;
+
+
+    // 1 - Código
+    ptr = strtok(string,",");
+    if(ptr == NULL)
+        return FALSE;
+
+    id = atoi(ptr);
+    item->id = id;
+
+
+    // 2 - Nome
+    ptr = strtok(NULL,",");
+    if(ptr == NULL)
+        return FALSE;
+
+    strcpy(item->name,ptr);
+
+
+    // 3 - Relevancia
+    ptr = strtok(string,",");
+    if(ptr == NULL)
+        return FALSE;
+
+    relevance = atoi(ptr);
+    item->relevance = relevance;
+
+
+    // 4 - URL
+    ptr = strtok(NULL,",");
+    if(ptr == NULL)
+        return FALSE;
+
+    strcpy(item->mainUrl,ptr);
+
+    // 5 - Palavras-Chave
+    // Ler as palavras chave até que strtok retorne NULO
+    while(prt != NULL && item->numKeyWords<=10)
+    {
+        item->numKeyWords++;
+        ptr = strtok(NULL,",");
+        if(ptr == NULL)
+            return FALSE;
+
+        item->keyWords = (char **) realloc (item->numKeyWords*sizeof(char *));
+        item->keyWords[item->numKeyWords-1] = (char *) malloc (strlen(ptr)*sizeof(char));
+        strcpy(item->keyWords[item->numKeyWords-1], ptr);
+    }
+
+    return TRUE;
+}
+
+// A função recebe a string com todos os dados e chama uma função auxiliar para separar essa string nos devidos campos
+ITEM *item_criar(char *string)
 {
     ITEM *item;
 
     item = (ITEM *)malloc(sizeof(ITEM));
 
     if (item != NULL)
+    {
         /* Setar o ID, nome, relevancia, link */
-        item->numKeyWords = 0;
-
+        if(!item_inserir_dados(string, item))
+            return NULL;
+    }
 
     // it will return NULL if alocation doesnt work
     return (item);
@@ -56,10 +117,10 @@ void item_imprimir(ITEM *item)
 int item_get_id(ITEM *item)
 {
     if (item != NULL)
-        return (item->id);
+        return (item->chave);
     else
     {
-        printf("\nERROR: item_get_id()\n");
+        printf("\nERROR: item_get_chave()\n");
         exit(1); // ERROR: abort it! , there's not such int such that we can use it exclusively to represent an error (id is all INT)
                  // exit(0) --> 0 means regular exit
     }
