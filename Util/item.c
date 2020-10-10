@@ -71,7 +71,6 @@ boolean item_inserir_dados(char *string, ITEM *item)
 
         ptr = strtok(NULL,",");
     }
-
     return TRUE;
 }
 
@@ -287,8 +286,10 @@ boolean item_set_keyWords(ITEM *item, char *word)
     // Sets the limit of 10 keywords max
     if ((item) != NULL && (item)->numKeyWords < 10)
     {
-        strcpy((item)->keyWords[(item)->numKeyWords-1], word);
-        (item)->numKeyWords++;
+        item->keyWords = (char **)realloc(item->keyWords, (item->numKeyWords+1) * sizeof(char *));
+        item->keyWords[item->numKeyWords] = (char *)malloc((1 + strlen(word)) * sizeof(char));
+        strcpy(item->keyWords[item->numKeyWords], word);
+        item->numKeyWords++;
         return TRUE;
     }
     return FALSE;
