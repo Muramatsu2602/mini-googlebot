@@ -179,6 +179,11 @@ char **item_get_keyWords(ITEM *item)
 
 boolean item_set_id(ITEM **item, int id)
 {
+    if(id<0){
+        printf("ID cannot be negative!");
+        return FALSE;
+    }
+
     if (*item != NULL)
     {
         // we use (*item) to force the system to first analyse the item content (pointer) before the -> operator
@@ -201,6 +206,11 @@ boolean item_set_name(ITEM **item, char *name)
 
 boolean item_set_relevance(ITEM **item, int rel)
 {
+    if(rel<0 ||rel>1000){
+        printf("0-1000 is the range for relevance!");
+        return FALSE;
+    }
+
     if ((*item) != NULL)
     {
         (*item)->relevance = rel;
@@ -223,7 +233,7 @@ boolean item_set_mainUrl(ITEM **item, char *url)
 
 boolean item_set_numKeyWords(ITEM **item, int num)
 {
-    if (num > 10)
+    if (num<0 ||num > 10)
     {
         printf("10 is the max number for keywords!");
         return FALSE;
