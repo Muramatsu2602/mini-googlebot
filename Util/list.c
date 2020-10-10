@@ -161,6 +161,11 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 
 boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 {
+    if(item == NULL)
+    {
+        printf("item enviado é nulo!");
+        return FALSE;
+    }
     if ((!lista_cheia(lista)) && (lista != NULL))
     {
         NO *pnovo = (NO *)malloc(sizeof(NO));

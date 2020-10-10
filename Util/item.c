@@ -26,7 +26,10 @@ boolean item_inserir_dados(char *string, ITEM *item)
     // 1 - Código
     ptr = strtok(string, ",");
     if (ptr == NULL)
+    {
+        printf("STRTOK1!\n");
         return FALSE;
+    }
 
     id = atoi(ptr);
     item->id = id;
@@ -34,14 +37,22 @@ boolean item_inserir_dados(char *string, ITEM *item)
     // 2 - Nome
     ptr = strtok(NULL, ",");
     if (ptr == NULL)
+    {
+        printf("STRTOK2!\n");
         return FALSE;
+    }
+
 
     strcpy(item->name, ptr);
 
     // 3 - Relevancia
-    ptr = strtok(string, ",");
+    ptr = strtok(NULL, ",");
     if (ptr == NULL)
+    {
+        printf("STRTOK3!\n");
         return FALSE;
+    }
+
 
     relevance = atoi(ptr);
     item->relevance = relevance;
@@ -49,22 +60,26 @@ boolean item_inserir_dados(char *string, ITEM *item)
     // 4 - URL
     ptr = strtok(NULL, ",");
     if (ptr == NULL)
+    {
+        printf("STRTOK4!\n");
         return FALSE;
+    }
+
 
     strcpy(item->mainUrl, ptr);
 
     // 5 - Palavras-Chave
     // Ler as palavras chave até que strtok retorne NULO
+    ptr = strtok(NULL, ",");
     while (ptr != NULL && item->numKeyWords <= 10)
     {
         item->numKeyWords++;
-        ptr = strtok(NULL, ",");
-        if (ptr == NULL)
-            return FALSE;
 
         item->keyWords = (char **)realloc(item->keyWords, item->numKeyWords * sizeof(char *));
         item->keyWords[item->numKeyWords - 1] = (char *)malloc((1 + strlen(ptr)) * sizeof(char));
         strcpy(item->keyWords[item->numKeyWords - 1], ptr);
+
+        ptr = strtok(NULL, ",");
     }
 
     return TRUE;
@@ -82,6 +97,7 @@ ITEM *item_criar(char *string)
         /* Setar o ID, nome, relevancia, link */
         if (!item_inserir_dados(string, item))
         {
+            printf("ERRO ITEM_INSERIR_DADOS!");
             return NULL;
         }
     }

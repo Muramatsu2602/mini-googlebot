@@ -5,7 +5,7 @@
 	#define TAM_MAX 100
 	#define ERRO -32000
 
-	#define ORDENADA 1 // 0 para lista não ordenada, 1 para listas ordenadas
+	#define ORDENADA 0 // 0 para lista não ordenada, 1 para listas ordenadas
 
 	#include "item.h"
 

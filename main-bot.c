@@ -176,14 +176,19 @@ int main(int argc, char const *argv[])
     string = readline(fp);
     while (!feof(fp))
     {
-        lista_inserir_fim(lista, item_criar(string));
+        if(!lista_inserir_fim(lista, item_criar(string)))
+        {
+            printf("ERRO inserir lista!");
+            return 0;
+        }
         free(string);
         string = readline(fp);
     }
     free(string);
 
-    int opcao = 0;
+    lista_imprimir(lista);
 
+    int opcao = 0;
     while(opcao != 5)
     {
         printf("\n\nOpções:\n");
@@ -194,7 +199,7 @@ int main(int argc, char const *argv[])
         printf("5 - Sair.\n");
         
         printf("Insira a Opção: ");
-        scanf("%d ",&opcao);
+        scanf("%d",&opcao);
 
         switch(opcao)
         {
