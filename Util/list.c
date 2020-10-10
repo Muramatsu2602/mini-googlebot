@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "list.h"
-#include "item.h"
+#include "lista.h"
 
 typedef struct no_ NO;
 
@@ -21,9 +20,9 @@ struct Lista
 
 NO *no_criar(ITEM *item)
 {
-    NO *n = (NO *)malloc(sizeof(NO));
+    NO *n = (NO *) malloc(sizeof(NO));
 
-    if ((n != NULL) && (item != NULL))
+    if((n != NULL) && (item != NULL))
     {
         n->item = item;
         n->proximo = NULL;
@@ -32,35 +31,79 @@ NO *no_criar(ITEM *item)
     return NULL;
 }
 
-LISTA *lista_criar(void)
+/*
+    Verifica se a lista está vazia. Retorna TRUE em caso positivo e FALSE
+    caso contrário
+*/    
+boolean lista_vazia(LISTA *lista){
+    if((lista != NULL) && lista->inicio == NULL)
+    {
+        return TRUE;
+    }
+    return FALSE;
+}
+
+/*
+    Verifica se a lista está cheia. Retorna TRUE em caso positivo e FALSE
+    caso contrário
+*/
+boolean lista_cheia(LISTA *lista){
+    // Verifica se consegue criar outro nó, senão a lista está cheia
+    NO *no = (NO *) malloc(sizeof(NO));
+    if(no != NULL)
+    {
+        free(no);
+        no = NULL;
+        return FALSE;
+    }
+    return TRUE;
+}
+
+int lista_tamanho(LISTA *lista)
+{
+    return(lista->tamanho);
+}
+
+void lista_imprimir(LISTA *l)
+{
+    NO *noAtual = l->inicio;
+    for (int i=0; i < l->tamanho; i++)
+    {
+        printf("[%d]; ", item_get_chave(noAtual->item));
+        noAtual = noAtual->proximo;
+    }
+    printf("\n");
+    return;
+}
+
+LISTA* lista_criar(void)
 {
     // Alocar espaço na memória para os itens
-    LISTA *lista;
-    lista = (LISTA *)malloc(sizeof(LISTA));
-
-    if (lista != NULL)
+    LISTA* lista;
+    lista = (LISTA *) malloc (sizeof(LISTA));
+    
+    if(lista != NULL)
     {
         lista->inicio = NULL;
         lista->fim = NULL;
         lista->tamanho = 0;
     }
-
     return lista;
 }
 
 boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 {
-    if ((!lista_cheia(lista)) && (lista != NULL))
+    if((!lista_cheia(lista)) && (lista !=NULL))
     {
-        NO *pnovo = (NO *)malloc(sizeof(NO));
-        // se vazia, muda os ponteiros
-        if (lista->inicio == NULL)
+        NO *pnovo = (NO *) malloc(sizeof(NO));
+        // Testar se a lista está vazia
+        if(lista->inicio == NULL)
         {
             pnovo->item = item;
             lista->inicio = pnovo;
             pnovo->proximo = NULL;
         }
-        // se nao vazia, muda o ponteiro deproximo, fim e so
+        // Se não estiver vazia pega o NÓ que está no fim da lista
         else
         {
             lista->fim->proximo = pnovo;
@@ -75,152 +118,265 @@ boolean lista_inserir_fim(LISTA *lista, ITEM *item)
     return FALSE;
 }
 
-int lista_tamanho(LISTA *lista)
+// Enviar o primeiro nó da lista
+void lista_apagar(LISTA **lista)
 {
-    if (lista)
-        return lista->tamanho;
-    exit(1);
-}
-
-boolean lista_vazia(LISTA *lista)
-{
-    if ((lista != NULL) && lista->inicio == NULL)
-        return TRUE;
-    else
-        return FALSE;
-}
-
-boolean lista_cheia(LISTA *l)
-{
-    NO *no = (NO *)malloc(sizeof(NO));
-
-    if (no != NULL)
+    NO *noAtual = (*lista)->inicio;
+    // Caso base: no Atual é nulo, ou seja, a lista inteira já foi apagada
+    NO *noProximo;
+    if(noAtual !=NULL)
     {
-        free(no);
-        no = NULL;
-        return (FALSE);
+        noProximo = noAtual->proximo;
+        item_apagar(&noAtual->item);
+        free(noAtual);
+        noAtual = NULL;
+        (*lista)->tamanho--;
+        (*lista)->inicio = noProximo;
+        lista_apagar(lista);
     }
-    return (TRUE);
+    else
+    {
+        // Todos já foram apagados, dar free na lista
+        free(*lista);
+    }
 }
 
+void lista_inverter(LISTA **lista)
+{
+    // Tem vários algoritmos para inverter a lista
+    NO *noAtual = (*lista)->inicio;
+    (*lista)->fim = noAtual; // Já define o primeiro nó agora como o último nó da lista
+    NO *noAnterior = NULL;
+    NO *noProximo = NULL;
 
-// remove item especifico da lista
+    while(noAtual != NULL)
+    {
+        noProximo = noAtual->proximo; // Pega o próximo nó da lista (1 iteração: será NULL)
+        /*
+            Na primeira vez o nó atual é o primeiro da lista e seu ponteiro próximo é deverá ser nulo. Como vamos inverter a ordem dos nós
+            o primeiro nó será agora o último da lista e o ponteiro de seu próximo pontará para ele.
+        */
+        noAtual->proximo = noAnterior;
+        noAnterior = noAtual; // Pega o nó atual para que seja utilizado na proximo iteração do while
+        noAtual = noProximo; // O nó a ser manipulado agora será o proximo da lista original
+    }
+
+    // Redefine o inicio da lista como o último nó da original
+    (*lista)->inicio = noAnterior;
+}
+
+// Busca sequencial de itens, para listas não ordenadas
+ITEM *lista_busca_sequencial(LISTA *lista, int chave)
+{
+    NO *aux;
+    if(lista !=NULL)
+    {
+        aux = lista->inicio;
+        while(aux !=NULL)
+        {
+            if(item_get_chave(aux->item) == chave)
+            {
+                return aux->item;
+            }
+            aux = aux->proximo;
+        }
+    }
+    return NULL;
+}
+
+ITEM *lista_busca_ordenada(LISTA *lista, int chave)
+{
+    NO *aux;
+    if(lista!=NULL)
+    {
+        aux = lista->inicio;
+        while(aux != NULL && item_get_chave(aux->item) <= chave)
+        {
+            if(item_get_chave(aux->item) == chave)
+            {
+                return aux->item;
+            }
+            aux = aux->proximo;
+        }
+    }
+    return NULL;
+}
+
+ITEM *lista_busca(LISTA *lista, int chave)
+{
+    ITEM *x;
+
+    if(!ORDENADA)
+    {
+        x = lista_busca_sequencial(lista, chave);
+    }
+    else
+    {
+        x = lista_busca_ordenada(lista, chave);
+    }
+    return x;
+}
+
+/*
+// Versão 1 do lista_remover
 boolean lista_remover(LISTA *lista, int chave)
 {
-    NO *aux = NULL;
-    NO *p = NULL;
+    NO *noAtual;
+    NO *noAnterior = NULL;
+    NO *noProximo = NULL;
 
-    if (lista != NULL)
+    noAtual = lista->inicio;
+    while(noAtual != NULL && item_get_chave(noAtual->item) !=  chave)
     {
-        p = lista->inicio;
+        noAnterior = noAtual;
+        noAtual = noAtual->proximo;
+    }
 
-        while (p != NULL && item_get_chave(p->item) != chave)
+    if(noAtual != NULL)
+    {
+        // Achou o nó a ser removido
+        if(noAtual == lista->inicio)
         {
-            aux = p;
-            p = p->proximo;
+            noAnterior = noAtual;
+            noAtual = noAtual->proximo;
+
+            lista->inicio = noAtual;
+
+            // Excluir o nó anterior
+            item_apagar(&noAnterior->item);
+            free(noAnterior);
+            noAnterior = NULL;
+            lista->tamanho--;
+            return TRUE;
         }
-
-        // chegamos no final da lista OU achamos o no a ser removido
-        if (p != NULL) // elemento esta na lista (p nao esta nulo, carac do fim)
+        else if(noAtual == lista->fim)
         {
-            if (p == lista->inicio)
-            {
-                lista->inicio = p->proximo;
-                p->proximo = NULL;
-            }
-            // esta no meio
-            else
-            {
-                aux->proximo = p->proximo;
-                p->proximo = NULL;
-            }
+            lista->fim = noAnterior;
 
-            if (p == lista->fim)
-            {
-                lista->fim = aux;
-            }
+            // Excluir o nó
+            item_apagar(&noAtual->item);
+            free(noAtual);
+            noAtual = NULL;
+            lista->tamanho--;
+            return TRUE;
+        }
+        else
+        {
+            // É um nó no meio da lista
+            noProximo = noAtual->proximo;
 
-            free(p);
+            noAnterior->proximo = noProximo;
+            item_apagar(&noAtual->item);
+            free(noAtual);
+            noAtual = NULL;
             lista->tamanho--;
             return TRUE;
         }
     }
-    return FALSE; // a lista nao existe ou nao encontramos o item
+    return FALSE;
 }
+*/
 
-// Inverte lista iterativamente
-LISTA *lista_inverter(LISTA *lista)
+// Versão 2 do lista_remover -> mais eficiente!
+boolean lista_remover(LISTA *lista, int chave)
 {
-    // podemos inverter uma lista se ela existe e nao eh vazia
-    if (lista == NULL || lista_vazia(lista))
+    NO *noAtual;
+    NO *noAnterior = NULL;
+    NO *noProximo = NULL;
+
+    noAtual = lista->inicio;
+    while(noAtual != NULL && item_get_chave(noAtual->item) !=  chave)
     {
-        return NULL;
+        noAnterior = noAtual;
+        noAtual = noAtual->proximo;
     }
 
-    // 
-    NO *atual = lista->inicio;
-    NO *anterior = NULL;
-    NO *prox = NULL;
-
-    // aplicando SWAPs
-    while (atual != NULL)
+    if(noAtual != NULL)
     {
-        prox = atual->proximo;
-        atual->proximo = anterior;
-
-        // colocando pointeros para frente
-        anterior = atual;
-        atual = prox;
-    }
-
-    // corrigindo as extremidades da lista
-    lista->inicio = anterior;
-    lista->fim = prox;
-
-    printf("Lista invertida com sucesso!\n");
-    
-    return lista;
-}
-
-void lista_imprimir(LISTA *lista)
-{
-    // Podemos imprimir uma lista nao vazia e que exista
-    NO *p = NULL;
-
-    if (lista != NULL && !lista_vazia(lista))
-    {
-        p = lista->inicio;
-        int i;
-
-        printf("Imprimindo a lista de tamanho %d!\n",lista->tamanho);
-        // percorremos os nos a partir do inicio da lista
-        for (i = 0; i < lista->tamanho; i++)
+        // Achou o nó a ser removido
+        if(noAtual == lista->inicio)
         {
-            printf("[%d]\n", item_get_chave(p->item));
-            p = p->proximo;
-        }
+            // É o primeiro nó da lista
 
-        return;
+            noAnterior = noAtual;
+            noAtual = noAtual->proximo;
+
+            lista->inicio = noAtual;
+
+            // Excluir o nó anterior (que era o atual)
+            item_apagar(&noAnterior->item);
+            free(noAnterior);
+            noAnterior = NULL;
+            lista->tamanho--;
+            return TRUE;
+        }
+        else
+        {
+            if(noAtual == lista->fim)
+            {
+                // É o último nó da lista
+
+                noAnterior->proximo = NULL;
+                lista->fim = noAnterior;
+            }
+            else
+            {
+                // É um nó no meio da lista
+
+                noProximo = noAtual->proximo;
+                noAnterior->proximo = noProximo;
+            }
+
+            // Excluir o nó
+            item_apagar(&noAtual->item);
+            free(noAtual);
+            noAtual = NULL;
+            lista->tamanho--;
+            return TRUE;
+        }
     }
-    printf(" A lista esta vazia ou NULA");
+    return FALSE;
 }
 
-void lista_apagar(LISTA **lista)
+boolean lista_verifica_no(NO *n1, NO *n2)
 {
-    NO *p = NULL;
-    p = (*lista)->inicio;
-
-    // podemos apagar uma lista nao nula
-    if (*lista == NULL)
-        return;
-
-    for (int i = 0; i < (*lista)->tamanho; i++)
+    // Os 2 nós tem que terminar juntos
+    if(n1 == NULL && n2 == NULL)
     {
-        item_apagar(&p->item);
-        p = p->proximo;
+        return TRUE;
     }
 
-    free(*lista);
-    *lista = NULL;
-    return;
+    // Verifica se as chaves de cada item são iguais
+    if(item_get_chave(n1->item) != item_get_chave(n2->item))
+    {
+        return FALSE;
+    }
+    else
+    {
+        // Chamada recursiva para o próximo nó
+        lista_verifica_no(n1->proximo, n2->proximo);
+    }
+    return TRUE;
+}
+
+boolean lista_verifica_igual(LISTA *lista1, LISTA *lista2)
+{
+    // Verificar se o tamanho das listas são iguais
+    if(lista1->tamanho != lista2->tamanho)
+    {
+        return FALSE;
+    }
+
+    NO *noAtual1 = lista1->inicio;
+    NO *noAtual2 = lista2->inicio;
+
+    // A função lista_verifica_no é uma função recursiva que verifica os nós a partir do primeiro nó
+    if(lista_verifica_no(noAtual1,noAtual2))
+    {
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
