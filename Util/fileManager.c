@@ -1,24 +1,13 @@
 #include "fileManager.h"
 
-boolean openReadFile(char *fileName, FILE *fp)
+boolean openReadFile(char *fileName, FILE *fp, char *mode)
 {
-	fp = fopen(fileName,"r");
-	if (fp!=NULL)
+	fp = fopen(fileName, mode);
+	if (fp != NULL)
 	{
 		return TRUE;
 	}
-	
-	return FALSE;
-}
 
-boolean openWriteFile(char *fileName, FILE *fp)
-{
-	fp = fopen(fileName,"w");
-	if (fp!=NULL)
-	{
-		return TRUE;
-	}
-	
 	return FALSE;
 }
 
