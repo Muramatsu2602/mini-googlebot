@@ -285,7 +285,7 @@ int main(int argc, char const *argv[])
     string = readline(fp);
     while (!feof(fp))
     {
-        if(!lista_inserir_fim(lista, item_criar(string)))
+        if(!lista_inserir_ordenado(lista, item_criar(string)))
         {
             printf("ERRO inserir lista!");
             return 0;
@@ -306,7 +306,8 @@ int main(int argc, char const *argv[])
         printf("2 - Remover um site;\n");
         printf("3 - Inserir Palavra-Chave um site;\n");
         printf("4 - Atualizar relevância um site;\n");
-        printf("5 - Sair.\n");
+        printf("5 - Imprimir a lista de Sites;\n");
+        printf("6 - Sair.\n");
         
         printf("Insira a Opção: ");
         scanf("%d",&opcao);
@@ -331,6 +332,10 @@ int main(int argc, char const *argv[])
                 break;
 
             case 5:
+                lista_imprimir(lista);
+                break;
+
+            case 6:
                 system("clear");
                 break;
         }
