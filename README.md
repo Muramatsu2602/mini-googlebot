@@ -10,7 +10,7 @@ This project was developed by the undergrad students of Computer Science course 
 
 * **11796451 - Pedro Kenzo Muramatsu Carmo** - [Muramatsu2602](https://github.com/Muramatsu2602)
 
-<!-- ## Compiler/Plataform Used
+<!-- ## Compiler/Plataform Used test 
 gcc .... -->
 
 ## Data Structure Usage and Implementation Justification
