@@ -217,7 +217,6 @@ void inserirPalavraChave(LISTA *lista)
     }
 
     printf("Digite a palavra-chave a ser adicionada: ");
-    getchar(); // Consome o \n do scanf anterior
     string = readline(stdin);
 
     if(strlen(string) > 50)
@@ -227,7 +226,6 @@ void inserirPalavraChave(LISTA *lista)
         free(string);
         return;
     }
-
 
     if(item_set_keyWords(lista_busca(lista, id), string)) 
     {

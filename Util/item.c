@@ -285,9 +285,9 @@ boolean item_set_keyWords(ITEM *item, char *word)
     }
 
     // Sets the limit of 10 keywords max
-    if ((item) != NULL && (item)->numKeyWords <= 10)
+    if ((item) != NULL && (item)->numKeyWords < 10)
     {
-        strcpy((item)->keyWords[(item)->numKeyWords], word); // FIX ME!
+        strcpy((item)->keyWords[(item)->numKeyWords-1], word);
         (item)->numKeyWords++;
         return TRUE;
     }
