@@ -14,7 +14,7 @@
 0014,Twitter,676,https://twitter.com/,discussions,trends,social,media,verified
 0018,Ubuntu,199,https://ubuntu.com/,cannonical,opensource,linux,programming,hacker
 0019,Kabum,833,https://www.kabum.com.br/,shopping,computers,hardware,gaming,practice
-0015,Moodle,0,https://moodle.org/,learning,EAD,tests,exams
+0022,Moodle,0,https://moodle.org/,learning,EAD,tests,exams
 0006,NHK,490,https://www3.nhk.or.jp/news/easy/,japanese,news,television
 0007,USP,999,https://www5.usp.br/,education,university,best,brazil
 0008,Samsung,787,https://www.samsung.com/br/,smartphone,korea,galaxy
