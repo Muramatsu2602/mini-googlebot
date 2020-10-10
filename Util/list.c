@@ -69,7 +69,7 @@ void lista_imprimir(LISTA *l)
     NO *noAtual = l->inicio;
     for (int i=0; i < l->tamanho; i++)
     {
-        printf("[%d]; ", item_get_chave(noAtual->item));
+        printf("[%d]; ", item_get_id(noAtual->item));
         noAtual = noAtual->proximo;
     }
     printf("\n");

@@ -85,10 +85,14 @@ ITEM *item_criar(char *string)
     {
         /* Setar o ID, nome, relevancia, link */
         if(!item_inserir_dados(string, item))
+        {
+            free(string);
             return NULL;
+        }
     }
 
     // it will return NULL if alocation doesnt work
+    free(string);
     return (item);
 }
 

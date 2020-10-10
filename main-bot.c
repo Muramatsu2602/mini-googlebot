@@ -2,6 +2,8 @@
 #include <stdlib.h>
 
 #include "Util/list.h"
+
+#define READLINE_BUFFER 16
 // #include "Util/fileManager.h"
 
 /*
@@ -44,8 +46,17 @@ char *readline(FILE *stream)
 
 int main(int argc, char const *argv[])
 {
-    LISTA *list;
+    char *string;
+    LISTA *lista = lista_criar();
+
     FILE *fp;
+    openReadFile("Data/googlebot.txt", fp, "r+");
+
+    while(!feof(fp))
+    {
+        string = readline(fp);
+        lista_inserir_ordenado(lista, item_criar(string));
+    }
 
     // lista_apagar(list);
     // fclose(fp);
