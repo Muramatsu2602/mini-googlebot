@@ -49,6 +49,18 @@ char *readline(FILE *stream)
 void inserirSite(LISTA *lista)
 {
     char *string;
+    /*char *aux;
+    printf("Digite o código do site a ser inserido: ");
+    aux = readline(stdin);
+
+    if(lista_busca(lista, atoi(aux)) != NULL)
+    {
+        printf("Um site com este ID já existe!!\n");
+        return;
+    }
+
+    string = (char *) malloc(strlen(aux)*sizeof(char));*/
+
     printf("Estrutura de inserção de site:\n");
     printf("Todos os campos são separados por vírgula sem espaço entre eles! Máximo de 10 palavras-chave");
     printf("<Código>,<Nome do Site>,<URL>,<palavra-chave 1>,<palavra-chave 2>,<palavra-chave n>\n\n");
@@ -106,7 +118,7 @@ void inserirPalavraChave(LISTA *lista)
         return;
     }
 
-    if(item_set_keyWords(lista_busca(lista, id), string))
+    if(item_set_keyWords(&lista_busca(lista, id), string))
     {
         printf("Palavra-Chave adicionada com sucesso!\n");
     }
@@ -135,19 +147,19 @@ void atualizarRelevancia(LISTA *lista)
     scanf("%d",&relevancia);
     printf("\n");
 
-    if(relevancia < 0 || relevancia > 1000)
+    /*if(relevancia < 0 || relevancia > 1000)
     {
         printf("Valor de relevância inválido!");
         return;
-    }
+    }*/
 
-    if(item_set_keyWords(lista_busca(lista, id), string))
+    if(item_set_relevance(&lista_busca(lista, id), relevancia))
     {
-        printf("Palavra-Chave adicionada com sucesso!\n");
+        printf("Relevancia atualizada com sucesso!\n");
     }
     else
     {
-        printf("Erro ao inserir nova Palavra-Chave!\n");
+        printf("Erro ao atualizar relevancia!\n");
     }
 }
 
