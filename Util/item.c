@@ -69,7 +69,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         item->keyWords[item->numKeyWords - 1] = (char *)malloc((1 + strlen(ptr)) * sizeof(char));
         strcpy(item->keyWords[item->numKeyWords - 1], ptr);
 
-        ptr = strtok(NULL, ",");
+        ptr = strtok(NULL,",");
     }
 
     return TRUE;

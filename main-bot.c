@@ -42,7 +42,7 @@ char *readline(FILE *stream)
         }
         string[pont] = (char)fgetc(stream);                                    // Recebe um dos caracteres da string
     } while (string[pont] != '\n' && string[pont++] != '\t' && !feof(stream)); // A condição de parada é achar o \n ou encontrar o marcador de fim de arquivo
-    string[pont - 1] = '\0';                                                   // Insere o terminador de string
+    string[pont] = '\0';                                                   // Insere o terminador de string
     return string;
 }
 
@@ -163,7 +163,7 @@ void inserirSite(LISTA *lista)
         aux = NULL;
     }
 
-    if(!lista_inserir_fim(lista, item_criar(string)))
+    if(!lista_inserir_ordenado(lista, item_criar(string)))
     {
         free(string);
         printf("Erro ao inserir novo Site!!\n\n");
