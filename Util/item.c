@@ -18,9 +18,9 @@ struct item_ // each item represents a website
 
 boolean item_inserir_dados(char *string, ITEM *item)
 {
-    char *ptr;
-    int id;
-    int relevance;
+    char *ptr = NULL;
+    int id = 0;
+    int relevance = 0;
     item->numKeyWords = 0;
 
     // 1 - Código

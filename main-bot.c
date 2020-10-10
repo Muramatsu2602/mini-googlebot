@@ -186,7 +186,7 @@ int main(int argc, char const *argv[])
     }
     free(string);
 
-    lista_imprimir(lista);
+    // lista_imprimir(lista);
 
     int opcao = 0;
     while(opcao != 5)
