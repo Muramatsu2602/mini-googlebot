@@ -298,7 +298,7 @@ int main(int argc, char const *argv[])
     // lista_imprimir(lista);
 
     int opcao = 0;
-    while(opcao != 5)
+    while(opcao != 6)
     {
         system("clear");
         printf("\nOpções:\n");
@@ -333,6 +333,9 @@ int main(int argc, char const *argv[])
 
             case 5:
                 lista_imprimir(lista);
+                printf("\n\nPressione qualquer botão para continuar...");
+                getchar();
+                getchar();
                 break;
 
             case 6:

@@ -145,7 +145,7 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
         // Agora que achou o nó que é maior do que ele, inserir ele antes
         // Ou se não achar nenhum maior, o novo nó será o ultimo da lista
 
-        if(noAtual == NULL)
+        /*if(noAtual == NULL)
         {
             lista->fim = pnovo;
             noAnterior->proximo = pnovo;
@@ -153,12 +153,12 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
             return TRUE;
         }
         else
-        {
+        {*/
             noAnterior->proximo = pnovo;
             pnovo->proximo = noAtual;
             lista->tamanho++;
             return TRUE;
-        }
+        //}
     }
 }
 
