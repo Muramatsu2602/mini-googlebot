@@ -107,56 +107,59 @@ LISTA *lista_criar(void)
 
 boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 {
-
-    if (lista == NULL || item == NULL)
+    if(lista == NULL || item == NULL)
         return FALSE;
 
-    NO *pnovo = (NO *)malloc(sizeof(NO));
+    NO *pnovo = (NO *) malloc(sizeof(NO));
     pnovo->item = item;
-    pnovo->proximo = NULL;
 
-    if (pnovo == NULL)
-        return FALSE;
-
-    if (lista_vazia(lista))
+    // Lista está vazia, o no atual será o primeiro dela
+    if(lista_vazia(lista))
     {
-        pnovo->proximo = lista->inicio;
         lista->inicio = pnovo;
+        pnovo->proximo = NULL;
         lista->tamanho++;
         return TRUE;
     }
     else
     {
-        if (item_get_id(pnovo->item) < item_get_id(lista->inicio->item))
-        {
+        NO *noAtual = lista->inicio;
+        NO *noAnterior = NULL;
 
-            NO *aux = lista->inicio;
+        while(item_get_id(pnovo->item) > item_get_id(noAtual->item) && noAtual->proximo != NULL)
+        {
+            // Enquanto o nó atual for maior que o anterior, colocar o Atual como o proximo
+            // e o anterior como o que era atual
+            noAnterior = noAtual;
+            noAtual = noAtual->proximo;
+        }
+
+
+        if(noAnterior == NULL)
+        {
             lista->inicio = pnovo;
-            lista->inicio->proximo = aux;
-            aux = NULL;
+            pnovo->proximo = noAtual;
             lista->tamanho++;
             return TRUE;
         }
+        // Agora que achou o nó que é maior do que ele, inserir ele antes
+        // Ou se não achar nenhum maior, o novo nó será o ultimo da lista
 
-        NO *noAnterior = lista->inicio;
-        NO *temp = lista->inicio->proximo;
-
-        while (temp != NULL && item_get_id(pnovo->item) >= item_get_id(temp->item))
+        if(noAtual == NULL)
         {
-            noAnterior = temp;
-            temp = temp->proximo;
-        }
-
-        if (temp == NULL)
+            lista->fim = pnovo;
             noAnterior->proximo = pnovo;
+            lista->tamanho++;
+            return TRUE;
+        }
         else
         {
-            pnovo->proximo = temp;
             noAnterior->proximo = pnovo;
+            pnovo->proximo = noAtual;
+            lista->tamanho++;
+            return TRUE;
         }
     }
-    lista->tamanho++;
-    return TRUE;
 }
 
 boolean lista_inserir_fim(LISTA *lista, ITEM *item)
