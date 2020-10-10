@@ -32,4 +32,4 @@ clean:
 
 zip:
 	@echo "Creating a zip folder with all important files!"
-	@zip -r proj1part1-bcc020.zip Util/*.c Util/*.h $(MAIN) Makefile
+	@zip -r proj1part1-bcc020.zip Data/*.txt Util/*.c Util/*.h $(MAIN) Makefile
