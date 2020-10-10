@@ -48,28 +48,129 @@ char *readline(FILE *stream)
 
 void inserirSite(LISTA *lista)
 {
-    char *string;
-    /*char *aux;
+    char *string = NULL;
+    char *aux = NULL;
     printf("Digite o código do site a ser inserido: ");
-    aux = readline(stdin);
+    int cod;
+    scanf("%d",&cod);
+    getchar(); // Consome o \n do scanf anterior
+    printf("Digitou: %d\n",cod);
 
-    if(lista_busca(lista, atoi(aux)) != NULL)
+    if(lista_busca(lista, cod) != NULL)
     {
-        printf("Um site com este ID já existe!!\n");
+        printf("Um site com este ID já existe!!\n\nPressione qualquer botão para continuar...");
+        getchar();
         return;
     }
 
-    string = (char *) malloc(strlen(aux)*sizeof(char));*/
+    string = (char *) malloc((sizeof(int)+1)*sizeof(char));
+    sprintf(string, "%d", cod);
 
-    printf("Estrutura de inserção de site:\n");
-    printf("Todos os campos são separados por vírgula sem espaço entre eles! Máximo de 10 palavras-chave");
-    printf("<Código>,<Nome do Site>,<URL>,<palavra-chave 1>,<palavra-chave 2>,<palavra-chave n>\n\n");
+    printf("Digite o nome do Site: ");
+    aux = readline(stdin);
 
-    printf("Digite a inserção do novo site conforme a estrutura: \n");
-    getchar(); // Consome o \n do scanf anterior
-    string = readline(stdin);
+    if(strlen(aux) > 50)
+    {
+        printf("O nome do Site deve conter até 50 caracteres!\n\nPressione qualquer botão para continuar...");
+        getchar();
+        free(aux);
+        aux = NULL;
+        free(string);
+        string = NULL;
+        return;
+    }
 
-    lista_inserir_fim(lista,item_criar(string));
+    string = (char *) realloc(string,(strlen(string)+strlen(aux)+2)*sizeof(char));
+    strcat(string,",");
+    strcat(string, aux);
+    free(aux);
+    aux = NULL;
+
+    printf("Digite o valor da relevância do site: ");
+    aux = readline(stdin);
+
+    if(atoi(aux) < 0 || atoi(aux) > 1000)
+    {
+        printf("O valor deve ser entre 0 e 1000!\n\nPressione qualquer botão para continuar...");
+        getchar();
+        free(aux);
+        aux = NULL;
+        free(string);
+        string = NULL;
+        return;
+    }
+
+    string = (char *) realloc(string,(strlen(string)+strlen(aux)+2)*sizeof(char));
+    strcat(string,",");
+    strcat(string, aux);
+    free(aux);
+    aux = NULL;
+
+    printf("Digite a URL do Site: ");
+    aux = readline(stdin);
+
+    if(strlen(aux) > 100)
+    {
+        printf("A URL do site pode conter até 100 caracteres!\n\nPressione qualquer botão para continuar...");
+        getchar();
+        free(aux);
+        aux = NULL;
+        free(string);
+        string = NULL;
+        return;
+    }
+
+    string = (char *) realloc(string,(strlen(string)+strlen(aux)+2)*sizeof(char));
+    strcat(string,",");
+    strcat(string, aux);
+    free(aux);
+    aux = NULL;
+
+    int num;
+    printf("Digite o número de palavars-chaves que deseja adicioanar: ");
+    scanf("%d",&num);
+    getchar(); // Consome o \n do scanf
+
+    if(num < 0 || num > 10)
+    {
+        printf("O número de palavras chave deve ser de 0 a 10!\n\nPressione qualquer botão para continuar...");
+        getchar();
+        free(string);
+        string = NULL;
+        return;
+    }
+
+    for(int i=0;i<num;i++)
+    {
+        printf("Digite a %d palavra-chave: ",i+1);
+        aux = readline(stdin);
+
+        if(strlen(aux) > 50)
+        {
+            printf("A palavra-chave pode conter até 100 caracteres!\n\nPressione qualquer botão para continuar...");
+            getchar();
+            free(aux);
+            aux = NULL;
+            free(string);
+            string = NULL;
+            return;
+        }   
+
+        string = (char *) realloc(string,(strlen(string)+strlen(aux)+2)*sizeof(char));
+        strcat(string,",");
+        strcat(string, aux);
+        free(aux);
+        aux = NULL;
+    }
+
+    if(!lista_inserir_fim(lista, item_criar(string)))
+    {
+        free(string);
+        printf("Erro ao inserir novo Site!!\n\n");
+    }
+
+    printf("Novo site de id: %d inserido com sucesso!\n\nPressione qualquer botão para continuar...",cod);
+    getchar();
     free(string);
 }
 
@@ -78,20 +179,24 @@ void removerSite(LISTA *lista)
     int id;
     printf("Digite o código do site que deseja remover: ");
     scanf("%d",&id);
+    getchar();
 
     if(lista_busca(lista, id) == NULL)
     {
-        printf("Site não encontrado na lista!!");
+        printf("Site não encontrado na lista!!\n\nPressione qualquer botão para continuar...");
+        getchar();
         return;
     }
 
     if(lista_remover(lista, id))
     {
-        printf("Site removido com sucesso!\n");
+        printf("Site removido com sucesso!\n\nPressione qualquer botão para continuar...");
+        getchar();
     }
     else
     {
-        printf("Erro ao remover Site!\n");
+        printf("Erro ao remover Site!\n\nPressione qualquer botão para continuar...");
+        getchar();
     }
 
 }
@@ -102,10 +207,12 @@ void inserirPalavraChave(LISTA *lista)
     char *string;
     printf("Digite o código do site que deseja inserir: ");
     scanf("%d",&id);
+    getchar();
 
     if(lista_busca(lista, id) == NULL)
     {
-        printf("Site não encontrado na lista!!");
+        printf("Site não encontrado na lista!!\n\nPressione qualquer botão para continuar...");
+        getchar();
         return;
     }
 
@@ -115,18 +222,22 @@ void inserirPalavraChave(LISTA *lista)
 
     if(strlen(string) > 50)
     {
-        printf("A palavra-chave excede o limite de 50 caracteres!\n");
+        printf("A palavra-chave excede o limite de 50 caracteres!\n\nPressione qualquer botão para continuar...");
+        getchar();
         free(string);
         return;
     }
 
+
     if(item_set_keyWords(lista_busca(lista, id), string)) 
     {
-        printf("Palavra-Chave adicionada com sucesso!\n");
+        printf("Palavra-Chave adicionada com sucesso!\n\nPressione qualquer botão para continuar...");
+        getchar();
     }
     else
     {
-        printf("Erro ao inserir nova Palavra-Chave!\n");
+        printf("Erro ao inserir nova Palavra-Chave!\n\nPressione qualquer botão para continuar...");
+        getchar();
     }
     free(string);
 }
@@ -140,22 +251,26 @@ void atualizarRelevancia(LISTA *lista)
 
     if(lista_busca(lista, id) == NULL)
     {
-        printf("Site não encontrado na lista!!");
+        printf("Site não encontrado na lista!!\n\nPressione qualquer botão para continuar...");
+        getchar();
         return;
     }
 
     printf("Alterando a relevancia do Site de id: %d\n\n",id);
     printf("Digite o novo valor de relevancia: ");
     scanf("%d",&relevancia);
+    getchar();
     printf("\n");
 
     if(item_set_relevance(lista_busca(lista, id), relevancia))
     {
-        printf("Relevancia atualizada com sucesso!\n");
+        printf("Relevancia atualizada com sucesso!\n\nPressione qualquer botão para continuar...");
+        getchar();
     }
     else
     {
-        printf("Erro ao atualizar relevancia!\n");
+        printf("Erro ao atualizar relevancia!\n\nPressione qualquer botão para continuar...");
+        getchar();
     }
 }
 
@@ -187,7 +302,8 @@ int main(int argc, char const *argv[])
     int opcao = 0;
     while(opcao != 5)
     {
-        printf("\n\nOpções:\n");
+        system("clear");
+        printf("\nOpções:\n");
         printf("1 - Inserir um site;\n");
         printf("2 - Remover um site;\n");
         printf("3 - Inserir Palavra-Chave um site;\n");
@@ -196,6 +312,7 @@ int main(int argc, char const *argv[])
         
         printf("Insira a Opção: ");
         scanf("%d",&opcao);
+        system("clear");
 
         switch(opcao)
         {
@@ -216,7 +333,8 @@ int main(int argc, char const *argv[])
                 break;
 
             case 5:
-                return 0;
+                system("clear");
+                break;
         }
     }
     
