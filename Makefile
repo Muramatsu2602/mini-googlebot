@@ -1,21 +1,21 @@
 OBJ1 = Util/item.c -o Util/item.o
-OBJ2 = Util/listadinamica.c -o Util/listadinamica.o
-MAIN=main-bot.c
+OBJ2 = Util/list.c -o Util/list.o
+MAIN= main-bot.c
 UTIL= Util/*.o
-BINARY=main
+BINARY= main
 
-CFLAGS = -Wall =Werror
+CFLAGS = -Werror
 VFLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes
-
-greetings:
-	@echo "Welcome to Part 1 of the Google MiniBot Project!"
-	@echo "Proudly made by: Giovanni Shibaki Camargo & Pedro Kenzo Muramatsu Carmo, from BCC 020 ICMC-USP"
 
 all:
 	@echo "Compiling all ./Util!"
 	@gcc $(CFLAGS) -c $(OBJ1) -I Util/
 	@gcc $(CFLAGS) -c $(OBJ2) -I Util/
 	@gcc $(CFLAGS) $(MAIN) $(UTIL) -o $(BINARY) -I Util/
+
+greetings:
+	@echo "Welcome to Part 1 of the Google MiniBot Project!"
+	@echo "Proudly made by: Giovanni Shibaki Camargo & Pedro Kenzo Muramatsu Carmo, from BCC 020 ICMC-USP"
 
 run:
 	@echo "Running the Application!"
@@ -27,7 +27,7 @@ valval: all
 
 clean:
 	@echo "Cleaning the binary file!"
-	@rm *.o
+	@rm Util/*.o
 	@rm $(BINARY)
 
 zip:

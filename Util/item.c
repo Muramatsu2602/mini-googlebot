@@ -23,52 +23,48 @@ boolean item_inserir_dados(char *string, ITEM *item)
     int relevance;
     item->numKeyWords = 0;
 
-
     // 1 - Código
-    ptr = strtok(string,",");
-    if(ptr == NULL)
+    ptr = strtok(string, ",");
+    if (ptr == NULL)
         return FALSE;
 
     id = atoi(ptr);
     item->id = id;
 
-
     // 2 - Nome
-    ptr = strtok(NULL,",");
-    if(ptr == NULL)
+    ptr = strtok(NULL, ",");
+    if (ptr == NULL)
         return FALSE;
 
-    strcpy(item->name,ptr);
-
+    strcpy(item->name, ptr);
 
     // 3 - Relevancia
-    ptr = strtok(string,",");
-    if(ptr == NULL)
+    ptr = strtok(string, ",");
+    if (ptr == NULL)
         return FALSE;
 
     relevance = atoi(ptr);
     item->relevance = relevance;
 
-
     // 4 - URL
-    ptr = strtok(NULL,",");
-    if(ptr == NULL)
+    ptr = strtok(NULL, ",");
+    if (ptr == NULL)
         return FALSE;
 
-    strcpy(item->mainUrl,ptr);
+    strcpy(item->mainUrl, ptr);
 
     // 5 - Palavras-Chave
     // Ler as palavras chave até que strtok retorne NULO
-    while(prt != NULL && item->numKeyWords<=10)
+    while (ptr != NULL && item->numKeyWords <= 10)
     {
         item->numKeyWords++;
-        ptr = strtok(NULL,",");
-        if(ptr == NULL)
+        ptr = strtok(NULL, ",");
+        if (ptr == NULL)
             return FALSE;
 
-        item->keyWords = (char **) realloc (item->numKeyWords*sizeof(char *));
-        item->keyWords[item->numKeyWords-1] = (char *) malloc (strlen(ptr)*sizeof(char));
-        strcpy(item->keyWords[item->numKeyWords-1], ptr);
+        item->keyWords = (char **)realloc(item->keyWords, item->numKeyWords * sizeof(char *));
+        item->keyWords[item->numKeyWords - 1] = (char *)malloc((1 + strlen(ptr)) * sizeof(char));
+        strcpy(item->keyWords[item->numKeyWords - 1], ptr);
     }
 
     return TRUE;
@@ -84,15 +80,13 @@ ITEM *item_criar(char *string)
     if (item != NULL)
     {
         /* Setar o ID, nome, relevancia, link */
-        if(!item_inserir_dados(string, item))
+        if (!item_inserir_dados(string, item))
         {
-            free(string);
             return NULL;
         }
     }
 
     // it will return NULL if alocation doesnt work
-    free(string);
     return (item);
 }
 
@@ -121,7 +115,7 @@ void item_imprimir(ITEM *item)
 int item_get_id(ITEM *item)
 {
     if (item != NULL)
-        return (item->chave);
+        return (item->id);
     else
     {
         printf("\nERROR: item_get_chave()\n");
@@ -136,19 +130,19 @@ boolean item_set_id(ITEM **item, int id)
     {
         // we use (*item) to force the system to first analyse the item content (pointer) before the -> operator
         (*item)->id = id;
-        
+
         return TRUE;
     }
     return FALSE;
 }
 
 // Permite a inserção de novas palavras-chave
-boolean item_set_keyWord(ITEM **item,char *word)
+boolean item_set_keyWord(ITEM **item, char *word)
 {
     // Controla o limite de 10 palavras-chave
-    if((*item) != NULL && (*item)->numKeyWords < 10)
+    if ((*item) != NULL && (*item)->numKeyWords < 10)
     {
-        strcpy(word,(*item)->keyWord[(*item)->numKeyWords]); // FIX ME!
+        strcpy(word, (*item)->keyWords[(*item)->numKeyWords]); // FIX ME!
         return TRUE;
     }
     return FALSE;
@@ -156,7 +150,7 @@ boolean item_set_keyWord(ITEM **item,char *word)
 
 boolean item_set_relevance(ITEM **item, int rel)
 {
-    if((*item) != NULL)
+    if ((*item) != NULL)
     {
         (*item)->relevance = rel;
         return TRUE;
@@ -166,9 +160,9 @@ boolean item_set_relevance(ITEM **item, int rel)
 
 int item_get_relevance(ITEM *item)
 {
-    if(item != NULL)
+    if (item != NULL)
     {
         return item->relevance;
     }
-    return ERROR; 
+    return ERROR;
 }

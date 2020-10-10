@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "lista.h"
+#include "list.h"
 
 typedef struct no_ NO;
 
@@ -112,7 +112,7 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item){
     }
     else
     {
-        if (item_get_chave(pnovo->item) < item_get_chave(lista->inicio->item)){
+        if (item_get_id(pnovo->item) < item_get_id(lista->inicio->item)){
 
             NO *aux = lista->inicio;
             lista->inicio = pnovo;
@@ -125,7 +125,7 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item){
         NO *noAnterior = lista->inicio;
         NO *temp = lista->inicio->proximo;
 
-        while (temp != NULL && item_get_chave(pnovo->item) >= item_get_chave(temp->item)){
+        while (temp != NULL && item_get_id(pnovo->item) >= item_get_id(temp->item)){
             noAnterior = temp;
             temp = temp->proximo;
         }
@@ -223,7 +223,7 @@ ITEM *lista_busca_sequencial(LISTA *lista, int chave)
         aux = lista->inicio;
         while(aux !=NULL)
         {
-            if(item_get_chave(aux->item) == chave)
+            if(item_get_id(aux->item) == chave)
             {
                 return aux->item;
             }
@@ -239,9 +239,9 @@ ITEM *lista_busca_ordenada(LISTA *lista, int chave)
     if(lista!=NULL)
     {
         aux = lista->inicio;
-        while(aux != NULL && item_get_chave(aux->item) <= chave)
+        while(aux != NULL && item_get_id(aux->item) <= chave)
         {
-            if(item_get_chave(aux->item) == chave)
+            if(item_get_id(aux->item) == chave)
             {
                 return aux->item;
             }
@@ -334,7 +334,7 @@ boolean lista_remover(LISTA *lista, int chave)
     NO *noProximo = NULL;
 
     noAtual = lista->inicio;
-    while(noAtual != NULL && item_get_chave(noAtual->item) !=  chave)
+    while(noAtual != NULL && item_get_id(noAtual->item) !=  chave)
     {
         noAnterior = noAtual;
         noAtual = noAtual->proximo;
@@ -396,7 +396,7 @@ boolean lista_verifica_no(NO *n1, NO *n2)
     }
 
     // Verifica se as chaves de cada item são iguais
-    if(item_get_chave(n1->item) != item_get_chave(n2->item))
+    if(item_get_id(n1->item) != item_get_id(n2->item))
     {
         return FALSE;
     }

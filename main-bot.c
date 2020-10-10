@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "Util/list.h"
 
@@ -16,15 +17,16 @@
     5. Sair: finalizar o programa.
 */
 
-boolean openReadFile(char *fileName, FILE *fp, char *mode)
+FILE *openReadFile(char *fileName, FILE *fp, char *mode)
 {
     fp = fopen(fileName, mode);
-    if (fp != NULL)
+    if (fp == NULL)
     {
-        return TRUE;
+        printf("ERRO NA ABERTURA DO ARQUIVO");
+        return NULL;
     }
 
-    return FALSE;
+    return fp;
 }
 
 // You can read file lines using this function
@@ -34,31 +36,36 @@ char *readline(FILE *stream)
     int pont = 0;
     do
     {
-        if (pont % READLINE_BUFFER == 0)
+        if (pont % READLINE_BUFFER == 0) // Se o ponteiro for divisivel pelo buffer ou é 0 é preciso alocar mais memória HEAP para receber a string
         {
             string = (char *)realloc(string, ((pont / READLINE_BUFFER) + 1) * READLINE_BUFFER);
         }
-        string[pont] = (char)fgetc(stream);
-    } while (string[pont++] != '\n' && !feof(stream));
-    string[pont - 1] = '\0';
+        string[pont] = (char)fgetc(stream);                                    // Recebe um dos caracteres da string
+    } while (string[pont] != '\n' && string[pont++] != '\t' && !feof(stream)); // A condição de parada é achar o \n ou encontrar o marcador de fim de arquivo
+    string[pont - 1] = '\0';                                                   // Insere o terminador de string
     return string;
 }
 
 int main(int argc, char const *argv[])
 {
-    char *string;
-    LISTA *lista = lista_criar();
+    char *string = NULL;
+    LISTA *lista = NULL;
+    FILE *fp = NULL;
 
-    FILE *fp;
-    openReadFile("Data/googlebot.txt", fp, "r+");
+    lista = lista_criar();
+    fp = openReadFile("Data/googlebot.txt", fp, "r+");
 
-    while(!feof(fp))
+    // Reading text from file
+    string = readline(fp);
+    while (!feof(fp))
     {
-        string = readline(fp);
         lista_inserir_ordenado(lista, item_criar(string));
+        free(string);
+        string = readline(fp);
     }
 
-    // lista_apagar(list);
-    // fclose(fp);
+    free(string);
+    lista_apagar(&lista);
+    fclose(fp);
     return 0;
 }
