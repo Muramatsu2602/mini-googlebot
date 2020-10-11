@@ -222,9 +222,9 @@ char **item_get_keyWords(ITEM *item)
 
 boolean item_set_id(ITEM *item, int id)
 {
-    if (id < 0)
+    if (id < 0 || id>9999)
     {
-        printf("ID cannot be negative!");
+        printf("ID range is 0-9999!");
         return FALSE;
     }
 
@@ -240,7 +240,7 @@ boolean item_set_id(ITEM *item, int id)
 
 boolean item_set_name(ITEM *item, char *name)
 {
-    if ((item) != NULL)
+    if ((item) != NULL && name!=NULL)
     {
         strcpy((item)->name, name);
         return TRUE;
@@ -268,7 +268,7 @@ boolean item_set_mainUrl(ITEM *item, char *url)
 {
     if (url == NULL || strlen(url) > 100)
     {
-        printf("50 characters max per keyword!\n");
+        printf("100 characters max for URL!\n");
         return FALSE;
     }
 
@@ -301,7 +301,7 @@ boolean item_set_keyWords(ITEM *item, char *word)
     // max 50carac na keyword
     if (strlen(word) > 50)
     {
-        printf("Limite de 50 caracteres para palavra-chave\n");
+        printf("5o character limit for each keyword\n");
         return FALSE;
     }
 
