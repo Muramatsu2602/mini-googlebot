@@ -4,7 +4,7 @@
 
 #include "Util/list.h"
 
-#define READLINE_BUFFER 16
+#define BUFFER 100
 // #include "Util/fileManager.h"
 
 FILE *openReadFile(char *fileName, FILE *fp, char *mode)
@@ -26,9 +26,9 @@ char *readline(FILE *stream)
     int pont = 0;
     do
     {
-        if (pont % READLINE_BUFFER == 0) // Se o ponteiro for divisivel pelo buffer ou é 0 é preciso alocar mais memória HEAP para receber a string
+        if (pont % BUFFER == 0) // Se o ponteiro for divisivel pelo buffer ou é 0 é preciso alocar mais memória HEAP para receber a string
         {
-            string = (char *)realloc(string, ((pont / READLINE_BUFFER) + 1) * READLINE_BUFFER);
+            string = (char *)realloc(string, ((pont / BUFFER) + 1) * BUFFER);
         }
         string[pont] = (char)fgetc(stream);                                    // Recebe um dos caracteres da string
     } while (string[pont] != '\n' && string[pont++] != '\t' && !feof(stream)); // A condição de parada é achar o \n ou encontrar o marcador de fim de arquivo
@@ -36,45 +36,75 @@ char *readline(FILE *stream)
     return string;
 }
 
-void inserirSite_2(LISTA *lista)
+boolean inserirSite(LISTA *lista)
 {
     ITEM *newsite = NULL;
+    char *text_aux = malloc(sizeof(char) * BUFFER);
     int aux = 0;
+    int n;
 
     newsite = item_criar();
 
     printf("Digite o código do site a ser inserido: ");
-    scanf("%d ", &aux);
-    item_set_id(newsite, aux);
+    scanf("%d", &aux);
+    if (lista_busca(lista, aux) != NULL)
+    {
+        printf("Codigo ja cadastrado!\n");
+        getchar();
+        return FALSE;
+    }
+    if (!item_set_id(newsite, aux))
+        return FALSE;
 
     printf("Digite o nome do Site: ");
-    item_set_name(newsite, readline(stdin));
+    scanf("%s", text_aux);
+    if (!item_set_name(newsite, text_aux))
+    {
+        free(text_aux);
+        return FALSE;
+    }
 
     printf("Digite o valor da relevância do site: ");
-    scanf("%d ", &aux);
-    item_set_relevance(newsite, aux);
+    scanf("%d", &aux);
+    if (!item_set_relevance(newsite, aux))
+        return FALSE;
 
     printf("Digite a URL do Site: ");
-    item_set_mainUrl(newsite, readline(stdin));
+    scanf("%s", text_aux);
+    if (!item_set_mainUrl(newsite, text_aux))
+    {
+        free(text_aux);
+        return FALSE;
+    }
 
     printf("Digite o número de palavras-chave que deseja adicionar: ");
     scanf("%d", &aux);
-    item_set_numKeyWords(newsite, aux);
+    if (!item_set_numKeyWords(newsite, aux))
+        return FALSE;
 
-    for (int i = 0; i < item_get_numKeyWords(newsite); i++)
+    n = item_get_numKeyWords(newsite);
+    for (int i = 0; i < n; i++)
     {
         printf("Digite a %d palavra-chave: ", i + 1);
-        item_set_keyWords(newsite,readline(stdin));
+        scanf("%s", text_aux);
+        if (!item_set_keyWords(newsite, text_aux))
+        {
+            free(text_aux);
+            return FALSE;
+        }
     }
 
     if (!lista_inserir_ordenado(lista, newsite))
     {
-        printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
-        getchar();
+        free(text_aux);
+        return FALSE;
     }
+
+    free(text_aux);
+    return TRUE;
 }
 
-void inserirSite(LISTA *lista)
+void inserirSite2(LISTA *lista)
 {
     char *string = NULL;
     char *aux = NULL;
@@ -192,7 +222,7 @@ void inserirSite(LISTA *lista)
         aux = NULL;
     }
 
-    if (!lista_inserir_ordenado(lista, item_criar(string)))
+    if (!lista_inserir_ordenado(lista, item_criar_CSV(string)))
     {
         free(string);
         printf("Erro ao inserir novo Site!!\n\n");
@@ -297,7 +327,7 @@ int main(int argc, char const *argv[])
     string = readline(fp);
     while (!feof(fp))
     {
-        if (!lista_inserir_ordenado(lista, item_criar(string)))
+        if (!lista_inserir_ordenado(lista, item_criar_CSV(string)))
         {
             printf("ERRO inserir lista!");
             return 0;
@@ -328,7 +358,12 @@ int main(int argc, char const *argv[])
         switch (opcao)
         {
         case 1:
-            inserirSite(lista);
+            if (!inserirSite(lista))
+            {
+                printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+                getchar();
+                getchar();
+            }
             break;
 
         case 2:

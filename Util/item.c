@@ -16,8 +16,22 @@ struct item_ // each item represents a website
     char **keyWords; //  Limit = 50 char per word
 };
 
+ITEM *item_criar(void)
+{
+    ITEM *item;
+
+    item = (ITEM *)malloc(sizeof(ITEM));
+
+    if (item == NULL){
+        printf("Erro ao alocar ITEM!\n");
+        return NULL;
+    }
+
+    return (item);
+}
+
 // formata string recebida e preenche um item
-boolean item_inserir_dados(char *string, ITEM *item)
+boolean item_set_CSV(char *string, ITEM *item)
 {
     char *ptr = NULL;
     item_set_keyWords(item, NULL);
@@ -76,7 +90,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
 }
 
 // cria item a partir de string em formato CSV
-ITEM *item_criar(char *string)
+ITEM *item_criar_CSV(char *string)
 {
     ITEM *item;
 
@@ -85,7 +99,7 @@ ITEM *item_criar(char *string)
     if (item != NULL)
     {
         /* Setar o ID, nome, relevancia, link */
-        if (!item_inserir_dados(string, item))
+        if (!item_set_CSV(string, item))
         {
             printf("ERRO ITEM_INSERIR_DADOS!");
             return NULL;
@@ -279,7 +293,7 @@ boolean item_set_keyWords(ITEM *item, char *word)
 
     // max 50carac na keyword
     if (strlen(word) > 50)
-    {   
+    {
         printf("Limite de 50 caracteres para palavra-chave\n");
         return FALSE;
     }
