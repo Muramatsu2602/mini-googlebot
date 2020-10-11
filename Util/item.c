@@ -22,7 +22,8 @@ ITEM *item_criar(void)
 
     item = (ITEM *)malloc(sizeof(ITEM));
 
-    if (item == NULL){
+    if (item == NULL)
+    {
         printf("Erro ao alocar ITEM!\n");
         return NULL;
     }
@@ -288,6 +289,7 @@ boolean item_set_keyWords(ITEM *item, char *word)
     if (word == NULL)
     {
         item->keyWords = NULL;
+        item->numKeyWords = 0;
         return FALSE;
     }
 
@@ -299,12 +301,14 @@ boolean item_set_keyWords(ITEM *item, char *word)
     }
 
     // Sets the limit of 10 keywords max
-    if ((item) != NULL && (item)->numKeyWords < 10)
+    if ( (item) != NULL && (item)->numKeyWords < 10)
     {
-        item->keyWords = (char **)realloc(item->keyWords, (item->numKeyWords + 1) * sizeof(char *));
-        item->keyWords[item->numKeyWords] = (char *)malloc((1 + strlen(word)) * sizeof(char));
-        strcpy(item->keyWords[item->numKeyWords], word);
         item->numKeyWords++;
+        
+        item->keyWords = (char **)realloc(item->keyWords, (item->numKeyWords) * sizeof(char *));
+        item->keyWords[item->numKeyWords - 1] = (char *)malloc((1 + strlen(word)) * sizeof(char));
+        strcpy(item->keyWords[item->numKeyWords - 1], word);
+
         return TRUE;
     }
     return FALSE;

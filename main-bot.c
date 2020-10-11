@@ -85,7 +85,7 @@ boolean inserirSite(LISTA *lista)
     n = item_get_numKeyWords(newsite);
     for (int i = 0; i < n; i++)
     {
-        printf("Digite a %d palavra-chave: ", i + 1);
+        printf("Digite a %d palavra-chave: ", 1 + i);
         scanf("%s", text_aux);
         if (!item_set_keyWords(newsite, text_aux))
         {
