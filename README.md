@@ -14,13 +14,15 @@ This project was developed by the undergrad students of Computer Science course 
 gcc .... -->
 
 ## Data Structure Usage and Implementation Justification
-We decided to utilized the concept of Simple Linked List to implement an ADT to store the websites. This data structures has been chosen given the following benefits:
+We decided to utilized the concept of **Simple Linked List** to implement an ADT to store the websites. This data structures has been chosen given the following benefits:
 
  * It offers a flexible storage (that depends on the system's dynammic memory), defined during runtime.
- * ...
+ * Allows Insertion in all positions of the list
 
 ## User Manual
-In the project's repository, there are two folders, along with the main .c file (called "main-bot.c"). In the **Data**, we can find the input file: **googlebot.txt** . Whereas in the **Util**, we can find all ".c" and ".h" files regarding the implementation of the chosen ADT and a auxiliary file called "fileManager". This last one is tasked with dealing with the input, thus not overloading the main file with too many functions.
+In the project's repository, there are two folders, along with the main .c file (called "main-bot.c"). In the **Data**, we can find the input file: **googlebot.txt** . Whereas in the **Util**, we can find all ".c" and ".h" files regarding the implementation of the chosen ADT.
+
+ <!-- and a auxiliary file called "fileManager". This last one is tasked with dealing with the input, thus not overloading the main file with too many functions. -->
 
 In order to compile and execute the program, you should use the following Makefile commands:
 ```
