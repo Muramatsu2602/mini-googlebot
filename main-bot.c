@@ -36,6 +36,11 @@ char *readline(FILE *stream)
     return string;
 }
 
+void inserirSite_2(LISTA *lista)
+{
+    ITEM * newsite;
+}
+
 void inserirSite(LISTA *lista)
 {
     char *string = NULL;
@@ -59,7 +64,7 @@ void inserirSite(LISTA *lista)
 
     printf("Digite o nome do Site: ");
     aux = readline(stdin);
-    
+
     if (strlen(aux) > 50)
     {
         printf("O nome do Site deve conter até 50 caracteres!\n\nPressione qualquer botão para continuar...");

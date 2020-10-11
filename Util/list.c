@@ -73,8 +73,11 @@ void lista_imprimir(LISTA *l)
 
     for (int i = 0; i < l->tamanho; i++)
     {
-        printf("ID:%d\n", item_get_id(noAtual->item));
-        printf("%s\t%04d\t%s\t%d\t", item_get_name(noAtual->item), item_get_relevance(noAtual->item), item_get_mainUrl(noAtual->item), item_get_numKeyWords(noAtual->item));
+        printf("[%04d]\t", item_get_id(noAtual->item));
+        printf("%s\t\t", item_get_name(noAtual->item));
+        printf("%04d\t", item_get_relevance(noAtual->item));
+        printf("%s\t", item_get_mainUrl(noAtual->item));
+        printf("%d\t", item_get_numKeyWords(noAtual->item));
 
         aux = item_get_keyWords(noAtual->item);
         for (int j = 0; j < item_get_numKeyWords(noAtual->item); j++)
@@ -85,7 +88,6 @@ void lista_imprimir(LISTA *l)
 
         noAtual = noAtual->proximo;
     }
-    printf("\n");
 
     return;
 }
@@ -107,15 +109,15 @@ LISTA *lista_criar(void)
 
 boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 {
-    if(lista == NULL || item == NULL)
+    if (lista == NULL || item == NULL)
         return FALSE;
 
-    NO *pnovo = (NO *) malloc(sizeof(NO));
+    NO *pnovo = (NO *)malloc(sizeof(NO));
     pnovo->item = item;
 
     NO *noAtual;
 
-    if(lista->inicio == NULL || item_get_id(lista->inicio->item) >= item_get_id(pnovo->item))
+    if (lista->inicio == NULL || item_get_id(lista->inicio->item) >= item_get_id(pnovo->item))
     {
         pnovo->proximo = lista->inicio;
         lista->inicio = pnovo;
@@ -124,7 +126,7 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
     {
         noAtual = lista->inicio;
 
-        while(noAtual->proximo != NULL && item_get_id(noAtual->proximo->item) < item_get_id(pnovo->item))
+        while (noAtual->proximo != NULL && item_get_id(noAtual->proximo->item) < item_get_id(pnovo->item))
         {
             noAtual = noAtual->proximo;
         }
@@ -137,7 +139,7 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 
 boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 {
-    if(item == NULL)
+    if (item == NULL)
     {
         printf("item enviado é nulo!");
         return FALSE;
@@ -271,7 +273,6 @@ ITEM *lista_busca(LISTA *lista, int chave)
     return x;
 }
 
-// Versão 2 do lista_remover -> mais eficiente!
 boolean lista_remover(LISTA *lista, int chave)
 {
     NO *noAtual;
