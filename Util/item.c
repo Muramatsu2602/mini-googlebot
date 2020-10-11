@@ -69,7 +69,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
         item->keyWords[item->numKeyWords - 1] = (char *)malloc((1 + strlen(ptr)) * sizeof(char));
         strcpy(item->keyWords[item->numKeyWords - 1], ptr);
 
-        ptr = strtok(NULL,",");
+        ptr = strtok(NULL, ",");
     }
     return TRUE;
 }
@@ -278,15 +278,15 @@ boolean item_set_keyWords(ITEM *item, char *word)
 
     // max 50carac na keyword
     if (strlen(word) > 50)
-    {
-        printf("50 characters max per keyword!\n");
+    {   
+        printf("Limite de 50 caracteres para palavra-chave\n");
         return FALSE;
     }
 
     // Sets the limit of 10 keywords max
     if ((item) != NULL && (item)->numKeyWords < 10)
     {
-        item->keyWords = (char **)realloc(item->keyWords, (item->numKeyWords+1) * sizeof(char *));
+        item->keyWords = (char **)realloc(item->keyWords, (item->numKeyWords + 1) * sizeof(char *));
         item->keyWords[item->numKeyWords] = (char *)malloc((1 + strlen(word)) * sizeof(char));
         strcpy(item->keyWords[item->numKeyWords], word);
         item->numKeyWords++;
