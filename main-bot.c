@@ -5,7 +5,6 @@
 #include "Util/list.h"
 
 #define BUFFER 100
-// #include "Util/fileManager.h"
 
 FILE *openReadFile(char *fileName, FILE *fp, char *mode)
 {
@@ -105,135 +104,6 @@ boolean inserirSite(LISTA *lista)
     return TRUE;
 }
 
-void inserirSite2(LISTA *lista)
-{
-    char *string = NULL;
-    char *aux = NULL;
-    int cod = 0;
-
-    printf("Digite o código do site a ser inserido: ");
-    scanf("%d", &cod);
-    getchar(); // Consome o \n do scanf anterior
-    printf("Digitou: %d\n", cod);
-
-    if (lista_busca(lista, cod) != NULL)
-    {
-        printf("Um site com este ID já existe!!\n\nPressione qualquer botão para continuar...");
-        getchar();
-        return;
-    }
-
-    string = (char *)malloc((sizeof(int) + 1) * sizeof(char));
-    sprintf(string, "%d", cod);
-
-    printf("Digite o nome do Site: ");
-    aux = readline(stdin);
-
-    if (strlen(aux) > 50)
-    {
-        printf("O nome do Site deve conter até 50 caracteres!\n\nPressione qualquer botão para continuar...");
-        getchar();
-        free(aux);
-        aux = NULL;
-        free(string);
-        string = NULL;
-        return;
-    }
-
-    string = (char *)realloc(string, (strlen(string) + strlen(aux) + 2) * sizeof(char));
-    strcat(string, ",");
-    strcat(string, aux);
-    free(aux);
-    aux = NULL;
-
-    printf("Digite o valor da relevância do site: ");
-    aux = readline(stdin);
-
-    if (atoi(aux) < 0 || atoi(aux) > 1000)
-    {
-        printf("O valor deve ser entre 0 e 1000!\n\nPressione qualquer botão para continuar...");
-        getchar();
-        free(aux);
-        aux = NULL;
-        free(string);
-        string = NULL;
-        return;
-    }
-
-    string = (char *)realloc(string, (strlen(string) + strlen(aux) + 2) * sizeof(char));
-    strcat(string, ",");
-    strcat(string, aux);
-    free(aux);
-    aux = NULL;
-
-    printf("Digite a URL do Site: ");
-    aux = readline(stdin);
-
-    if (strlen(aux) > 100)
-    {
-        printf("A URL do site pode conter até 100 caracteres!\n\nPressione qualquer botão para continuar...");
-        getchar();
-        free(aux);
-        aux = NULL;
-        free(string);
-        string = NULL;
-        return;
-    }
-
-    string = (char *)realloc(string, (strlen(string) + strlen(aux) + 2) * sizeof(char));
-    strcat(string, ",");
-    strcat(string, aux);
-    free(aux);
-    aux = NULL;
-
-    int num;
-    printf("Digite o número de palavars-chaves que deseja adicioanar: ");
-    scanf("%d", &num);
-    getchar(); // Consome o \n do scanf
-
-    if (num < 0 || num > 10)
-    {
-        printf("O número de palavras chave deve ser de 0 a 10!\n\nPressione qualquer botão para continuar...");
-        getchar();
-        free(string);
-        string = NULL;
-        return;
-    }
-
-    for (int i = 0; i < num; i++)
-    {
-        printf("Digite a %d palavra-chave: ", i + 1);
-        aux = readline(stdin);
-
-        if (strlen(aux) > 50)
-        {
-            printf("A palavra-chave pode conter até 100 caracteres!\n\nPressione qualquer botão para continuar...");
-            getchar();
-            free(aux);
-            aux = NULL;
-            free(string);
-            string = NULL;
-            return;
-        }
-
-        string = (char *)realloc(string, (strlen(string) + strlen(aux) + 2) * sizeof(char));
-        strcat(string, ",");
-        strcat(string, aux);
-        free(aux);
-        aux = NULL;
-    }
-
-    if (!lista_inserir_ordenado(lista, item_criar_CSV(string)))
-    {
-        free(string);
-        printf("Erro ao inserir novo Site!!\n\n");
-    }
-
-    printf("Novo site de id: %d inserido com sucesso!\n\nPressione qualquer botão para continuar...", cod);
-    getchar();
-    free(string);
-}
-
 void removerSite(LISTA *lista)
 {
     int id;
@@ -320,6 +190,7 @@ int main(int argc, char const *argv[])
     char *string = NULL;
     LISTA *lista = NULL;
     FILE *fp = NULL;
+    int opcao = 0;
 
     lista = lista_criar();
     fp = openReadFile("Data/googlebot.txt", fp, "r+");
@@ -336,11 +207,7 @@ int main(int argc, char const *argv[])
         free(string);
         string = readline(fp);
     }
-    free(string);
 
-    // lista_imprimir(lista);
-
-    int opcao = 0;
     while (opcao != 6)
     {
         system("clear");
@@ -358,40 +225,41 @@ int main(int argc, char const *argv[])
 
         switch (opcao)
         {
-        case 1:
-            if (!inserirSite(lista))
-            {
-                printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+            case 1:
+                if (!inserirSite(lista))
+                {
+                    printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+                    getchar();
+                    getchar();
+                }
+                break;
+
+            case 2:
+                removerSite(lista);
+                break;
+
+            case 3:
+                inserirPalavraChave(lista);
+                break;
+
+            case 4:
+                atualizarRelevancia(lista);
+                break;
+
+            case 5:
+                lista_imprimir(lista);
+                printf("\n\nPressione qualquer botão para continuar...");
                 getchar();
                 getchar();
-            }
-            break;
+                break;
 
-        case 2:
-            removerSite(lista);
-            break;
-
-        case 3:
-            inserirPalavraChave(lista);
-            break;
-
-        case 4:
-            atualizarRelevancia(lista);
-            break;
-
-        case 5:
-            lista_imprimir(lista);
-            printf("\n\nPressione qualquer botão para continuar...");
-            getchar();
-            getchar();
-            break;
-
-        case 6:
-            system("clear");
-            break;
+            case 6:
+                system("clear");
+                break;
         }
     }
 
+    free(string);
     lista_apagar(&lista);
     fclose(fp);
     return 0;
