@@ -78,10 +78,10 @@ boolean inserirSite(LISTA *lista)
     }
 
     printf("Digite o número de palavras-chave que deseja adicionar: ");
-    scanf("%d", &aux);
+    scanf("%d",&aux);
 
-    n = item_get_numKeyWords(newsite);
-    for (int i = 0; i < n; i++)
+    item_set_keyWords(newsite, NULL);
+    for (int i = 0; i < aux; i++)
     {
         printf("Digite a %d palavra-chave: ", 1 + i);
         scanf("%s", text_aux);
@@ -98,7 +98,6 @@ boolean inserirSite(LISTA *lista)
         return FALSE;
     }
 
-    free(text_aux);
     return TRUE;
 }
 
