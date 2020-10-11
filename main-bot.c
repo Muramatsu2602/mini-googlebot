@@ -43,7 +43,7 @@ char *readline(FILE *stream)
 boolean inserirSite(LISTA *lista)
 {
     ITEM *newsite = NULL;
-    char *text_aux = malloc(sizeof(char) * BUFFER);
+    char *text_aux;
     int aux = 0;
     int n;
 
@@ -54,19 +54,20 @@ boolean inserirSite(LISTA *lista)
     if (lista_busca(lista, aux) != NULL)
     {
         printf("Codigo ja cadastrado!\n");
-        getchar();
         return FALSE;
     }
     if (!item_set_id(newsite, aux))
         return FALSE;
 
     printf("Digite o nome do Site: ");
-    scanf("%s", text_aux);
+    getchar(); // Consome o \n do scanf anterior
+    text_aux = readline(stdin);
     if (!item_set_name(newsite, text_aux))
     {
         free(text_aux);
         return FALSE;
     }
+    free(text_aux);
 
     printf("Digite o valor da relevância do site: ");
     scanf("%d", &aux);
@@ -74,36 +75,38 @@ boolean inserirSite(LISTA *lista)
         return FALSE;
 
     printf("Digite a URL do Site: ");
-    scanf("%s", text_aux);
+    getchar(); // Consome o \n do scanf anterior
+    text_aux = readline(stdin);
     if (!item_set_mainUrl(newsite, text_aux))
     {
         free(text_aux);
         return FALSE;
     }
+    free(text_aux);
 
     printf("Digite o número de palavras-chave que deseja adicionar: ");
     scanf("%d", &aux);
 
     item_set_keyWords(newsite, NULL);
+    getchar(); // Consome o \n do scanf anterior
     for (int i = 0; i < aux; i++)
     {
         printf("Digite a %d palavra-chave: ", 1 + i);
-        scanf("%s", text_aux);
+        text_aux = readline(stdin);
         if (!item_set_keyWords(newsite, text_aux))
         {
             free(text_aux);
             return FALSE;
         }
+        free(text_aux);
     }
 
     if (!lista_inserir_ordenado(lista, newsite))
     {
-        free(text_aux);
         return FALSE;
     }
 
     printf("Novo site de id: %d inserido com sucesso!\n\nPressione qualquer botão para continuar...", item_get_id(newsite));
-    getchar();
     getchar();
 
     return TRUE;
