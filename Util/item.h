@@ -1,5 +1,6 @@
 /*
-    This is our interface (visible to the user) where we define the functions of our ADT
+    11796444 - Giovanni Shibaki Camargo
+    11796451 - Pedro Kenzo Muramatsu Carmo
 */
 #ifndef ITEM_H
 #define ITEM_H

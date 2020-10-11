@@ -1,3 +1,8 @@
+/*
+    11796444 - Giovanni Shibaki Camargo
+    11796451 - Pedro Kenzo Muramatsu Carmo
+*/
+
 #ifndef _LISTA_H
 #define _LISTA_H
 
