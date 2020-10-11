@@ -16,8 +16,12 @@ The chosen compiler was GCC (Gnu C Compiler), using the flag -std=c99. Each prog
 ## About the Data Structure Chosen
 We decided to utilized the concept of **Simple Linked List** to implement an ADT to store the websites. This data structures has been chosen given the following benefits:
 
- * It offers a flexible storage (that depends on the system's dynammic memory), defined during runtime.
- * Allows Insertion in all positions of the listm
+ * It offers a flexible storage (that depends on the system's dynammic memory), defined during runtime;
+ * Allows Insertion and Deletion of items in all positions of the list;
+ * Easy vizualization of the state of a linked list, allowing to easily draw that state and think through the code;
+ * Easy to build specific functions for different problems and aplications.
+
+
 
 ## User Manual
 In the project's repository, there are two folders, along with the main .c file (called "main-bot.c"). In the **Data**, we can find the input file: **googlebot.txt** . Whereas in the **Util**, we can find all ".c" and ".h" files regarding the implementation of the chosen ADT.
