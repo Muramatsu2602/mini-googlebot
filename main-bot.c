@@ -38,7 +38,40 @@ char *readline(FILE *stream)
 
 void inserirSite_2(LISTA *lista)
 {
-    ITEM * newsite;
+    ITEM *newsite = NULL;
+    int aux = 0;
+
+    newsite = item_criar();
+
+    printf("Digite o código do site a ser inserido: ");
+    scanf("%d ", &aux);
+    item_set_id(newsite, aux);
+
+    printf("Digite o nome do Site: ");
+    item_set_name(newsite, readline(stdin));
+
+    printf("Digite o valor da relevância do site: ");
+    scanf("%d ", &aux);
+    item_set_relevance(newsite, aux);
+
+    printf("Digite a URL do Site: ");
+    item_set_mainUrl(newsite, readline(stdin));
+
+    printf("Digite o número de palavras-chave que deseja adicionar: ");
+    scanf("%d", &aux);
+    item_set_numKeyWords(newsite, aux);
+
+    for (int i = 0; i < item_get_numKeyWords(newsite); i++)
+    {
+        printf("Digite a %d palavra-chave: ", i + 1);
+        item_set_keyWords(newsite,readline(stdin));
+    }
+
+    if (!lista_inserir_ordenado(lista, newsite))
+    {
+        printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+        getchar();
+    }
 }
 
 void inserirSite(LISTA *lista)

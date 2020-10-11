@@ -16,6 +16,7 @@ struct item_ // each item represents a website
     char **keyWords; //  Limit = 50 char per word
 };
 
+// formata string recebida e preenche um item
 boolean item_inserir_dados(char *string, ITEM *item)
 {
     char *ptr = NULL;
@@ -74,7 +75,7 @@ boolean item_inserir_dados(char *string, ITEM *item)
     return TRUE;
 }
 
-// A função recebe a string com todos os dados e chama uma função auxiliar para separar essa string nos devidos campos
+// cria item a partir de string em formato CSV
 ITEM *item_criar(char *string)
 {
     ITEM *item;
