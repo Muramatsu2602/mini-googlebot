@@ -11,9 +11,9 @@ This project was developed by the undergrad students of Computer Science course 
 * **11796451 - Pedro Kenzo Muramatsu Carmo** - [Muramatsu2602](https://github.com/Muramatsu2602)
 
 ## Compiler/Plataform Used test 
-The chosen compiler was GCC (Gnu C Compiler), using the flag -std=c99.
+The chosen compiler was GCC (Gnu C Compiler), using the flag -std=c99. Each programmer used a distinct text editor, both agreed upon using a GitHub repository to store the project's source-code.
 
-## Data Structure Usage and Implementation Justification
+## About the Data Structure Chosen
 We decided to utilized the concept of **Simple Linked List** to implement an ADT to store the websites. This data structures has been chosen given the following benefits:
 
  * It offers a flexible storage (that depends on the system's dynammic memory), defined during runtime.
@@ -39,14 +39,15 @@ Opções:
 6 - Sair.
 Insira a Opção: 
 ```
+Choose any of the shown options and select 6 to exit the application. Enjoy!
+
+## About each Googlebot Function
 Heres what each option does and its implementation:
 
 ### 1 - Insert a website
 There are two main ways of inserting a website in this program: one reads a string in CSV format (that comes from a .txt file), extracts the data and creates an ITEM; the other reads keyboard input and creates the ITEM.
 
 The second function, which is called when option 1 is selected, tests each input using SETTER functions, thus creating a ITEM (website). This same item is then sent to the **lista_inserir_ordenado** function, which inserts a new ITEM to the list in a ordered fashion.
-
-
 
 ### 2 - Remove a website
 Reads an ID whose ITEM the user wants to delete from the list. If that ID exists, the **lista_remover** function is called. This function traverses through the ordered list, finds the correct spot and then proceeds to update the nodes that were adjacent to the deleted node.
