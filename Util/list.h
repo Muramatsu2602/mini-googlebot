@@ -22,6 +22,8 @@
 	void lista_apagar(LISTA **lista);
 	boolean lista_remover(LISTA *lista, int chave);
 	ITEM* lista_busca(LISTA *lista, int chave); // Busca o item de chave X e retorna esse item
+	LISTA *lista_busca_keyword(LISTA *lista, char *keyword);
+
 
 	int lista_tamanho(LISTA *lista);
 	boolean lista_vazia(LISTA *lista);

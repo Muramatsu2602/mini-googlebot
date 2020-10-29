@@ -278,6 +278,14 @@ ITEM *lista_busca(LISTA *lista, int chave)
     return x;
 }
 
+LISTA *lista_busca_keyword(LISTA *lista, char *keyword)
+{
+    if(lista!=NULL && !(lista_vazia(lista)))
+        return NULL;
+
+    
+}
+
 boolean lista_remover(LISTA *lista, int chave)
 {
     NO *noAtual;

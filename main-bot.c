@@ -193,6 +193,23 @@ void atualizarRelevancia(LISTA *lista)
     getchar();
 }
 
+void buscarPorKeyword(LISTA *lista)
+{
+    char *keyword = NULL;
+
+    printf("insira a palavra-chave desejada: ");
+    keyword = readline(stdin);
+
+    // ou melhor chamar lista_imprimir no main dps dessa func retornar uma lista?
+    lista_imprimir(lista_busca_keyword(lista, keyword));
+
+    free(keyword);
+
+    printf("\n\nPressione qualquer botão para continuar...");
+    getchar();
+    getchar();
+}
+
 int main(int argc, char const *argv[])
 {
     char *string = NULL;
@@ -216,7 +233,7 @@ int main(int argc, char const *argv[])
         string = readline(fp);
     }
 
-    while (opcao != 6)
+    while (opcao != 8)
     {
         system("clear");
         printf("\nOpções:\n");
@@ -233,37 +250,41 @@ int main(int argc, char const *argv[])
 
         switch (opcao)
         {
-            case 1:
-                if (!inserirSite(lista))
-                {
-                    printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
-                    getchar();
-                    getchar();
-                }
-                break;
-
-            case 2:
-                removerSite(lista);
-                break;
-
-            case 3:
-                inserirPalavraChave(lista);
-                break;
-
-            case 4:
-                atualizarRelevancia(lista);
-                break;
-
-            case 5:
-                lista_imprimir(lista);
-                printf("\n\nPressione qualquer botão para continuar...");
+        case 1:
+            if (!inserirSite(lista))
+            {
+                printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
                 getchar();
                 getchar();
-                break;
+            }
+            break;
 
-            case 6:
-                system("clear");
-                break;
+        case 2:
+            removerSite(lista);
+            break;
+
+        case 3:
+            inserirPalavraChave(lista);
+            break;
+
+        case 4:
+            atualizarRelevancia(lista);
+            break;
+
+        case 5:
+            lista_imprimir(lista);
+            printf("\n\nPressione qualquer botão para continuar...");
+            getchar();
+            getchar();
+            break;
+        case 6:
+            buscarPorKeyword(lista);
+            break;
+        case 7:
+            // Sugestão de sites
+        case 8:
+            system("clear");
+            break;
         }
     }
 
