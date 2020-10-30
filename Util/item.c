@@ -223,8 +223,6 @@ ITEM *item_copy(ITEM *source)
         return NULL;
 
     ITEM *destiny = NULL;
-    char **aux = NULL;
-
     destiny = item_criar();
 
     // copying content from source to destiny items

@@ -54,7 +54,7 @@ boolean lista_vazia(LISTA *lista)
     Verifica se a lista está cheia. Retorna TRUE em caso positivo e FALSE
     caso contrário
 */
-boolean lista_cheia(LISTA *lista)
+boolean lista_cheia()
 {
     // Verifica se consegue criar outro nó, senão a lista está cheia
     NO *no = (NO *)malloc(sizeof(NO));
@@ -205,7 +205,7 @@ boolean lista_inserir_fim(LISTA *lista, ITEM *item)
         printf("item enviado é nulo!");
         return FALSE;
     }
-    if ((!lista_cheia(lista)) && (lista != NULL))
+    if ((!lista_cheia()) && (lista != NULL))
     {
         NO *pnovo = (NO *)malloc(sizeof(NO));
         // Testar se a lista está vazia

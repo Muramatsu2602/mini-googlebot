@@ -43,9 +43,8 @@ char *readline(FILE *stream)
 boolean inserirSite(LISTA *lista)
 {
     ITEM *newsite = NULL;
-    char *text_aux;
+    char *text_aux = NULL;
     int aux = 0;
-    int n;
 
     newsite = item_criar();
 
@@ -238,7 +237,7 @@ void sugerirSites(LISTA *lista)
     getchar();
 }
 
-int main(int argc, char const *argv[])
+int main(void)
 {
     char *string = NULL;
     LISTA *lista = NULL;
@@ -312,7 +311,7 @@ int main(int argc, char const *argv[])
             break;
         case 7:
             sugerirSites(lista);
-            // Sugestão de sites
+            break;
         case 8:
             system("clear");
             break;
