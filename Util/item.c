@@ -218,11 +218,18 @@ char **item_get_keyWords(ITEM *item)
     return NULL;
 }
 
+ITEM *item_copy(ITEM *source)
+{
+   ITEM *destiny = NULL;
+
+   return destiny;
+}
+
 // SETTERS
 
 boolean item_set_id(ITEM *item, int id)
 {
-    if (id < 0 || id>9999)
+    if (id < 0 || id > 9999)
     {
         printf("ID range is 0-9999!");
         return FALSE;
@@ -240,7 +247,7 @@ boolean item_set_id(ITEM *item, int id)
 
 boolean item_set_name(ITEM *item, char *name)
 {
-    if ((item) != NULL && name!=NULL)
+    if ((item) != NULL && name != NULL)
     {
         strcpy((item)->name, name);
         return TRUE;
@@ -306,10 +313,10 @@ boolean item_set_keyWords(ITEM *item, char *word)
     }
 
     // Sets the limit of 10 keywords max
-    if ( (item) != NULL && (item)->numKeyWords < 10)
+    if ((item) != NULL && (item)->numKeyWords < 10)
     {
         item->numKeyWords++;
-        
+
         item->keyWords = (char **)realloc(item->keyWords, (item->numKeyWords) * sizeof(char *));
         item->keyWords[item->numKeyWords - 1] = (char *)malloc((1 + strlen(word)) * sizeof(char));
         strcpy(item->keyWords[item->numKeyWords - 1], word);

@@ -102,7 +102,7 @@ void lista_imprimir_short(LISTA *l)
 {
     NO *noAtual = l->inicio;
 
-    printf("NAME\tURL\n");
+    printf("\nNAME\tURL\n");
     for (int i = 0; i < lista_tamanho(l); i++)
     {
         printf("%s\t", item_get_name(noAtual->item));
@@ -332,6 +332,7 @@ LISTA *lista_busca_keyword(LISTA *lista, char *keyword)
 
     LISTA *key_list = NULL;
     NO *aux;
+    ITEM *item;
     char **mat = NULL;
 
     key_list = lista_criar();
@@ -349,6 +350,7 @@ LISTA *lista_busca_keyword(LISTA *lista, char *keyword)
             {
                 if (strcmp(mat[i], keyword) == 0)
                 {
+
                     lista_inserir_by_relevance(key_list, aux->item);
                     break;
                 }

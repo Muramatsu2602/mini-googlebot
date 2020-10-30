@@ -22,6 +22,8 @@
 
     boolean item_apagar(ITEM **item);                 
     void item_imprimir(ITEM *item);
+    ITEM *item_copy(ITEM *source); // creates copy of item's contents to a new item
+
 
     // GETTERS
     int item_get_id(ITEM *item);
