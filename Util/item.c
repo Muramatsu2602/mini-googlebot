@@ -126,7 +126,7 @@ boolean item_apagar(ITEM **item) // pointer to a pointer
 
         free((*item)->keyWords);
         (*item)->keyWords = NULL;
-        
+
         free(*item);
         *item = NULL; // --> variable still exists, so it will be NULL (disables its future usage post-erase)
                       // this is why we use a double pointer, so we can alter its value (by reference) too
@@ -236,11 +236,13 @@ ITEM *item_copy(ITEM *source)
     memcpy(item_get_mainUrl(destiny), item_get_mainUrl(source), strlen(item_get_mainUrl(source)) + 1);
     item_set_numKeyWords(destiny, item_get_numKeyWords(source));
 
-    memcpy(item_get_keyWords(destiny), item_get_keyWords(source), sizeof(item_get_keyWords(source))+1);
-    // for (int i = 0; i < item_get_numKeyWords(source); i++)
-    // {
-    //     item_set_keyWords(destiny, aux[i]);
-    // }
+    destiny->keyWords = (char **)malloc(sizeof(char *) * item_get_numKeyWords(destiny));
+
+    for (int i = 0; i < item_get_numKeyWords(destiny); i++)
+    {
+        destiny->keyWords[i] = (char *)malloc(strlen((source->keyWords[i])) * sizeof(char));
+        strcpy(destiny->keyWords[i], source->keyWords[i]);
+    }
 
     return destiny;
 }

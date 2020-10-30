@@ -205,7 +205,7 @@ void buscarPorKeyword(LISTA *lista)
     keyword = readline(stdin);
 
     lista_busca_keyword(lista, key_lista,keyword);
-    lista_imprimir_short(key_lista);
+    lista_imprimir_short(key_lista, 0);
 
     free(keyword);
     lista_apagar(&key_lista);
