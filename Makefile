@@ -4,7 +4,7 @@ MAIN= main-bot.c
 UTIL= Util/*.o
 BINARY= main
 
-CFLAGS = -Werror -std=c99
+CFLAGS = -Wall -Wextra -Wpedantic -Wpointer-arith -O3 -march=native
 VFLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all:
