@@ -327,7 +327,7 @@ ITEM *lista_busca(LISTA *lista, int chave)
 
 LISTA *lista_busca_keyword(LISTA *lista, char *keyword)
 {
-    if (lista != NULL || !(lista_vazia(lista)) || keyword == NULL)
+    if (lista == NULL || (lista_vazia(lista)) || keyword == NULL)
         return NULL;
 
     LISTA *key_list = NULL;
@@ -347,7 +347,7 @@ LISTA *lista_busca_keyword(LISTA *lista, char *keyword)
             mat = item_get_keyWords(aux->item);
             for (int i = 0; i < item_get_numKeyWords(aux->item); i++)
             {
-                if (strcpy(mat[i], keyword) == 0)
+                if (strcmp(mat[i], keyword) == 0)
                 {
                     lista_inserir_by_relevance(key_list, aux->item);
                     break;

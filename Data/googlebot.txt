@@ -5,7 +5,7 @@
 0002,Netflix,800,https://www.netflix.com/br/,netflix,videos,streaming
 0003,FolhaDeSaoPaulo,200,https://www.folha.uol.com.br/,jornalismo,noticias,online
 0004,Amazon,1000,https://www.amazon.com/,ecommerce,online,shopping,alexa
-0005,Disney,580,https://disney.com.br/,filmes,animation,parks
+0005,Disney,580,https://disney.com.br/,filmes,animation,parks,videos
 0015,TypeBr,876,https://www.keybr.com/,typing,practice,testing,fast,reaction
 0016,Whatsapp,123,https://web.whatsapp.com/,zapzap,messaging,text,conversation
 0017,Globo,765,https://www.globo.com/,television,jounalism,actors,telenovelas,sport,drama
@@ -20,3 +20,4 @@
 0008,Samsung,787,https://www.samsung.com/br/,smartphone,korea,galaxy
 0009,Apple,100,https://www.apple.com/,expensive,iphone,ipad,iTunes,iWatch
 0098,Reddit,842,https://www.reddit.com/,upvote,downvote,frontpage
+0042,NatGeo,003,https://www.nationalgeographic.com/,videos,animals,amazing,american
