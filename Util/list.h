@@ -10,7 +10,7 @@
 	#define TAM_MAX 100
 	#define ERRO -32000
 
-	#define ORDENADA 0 // 0 para lista não ordenada, 1 para listas ordenadas
+	#define ORDENADA 0 // 0 for non sorted, 1 for sorted lists
 
 	#include "item.h"
 
@@ -18,7 +18,9 @@
 
 	LISTA* lista_criar(void);
 	boolean lista_inserir_fim(LISTA *lista, ITEM* item);
-	boolean lista_inserir_ordenado(LISTA *lista, ITEM *item);
+	boolean lista_inserir_ordenado(LISTA *lista, ITEM *item); // inserts ordered element by ID
+	boolean lista_inserir_by_relevance(LISTA *lista, ITEM *item); // inserts ordered elements by RELEVANCE
+
 	void lista_apagar(LISTA **lista);
 	boolean lista_remover(LISTA *lista, int chave);
 	ITEM* lista_busca(LISTA *lista, int chave); // Busca o item de chave X e retorna esse item

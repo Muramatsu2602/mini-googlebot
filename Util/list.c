@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "list.h"
 
@@ -126,6 +127,36 @@ LISTA *lista_criar(void)
         lista->tamanho = 0;
     }
     return lista;
+}
+
+boolean lista_inserir_by_relevance(LISTA *lista, ITEM *item)
+{
+    if (lista == NULL || item == NULL)
+        return FALSE;
+
+    NO *pnovo = (NO *)malloc(sizeof(NO));
+    pnovo->item = item;
+
+    NO *noAtual;
+
+    if (lista->inicio == NULL || item_get_relevance(lista->inicio->item) >= item_get_relevance(pnovo->item))
+    {
+        pnovo->proximo = lista->inicio;
+        lista->inicio = pnovo;
+    }
+    else
+    {
+        noAtual = lista->inicio;
+
+        while (noAtual->proximo != NULL && item_get_relevance(noAtual->proximo->item) < item_get_relevance(pnovo->item))
+        {
+            noAtual = noAtual->proximo;
+        }
+        pnovo->proximo = noAtual->proximo;
+        noAtual->proximo = pnovo;
+    }
+    lista->tamanho++;
+    return TRUE;
 }
 
 boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
@@ -296,12 +327,37 @@ ITEM *lista_busca(LISTA *lista, int chave)
 
 LISTA *lista_busca_keyword(LISTA *lista, char *keyword)
 {
-    if (lista != NULL || !(lista_vazia(lista)) || keyword==NULL)
+    if (lista != NULL || !(lista_vazia(lista)) || keyword == NULL)
         return NULL;
 
-    
+    LISTA *key_list = NULL;
+    NO *aux;
+    char **mat = NULL;
 
-    
+    key_list = lista_criar();
+
+    // sequential search
+    if (lista != NULL)
+    {
+        aux = lista->inicio;
+        while (aux != NULL)
+        {
+            // each site has up to ten keywords
+            // one of them has to be *keyword
+            mat = item_get_keyWords(aux->item);
+            for (int i = 0; i < item_get_numKeyWords(aux->item); i++)
+            {
+                if (strcpy(mat[i], keyword) == 0)
+                {
+                    lista_inserir_by_relevance(key_list, aux->item);
+                    break;
+                }
+            }
+            aux = aux->proximo;
+        }
+    }
+
+    return key_list;
 }
 
 boolean lista_remover(LISTA *lista, int chave)

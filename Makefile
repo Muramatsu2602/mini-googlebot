@@ -4,7 +4,11 @@ MAIN= main-bot.c
 UTIL= Util/*.o
 BINARY= main
 
-CFLAGS = -Wall -Wextra -Wpedantic -Wpointer-arith -O3 -march=native
+# Flags for default compilation
+CFLAGS = -Werror -std=c99 
+# Flags for nitpicking compilation 
+CFLAGS2 = -Wall -Wextra -Wpedantic -Wpointer-arith -O3 -march=native -std=c99
+# Valgrind Flags
 VFLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all:

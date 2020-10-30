@@ -205,7 +205,7 @@ void buscarPorKeyword(LISTA *lista)
     lista_imprimir_short(key_lista);
 
     free(keyword);
-    lista_apagar(key_lista);
+    lista_apagar(&key_lista);
 
     printf("\n\nPressione qualquer botão para continuar...");
     getchar();

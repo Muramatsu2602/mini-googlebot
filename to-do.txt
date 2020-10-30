@@ -1,0 +1,9 @@
+Coisas pra Implementar antes de entregar:
+
+- mudar nome de funcoes:
+    - lista_inserir_ordenado --> lista_inserir_byID
+- remover funcoes nao usadas at all:
+    - lisita_busca_sequencial
+    - ...
+- roda um valgrind com todas as flags pra matar variaveis nao usadas e tals
+ (CFLAGS2)
