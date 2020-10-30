@@ -76,7 +76,7 @@ void lista_imprimir(LISTA *l)
     NO *noAtual = l->inicio;
     char **aux = NULL;
 
-    for (int i = 0; i < l->tamanho; i++)
+    for (int i = 0; i < lista_tamanho(l); i++)
     {
         printf("[%04d]\t", item_get_id(noAtual->item));
         printf("%s\t\t", item_get_name(noAtual->item));
@@ -91,6 +91,22 @@ void lista_imprimir(LISTA *l)
         }
         printf("\n");
 
+        noAtual = noAtual->proximo;
+    }
+
+    return;
+}
+
+void lista_imprimir_short(LISTA *l)
+{
+    NO *noAtual = l->inicio;
+
+    printf("NAME\tURL\n");
+    for (int i = 0; i < lista_tamanho(l); i++)
+    {
+        printf("%s\t", item_get_name(noAtual->item));
+        printf("%s\t", item_get_mainUrl(noAtual->item));
+        printf("\n");
         noAtual = noAtual->proximo;
     }
 
@@ -280,8 +296,10 @@ ITEM *lista_busca(LISTA *lista, int chave)
 
 LISTA *lista_busca_keyword(LISTA *lista, char *keyword)
 {
-    if(lista!=NULL && !(lista_vazia(lista)))
+    if (lista != NULL || !(lista_vazia(lista)) || keyword==NULL)
         return NULL;
+
+    
 
     
 }

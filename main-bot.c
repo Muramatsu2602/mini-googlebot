@@ -196,14 +196,16 @@ void atualizarRelevancia(LISTA *lista)
 void buscarPorKeyword(LISTA *lista)
 {
     char *keyword = NULL;
+    LISTA *key_lista = NULL;
 
     printf("insira a palavra-chave desejada: ");
     keyword = readline(stdin);
 
-    // ou melhor chamar lista_imprimir no main dps dessa func retornar uma lista?
-    lista_imprimir(lista_busca_keyword(lista, keyword));
+    key_lista = lista_busca_keyword(lista, keyword);
+    lista_imprimir_short(key_lista);
 
     free(keyword);
+    lista_apagar(key_lista);
 
     printf("\n\nPressione qualquer botão para continuar...");
     getchar();
@@ -242,7 +244,9 @@ int main(int argc, char const *argv[])
         printf("3 - Inserir Palavra-Chave um site;\n");
         printf("4 - Atualizar relevância um site;\n");
         printf("5 - Imprimir a lista de Sites;\n");
-        printf("6 - Sair.\n");
+        printf("6 - Buscar sites por Palavra-chave;\n");
+        printf("7 - Sugestão de sites;\n");
+        printf("8 - Sair.\n");
 
         printf("Insira a Opção: ");
         scanf("%d", &opcao);
