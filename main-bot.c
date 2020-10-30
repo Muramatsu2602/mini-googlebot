@@ -214,6 +214,30 @@ void buscarPorKeyword(LISTA *lista)
     getchar();
 }
 
+void sugerirSites(LISTA *lista)
+{
+    char *keyword = NULL;
+    LISTA *key_lista = NULL;
+    key_lista = lista_criar();
+
+    printf("insira a palavra-chave desejada: ");
+    getchar();
+
+    keyword = readline(stdin);
+
+    // Buscas a palavra fornecida entre as palavras-chave de cada site
+    lista_busca_keyword(lista, key_lista, keyword);
+
+    // Função que executa os próximos passos do sugerirSites no arquivo list.c
+    lista_sugerir_sites(key_lista);
+
+    free(keyword);
+    lista_apagar(&key_lista);
+
+    printf("\n\nPressione qualquer botão para continuar...");
+    getchar();
+}
+
 int main(int argc, char const *argv[])
 {
     char *string = NULL;
@@ -287,6 +311,7 @@ int main(int argc, char const *argv[])
             buscarPorKeyword(lista);
             break;
         case 7:
+            sugerirSites(lista);
             // Sugestão de sites
         case 8:
             system("clear");

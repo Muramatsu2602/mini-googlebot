@@ -37,4 +37,7 @@
 	void lista_inverter(LISTA **lista);
 	boolean lista_verifica_igual(LISTA *lista1, LISTA *lista2);
 
+	void lista_sugerir_sites(LISTA *lista);
+	void lista_tirar_repeticoes(LISTA *lista);
+
 #endif

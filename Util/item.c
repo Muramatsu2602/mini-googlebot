@@ -236,11 +236,11 @@ ITEM *item_copy(ITEM *source)
     memcpy(item_get_mainUrl(destiny), item_get_mainUrl(source), strlen(item_get_mainUrl(source)) + 1);
     item_set_numKeyWords(destiny, item_get_numKeyWords(source));
 
-    destiny->keyWords = (char **)malloc(sizeof(char *) * item_get_numKeyWords(destiny));
+    destiny->keyWords = (char **) malloc((item_get_numKeyWords(destiny)) * sizeof(char *));
 
     for (int i = 0; i < item_get_numKeyWords(destiny); i++)
     {
-        destiny->keyWords[i] = (char *)malloc(strlen((source->keyWords[i])) * sizeof(char));
+        destiny->keyWords[i] = (char *)malloc((strlen(source->keyWords[i]) + 1) * sizeof(char));
         strcpy(destiny->keyWords[i], source->keyWords[i]);
     }
 

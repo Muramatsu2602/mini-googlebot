@@ -468,3 +468,76 @@ boolean lista_verifica_igual(LISTA *lista1, LISTA *lista2)
         return FALSE;
     }
 }
+
+void lista_tirar_repeticoes(LISTA *lista)
+{
+    NO *noAtual = lista->inicio;
+    NO *noProximo = noAtual->proximo;
+    
+    while(noAtual->proximo !=NULL)
+    {
+        if(item_get_id(noAtual->item) == item_get_id(noAtual->proximo->item))
+        {
+            noProximo = noAtual->proximo->proximo;
+            item_apagar(&noAtual->proximo->item);
+            free(noAtual->proximo);
+            noAtual->proximo = noProximo;
+        }
+        else
+        {
+            noAtual = noAtual->proximo;
+        }
+    }
+
+
+}
+
+void lista_sugerir_sites(LISTA *lista)
+{
+    // Primeiro passo: coletar todas as palavras-chave dos sites selecionados no passo anterior
+    char **keywords = NULL;
+
+    NO *noAtual = lista->inicio;
+
+    char **aux;
+    int numKeyWords = 0;
+    int total = 0;
+    
+    // Copiar as palavras-chave para keyWords
+    for(int i=0;i<lista->tamanho;i++)
+    {
+        aux = item_get_keyWords(noAtual->item);
+        numKeyWords = item_get_numKeyWords(noAtual->item);
+
+        keywords = (char **) realloc(keywords, (total+numKeyWords)*sizeof(char *));
+        total += numKeyWords;
+
+        for(int j=(total-numKeyWords), k=0;j<total;j++,k++)
+        {
+            keywords[j] = (char *) malloc((strlen(aux[k])+1)*sizeof(char));
+            strcpy(keywords[j], aux[k]);
+        }
+        noAtual = noAtual->proximo;
+    }
+
+    LISTA *key_lista = NULL;
+    key_lista = lista_criar();
+
+    for(int i=0;i<total;i++)
+    {
+        lista_busca_keyword(lista, key_lista, keywords[i]);
+    }
+
+    lista_tirar_repeticoes(key_lista);
+
+    lista_imprimir_short(key_lista,5);
+
+
+    // Liberar a memória HEAP alocada para a matriz de strings <keywords> e para a lista <key_lista>
+    for(int i=0;i<total;i++)
+    {
+        free(keywords[i]);
+    }
+    free(keywords);
+    lista_apagar(&key_lista);
+}
