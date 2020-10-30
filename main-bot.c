@@ -201,11 +201,12 @@ void buscarPorKeyword(LISTA *lista)
     printf("insira a palavra-chave desejada: ");
     keyword = readline(stdin);
 
-    key_lista = lista_busca_keyword(lista, keyword);
-    lista_imprimir_short(key_lista);
+    printf("HEY BOSS: %s\n",keyword);
+    // key_lista = lista_busca_keyword(lista, keyword);
+    // lista_imprimir_short(key_lista);
 
-    free(keyword);
-    lista_apagar(&key_lista);
+    // free(keyword);
+    // lista_apagar(&key_lista);
 
     printf("\n\nPressione qualquer botão para continuar...");
     getchar();

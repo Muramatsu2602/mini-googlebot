@@ -12,7 +12,7 @@ CFLAGS2 = -Wall -Wextra -Wpedantic -Wpointer-arith -O3 -march=native -std=c99
 VFLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all:
-	@echo "Welcome to Part 1 of the Google MiniBot Project!"
+	@echo "Welcome to Part 2 of the Google MiniBot Project!"
 	@echo "Compiling all ./Util!"
 	@gcc $(CFLAGS) -c $(OBJ1) -I Util/
 	@gcc $(CFLAGS) -c $(OBJ2) -I Util/

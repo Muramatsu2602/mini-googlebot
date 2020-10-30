@@ -40,7 +40,9 @@ Opções:
 3 - Inserir Palavra-Chave um site;
 4 - Atualizar relevância um site;
 5 - Imprimir a lista de Sites;
-6 - Sair.
+6 - Buscar sites por Palavra-chave;
+7 - Sugestão de sites;
+8 - Sair.
 Insira a Opção: 
 ```
 Choose any of the shown options and select 6 to exit the application. Enjoy!
@@ -48,7 +50,7 @@ Choose any of the shown options and select 6 to exit the application. Enjoy!
 OBS: if you want to remove all binary files from the repository, type **make clean** on the terminal.
 
 ## About each Googlebot Function
-Heres what each option does and its implementation:
+Heres what each option does and its implementation choices:
 
 ### 1 - Insert a website
 There are two main ways of inserting a website in this program: one reads a string in CSV format (that comes from a .txt file), extracts the data and creates an ITEM; the other reads keyboard input and creates the ITEM.
@@ -67,7 +69,13 @@ This function works similarly to the previous one, due to the fact that both use
 ### (EXTRA) 5 - Printing website list
 This function, that was not required by the activity's plan, prints all registered websites from the list.
 
-### 6 - Exit Application
+### 6 - Searching websites by keyword
+...
+
+### 7 - Suggesting websites
+...
+
+### 8 - Exit Application
 Ends the application and then calls **lista_apagar** and closes the file, which frees all heap memory allocated.
 
 ### Input Format

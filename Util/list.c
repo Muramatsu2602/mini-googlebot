@@ -139,7 +139,7 @@ boolean lista_inserir_by_relevance(LISTA *lista, ITEM *item)
 
     NO *noAtual;
 
-    if (lista->inicio == NULL || item_get_relevance(lista->inicio->item) >= item_get_relevance(pnovo->item))
+    if (lista->inicio == NULL || item_get_relevance(lista->inicio->item) < item_get_relevance(pnovo->item))
     {
         pnovo->proximo = lista->inicio;
         lista->inicio = pnovo;
@@ -148,7 +148,7 @@ boolean lista_inserir_by_relevance(LISTA *lista, ITEM *item)
     {
         noAtual = lista->inicio;
 
-        while (noAtual->proximo != NULL && item_get_relevance(noAtual->proximo->item) < item_get_relevance(pnovo->item))
+        while (noAtual->proximo != NULL && item_get_relevance(noAtual->proximo->item) >= item_get_relevance(pnovo->item))
         {
             noAtual = noAtual->proximo;
         }
