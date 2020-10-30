@@ -108,7 +108,7 @@ void lista_imprimir_short(LISTA *l, int n)
 
     NO *noAtual = l->inicio;
 
-    if (n == 0)
+    if (n <= 0 || n > lista_tamanho(l))
         n = lista_tamanho(l);
 
     printf("\nNAME\tURL\n");
@@ -473,23 +473,22 @@ void lista_tirar_repeticoes(LISTA *lista)
 {
     NO *noAtual = lista->inicio;
     NO *noProximo = noAtual->proximo;
-    
-    while(noAtual->proximo !=NULL)
+
+    while (noAtual->proximo != NULL)
     {
-        if(item_get_id(noAtual->item) == item_get_id(noAtual->proximo->item))
+        if (item_get_id(noAtual->item) == item_get_id(noAtual->proximo->item))
         {
             noProximo = noAtual->proximo->proximo;
             item_apagar(&noAtual->proximo->item);
             free(noAtual->proximo);
             noAtual->proximo = noProximo;
+            lista->tamanho--;
         }
         else
         {
             noAtual = noAtual->proximo;
         }
     }
-
-
 }
 
 void lista_sugerir_sites(LISTA *lista)
@@ -502,19 +501,19 @@ void lista_sugerir_sites(LISTA *lista)
     char **aux;
     int numKeyWords = 0;
     int total = 0;
-    
+
     // Copiar as palavras-chave para keyWords
-    for(int i=0;i<lista->tamanho;i++)
+    for (int i = 0; i < lista->tamanho; i++)
     {
         aux = item_get_keyWords(noAtual->item);
         numKeyWords = item_get_numKeyWords(noAtual->item);
 
-        keywords = (char **) realloc(keywords, (total+numKeyWords)*sizeof(char *));
+        keywords = (char **)realloc(keywords, (total + numKeyWords) * sizeof(char *));
         total += numKeyWords;
 
-        for(int j=(total-numKeyWords), k=0;j<total;j++,k++)
+        for (int j = (total - numKeyWords), k = 0; j < total; j++, k++)
         {
-            keywords[j] = (char *) malloc((strlen(aux[k])+1)*sizeof(char));
+            keywords[j] = (char *)malloc((strlen(aux[k]) + 1) * sizeof(char));
             strcpy(keywords[j], aux[k]);
         }
         noAtual = noAtual->proximo;
@@ -523,18 +522,17 @@ void lista_sugerir_sites(LISTA *lista)
     LISTA *key_lista = NULL;
     key_lista = lista_criar();
 
-    for(int i=0;i<total;i++)
+    for (int i = 0; i < total; i++)
     {
         lista_busca_keyword(lista, key_lista, keywords[i]);
     }
 
     lista_tirar_repeticoes(key_lista);
 
-    lista_imprimir_short(key_lista,5);
-
+    lista_imprimir_short(key_lista, TOP_RELEVANCE_NUM);
 
     // Liberar a memória HEAP alocada para a matriz de strings <keywords> e para a lista <key_lista>
-    for(int i=0;i<total;i++)
+    for (int i = 0; i < total; i++)
     {
         free(keywords[i]);
     }

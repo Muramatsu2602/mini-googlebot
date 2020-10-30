@@ -9,6 +9,7 @@
 	#define inicial 0
 	#define TAM_MAX 100
 	#define ERRO -32000
+	#define TOP_RELEVANCE_NUM 5
 
 	#define ORDENADA 0 // 0 for non sorted, 1 for sorted lists
 

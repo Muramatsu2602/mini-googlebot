@@ -229,15 +229,12 @@ ITEM *item_copy(ITEM *source)
 
     // copying content from source to destiny items
     item_set_id(destiny, item_get_id(source));
-    // item_set_name(destiny, item_get_name(source));
     memcpy(item_get_name(destiny), item_get_name(source), strlen(item_get_name(source)) + 1);
     item_set_relevance(destiny, item_get_relevance(source));
-    // item_set_mainUrl(destiny, item_get_mainUrl(source));
     memcpy(item_get_mainUrl(destiny), item_get_mainUrl(source), strlen(item_get_mainUrl(source)) + 1);
     item_set_numKeyWords(destiny, item_get_numKeyWords(source));
 
     destiny->keyWords = (char **) malloc((item_get_numKeyWords(destiny)) * sizeof(char *));
-
     for (int i = 0; i < item_get_numKeyWords(destiny); i++)
     {
         destiny->keyWords[i] = (char *)malloc((strlen(source->keyWords[i]) + 1) * sizeof(char));
