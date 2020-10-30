@@ -122,12 +122,11 @@ boolean item_apagar(ITEM **item) // pointer to a pointer
     if ((*item) != NULL)
     {
         for (int i = 0; i < (*item)->numKeyWords; i++)
-        {
             free((*item)->keyWords[i]);
-        }
+
         free((*item)->keyWords);
         (*item)->keyWords = NULL;
-
+        
         free(*item);
         *item = NULL; // --> variable still exists, so it will be NULL (disables its future usage post-erase)
                       // this is why we use a double pointer, so we can alter its value (by reference) too
@@ -224,21 +223,24 @@ ITEM *item_copy(ITEM *source)
         return NULL;
 
     ITEM *destiny = NULL;
+    char **aux = NULL;
+
     destiny = item_criar();
 
-    // // copying content from source to destiny items
-    // item_set_id(destiny, source->id);
-    // item_set_name()
-    // memcpy(destiny->name, source->name, strlen(source->name) + 1);
-    // destiny->relevance = source->relevance;
-    // memcpy(destiny->mainUrl, source->mainUrl, strlen(source->mainUrl) + 1);
-    // destiny->numKeyWords = source->numKeyWords;
-    
+    // copying content from source to destiny items
+    item_set_id(destiny, item_get_id(source));
+    // item_set_name(destiny, item_get_name(source));
+    memcpy(item_get_name(destiny), item_get_name(source), strlen(item_get_name(source)) + 1);
+    item_set_relevance(destiny, item_get_relevance(source));
+    // item_set_mainUrl(destiny, item_get_mainUrl(source));
+    memcpy(item_get_mainUrl(destiny), item_get_mainUrl(source), strlen(item_get_mainUrl(source)) + 1);
+    item_set_numKeyWords(destiny, item_get_numKeyWords(source));
+
+    memcpy(item_get_keyWords(destiny), item_get_keyWords(source), sizeof(item_get_keyWords(source))+1);
     // for (int i = 0; i < item_get_numKeyWords(source); i++)
     // {
-    //     /* code */
+    //     item_set_keyWords(destiny, aux[i]);
     // }
-    
 
     return destiny;
 }

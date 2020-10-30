@@ -31,7 +31,7 @@
 	boolean lista_vazia(LISTA *lista);
 	boolean lista_cheia(LISTA *lista);
 	void lista_imprimir(LISTA *lista);
-	void lista_imprimir_short(LISTA *l); // prints only name and link of a given website
+	void lista_imprimir_short(LISTA *l, int n); // prints only name and link of a given website
 
 	void lista_apagar(LISTA **lista);
 	void lista_inverter(LISTA **lista);

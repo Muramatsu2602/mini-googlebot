@@ -74,6 +74,9 @@ int lista_tamanho(LISTA *lista)
 
 void lista_imprimir(LISTA *l)
 {
+    if (l == NULL || lista_vazia(l))
+        return;
+
     NO *noAtual = l->inicio;
     char **aux = NULL;
 
@@ -98,12 +101,18 @@ void lista_imprimir(LISTA *l)
     return;
 }
 
-void lista_imprimir_short(LISTA *l)
+void lista_imprimir_short(LISTA *l, int n)
 {
+    if (l == NULL || lista_vazia(l))
+        return;
+
     NO *noAtual = l->inicio;
 
+    if (n == 0)
+        n = lista_tamanho(l);
+
     printf("\nNAME\tURL\n");
-    for (int i = 0; i < lista_tamanho(l); i++)
+    for (int i = 0; i < n; i++)
     {
         printf("%s\t", item_get_name(noAtual->item));
         printf("%s\t", item_get_mainUrl(noAtual->item));
@@ -345,13 +354,16 @@ void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)
         {
             if (strcmp(mat[i], keyword) == 0)
             {
-                // item = item_copy(aux->item);
-                lista_inserir_by_relevance(key_list, aux->item);
+                item = item_copy(aux->item);
+                lista_inserir_by_relevance(key_list, item);
                 break;
             }
         }
         aux = aux->proximo;
     }
+
+    if (lista_vazia(key_list))
+        printf("Nenhum site encontrado para a keyword: %s\n", keyword);
 }
 
 boolean lista_remover(LISTA *lista, int chave)
