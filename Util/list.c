@@ -522,13 +522,16 @@ void lista_sugerir_sites(LISTA *lista)
     LISTA *key_lista = NULL;
     key_lista = lista_criar();
 
+    // Inserir em key_lista todos os itens que possuem as palavras-chaves encontradas
     for (int i = 0; i < total; i++)
     {
         lista_busca_keyword(lista, key_lista, keywords[i]);
     }
 
+    // Tirar as repetições na lista <key_lista>
     lista_tirar_repeticoes(key_lista);
 
+    // Imprime o nome e o link dos 5 sites mais relevantes (se encontrar menos de 5 sites imprime apenas os que encontrou)
     lista_imprimir_short(key_lista, TOP_RELEVANCE_NUM);
 
     // Liberar a memória HEAP alocada para a matriz de strings <keywords> e para a lista <key_lista>

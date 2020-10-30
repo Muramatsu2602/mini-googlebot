@@ -228,6 +228,7 @@ void sugerirSites(LISTA *lista)
     lista_busca_keyword(lista, key_lista, keyword);
 
     // Função que executa os próximos passos do sugerirSites no arquivo list.c
+    // Está no arquivo list.c pois a função necessita do acesso aos ponteiros lista->inicio e no->proximo
     lista_sugerir_sites(key_lista);
 
     free(keyword);
