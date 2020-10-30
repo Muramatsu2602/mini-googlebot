@@ -197,13 +197,14 @@ void buscarPorKeyword(LISTA *lista)
 {
     char *keyword = NULL;
     LISTA *key_lista = NULL;
+    key_lista = lista_criar();
 
     printf("insira a palavra-chave desejada: ");
     getchar();
 
     keyword = readline(stdin);
 
-    key_lista = lista_busca_keyword(lista, keyword);
+    lista_busca_keyword(lista, key_lista,keyword);
     lista_imprimir_short(key_lista);
 
     free(keyword);
@@ -248,8 +249,8 @@ int main(int argc, char const *argv[])
         printf("6 - Buscar sites por Palavra-chave;\n");
         printf("7 - Sugestão de sites;\n");
         printf("8 - Sair.\n");
-
         printf("Insira a Opção: ");
+
         scanf("%d", &opcao);
         system("clear");
 

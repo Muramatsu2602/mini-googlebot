@@ -325,41 +325,33 @@ ITEM *lista_busca(LISTA *lista, int chave)
     return x;
 }
 
-LISTA *lista_busca_keyword(LISTA *lista, char *keyword)
+void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)
 {
-    if (lista == NULL || (lista_vazia(lista)) || keyword == NULL)
-        return NULL;
+    if (lista == NULL || key_list == NULL || (lista_vazia(lista)) || keyword == NULL)
+        return;
 
-    LISTA *key_list = NULL;
     NO *aux;
-    ITEM *item;
+    ITEM *item = NULL;
     char **mat = NULL;
 
-    key_list = lista_criar();
-
     // sequential search
-    if (lista != NULL)
+    aux = lista->inicio;
+    while (aux != NULL)
     {
-        aux = lista->inicio;
-        while (aux != NULL)
+        // each site has up to ten keywords
+        // one of them has to be *keyword
+        mat = item_get_keyWords(aux->item);
+        for (int i = 0; i < item_get_numKeyWords(aux->item); i++)
         {
-            // each site has up to ten keywords
-            // one of them has to be *keyword
-            mat = item_get_keyWords(aux->item);
-            for (int i = 0; i < item_get_numKeyWords(aux->item); i++)
+            if (strcmp(mat[i], keyword) == 0)
             {
-                if (strcmp(mat[i], keyword) == 0)
-                {
-
-                    lista_inserir_by_relevance(key_list, aux->item);
-                    break;
-                }
+                // item = item_copy(aux->item);
+                lista_inserir_by_relevance(key_list, aux->item);
+                break;
             }
-            aux = aux->proximo;
         }
+        aux = aux->proximo;
     }
-
-    return key_list;
 }
 
 boolean lista_remover(LISTA *lista, int chave)

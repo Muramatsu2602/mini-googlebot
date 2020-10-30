@@ -220,9 +220,27 @@ char **item_get_keyWords(ITEM *item)
 
 ITEM *item_copy(ITEM *source)
 {
-   ITEM *destiny = NULL;
+    if (source == NULL)
+        return NULL;
 
-   return destiny;
+    ITEM *destiny = NULL;
+    destiny = item_criar();
+
+    // // copying content from source to destiny items
+    // item_set_id(destiny, source->id);
+    // item_set_name()
+    // memcpy(destiny->name, source->name, strlen(source->name) + 1);
+    // destiny->relevance = source->relevance;
+    // memcpy(destiny->mainUrl, source->mainUrl, strlen(source->mainUrl) + 1);
+    // destiny->numKeyWords = source->numKeyWords;
+    
+    // for (int i = 0; i < item_get_numKeyWords(source); i++)
+    // {
+    //     /* code */
+    // }
+    
+
+    return destiny;
 }
 
 // SETTERS
