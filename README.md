@@ -1,90 +1,91 @@
 # Mini Googlebot
-This is a project for the [SCC0202](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=SCC0202&codcur=55041&codhab=0) course @ University of Sao Paulo.
 
-It can be defined as a simulation of a data-gathering algorithm created by Google called "Googlebot" using C, which searches the web for URLs that redirect to websites. As a result, it gathers a dataset of each website, allowing Google's search Algorithm to decide its relevance to the user. This project aims to utilize the correct data structures in order to store and process data in a efficient manner.
+Este projeto faz parte da disciplina [SCC0202](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=SCC0202&codcur=55041&codhab=0) do segundo semestre do curso de Ciências de Computação no ICMC-USP.
 
-## The Team
-This project was developed by the undergrad students of Computer Science course at ICMC-USP, SP-Brazil:
+Seu propósito é simular um algoritmo de coleta de dados criado pela Google, o chamado Googlebot, utilizando a linguagem C. O algoritmo, que procura pela internet URLs que redirecionem para websites, coleta um conjunto de dados e metadados de cada website, permitindo que o algoritmo decida sua relevância para o usuário. Desse modo, este exercicio procura avaliar a decisão correta na escolha de uma determinada estrutura de dados, bem como a implementação eficiente de suas funções.
+
+## A Equipe
 
 * **11796444 - Giovanni Shibaki Camargo** - [giovanni-shibaki](https://github.com/giovanni-shibaki)
 
 * **11796451 - Pedro Kenzo Muramatsu Carmo** - [Muramatsu2602](https://github.com/Muramatsu2602)
 
-## Compiler/Plataform Used test 
-The chosen compiler was GCC (Gnu C Compiler), using the flag -std=c99. Each programmer used a distinct text editor, both agreed upon using a GitHub repository to store the project's source-code.
+## Compilador/Plataforma Utilizada
 
-## About the Data Structure Chosen
-We decided to utilized the concept of **Simple Linked List** to implement an ADT to store the websites. This data structures has been chosen given the following benefits:
+O compilador escolhido foi o GCC (Gnu C Compiler) e o código-fonte fora compilado e testado utilizando a flag -std=c99, para garantir o padrão C99. Cada desenvolvedor optou por editores de textos distintos e utilizou-se a ferramenta de versionamento de codigo GitHub.
 
- * It offers a flexible storage (that depends on the system's dynammic memory), defined during runtime;
- * Allows Insertion and Deletion of items in all positions of the list;
- * Easy vizualization of the state of a linked list, allowing to easily draw that state and think through the code;
- * Easy to build specific functions for different problems and aplications.
+## Sobre a Estrutura de Dados Escolhida
+
+Utilizou-se o conceito de **Lista Simplesmente Encadeada** para a elaboração do TAD para armazenar os websites. Sabendo que o contexto de uso do TAD pressupõe grande volume de operações busca, inserção e remoção essa estrutura de dados foi escolhida por utilizar a alocação dinâmica (permite maleabilidade do tamanho da memória dutante a execução) e encadeamento (itens do TAD Lista não ocupam posições contíguas na memória heap). além disso, enumeram-se a seguintes vantagens:
+ 
+ * Permite inserção e remoção de items em qualquer posição da lista, não restrita política LIFO (Pilha) /FIFO (Fila)
+ * Facil visualização do estado atual do TAD, não necessitando de operações de pop/deque para acessar elementos em qualquer ponto da lista.
+
+**Por que não utilizar DLL?**
+- Todo no da DLL precisa de espaço extra na memória
+- Todas operacoes requerem um ponteiro extra, o chamado ponteiro anterior (a inserção demanda  modificar o ponteiro anterior e o proximo, enquanto que na lista simplismente encadeada, so se modifica o ponteiro atual)
+- Não é predominante no contexto do projeto um comportamento tipico de Skip and Back, mas sim de inserção sequencial em uma direção.
 
 
+## Manual de Uso
+No repositorio deste projeto, ha dois diretórios principais, juntamente ao arquivo principal **main-bot.c**. No diretorio **Data**, podemos encontrar o arquivo de entrada **googlebot.txt** que contem a coleção de websites dispostos em formato CSV. Em **Util**, por sua vez, estão guardados todos os arquivos de extensões *.c* e *.h* relacionados a implementação e definição do TAD escolhido.
 
-## User Manual
-In the project's repository, there are two folders, along with the main .c file (called "main-bot.c"). In the **Data**, we can find the input file: **googlebot.txt** . Whereas in the **Util**, we can find all ".c" and ".h" files regarding the implementation of the chosen ADT.
-
-In order to compile and execute the program, you should use the following Makefile commands:
+De modo a compilar e executar o programa, voce deve utilizar os seguintes comandos no terminal Linux:
 ```
 make
 make run
 ```
-
-Right after, a menu shall appear:
+Em seguida, um menu deve aparecer:
 ```
 Opções:
 1 - Inserir um site;
 2 - Remover um site;
 3 - Inserir Palavra-Chave um site;
 4 - Atualizar relevância um site;
-5 - Imprimir a lista de Sites;
+5 - Imprimir a lista de sites;
 6 - Buscar sites por Palavra-chave;
 7 - Sugestão de sites;
 8 - Sair.
 Insira a Opção: 
 ```
-Choose any of the shown options and select 6 to exit the application. Enjoy!
+Digite no teclado o número correspondente a operação desejada e pressione 8 para sair do programa. 
 
-OBS: if you want to remove all binary files from the repository, type **make clean** on the terminal.
+OBS: se deseja remover os arquivos gerados na execução, digite <make clean>.
 
-## About each Googlebot Function
+## Sobre as Funcionalidades do GoogleBot
 Heres what each option does and its implementation choices:
+Segue abaixo a explicação sobre cada operação e sua implementação:
 
-### 1 - Insert a website
-There are two main ways of inserting a website in this program: one reads a string in CSV format (that comes from a .txt file), extracts the data and creates an ITEM; the other reads keyboard input and creates the ITEM.
+### 1 - Inserir um site
+Existem duas maneiras de inserir um novo website no TAD Lista: o primeiro le diretamente do arquivo .txt em formato CSV, extraindo de la os dados de uma linha e a partir disso criando o ITEM, lidando tambem com a formatação da string (por meio do strtok); o outro recebe o input do teclado, preenche e cria o ITEM. Ambos invocam a função <lista_inserir_ordenado>, que adiciona o ITEM na lista de acordo com seu ID.
 
-The second function, which is called when option 1 is selected, tests each input using SETTER functions, thus creating a ITEM (website). This same item is then sent to the **lista_inserir_ordenado** function, which inserts a new ITEM to the list in a ordered fashion.
+### 2 - Remover um site
+A partir de um ID fornecido pelo usuario, apaga esse item da lista. Se o ID de fato existe, invoca-se a função <lista_remover>, a qual itera sobre a lista ordenada, encontra o ponto correto e assim atualiza os nós adjacentes apos deleta-lo.
 
-### 2 - Remove a website
-Reads an ID whose ITEM the user wants to delete from the list. If that ID exists, the **lista_remover** function is called. This function traverses through the ordered list, finds the correct spot and then proceeds to update the nodes that were adjacent to the deleted node.
+### 3 - Inserir Palavra-Chave um site
+Primeiramente, pede-se um ID, que é validado pela função <lista_busca_ordenada>. A seguir, retorna-se o item desejado, permitindo que o *setter* <item_set_keywords> inclua uma nova palavra-chave ao website.
 
-### 3 - Inserting a new Keyword in a website
-Fist, a ID is requested and then checked. Afterwards, the item whose ID was just verified is retrieved to the function, allowing for the **item_set_keywords** setter to add a new keyword to the website.
+### 4 - Atualizar relevância um site
+Essa função funciona de modo semelhante a anterior, visto que ambas, utilizam *setters* de um dado ITEM (website). Portanto, depois de verificar o ID fornecido e retornando o ITEM a quem este corresponde, chamamos <item_set_relevance>, alterando um dos dados da struct ITEM.
 
-### 4 - Updating the relevance of a website
-This function works similarly to the previous one, due to the fact that both use the setter function of the given ITEM (website). Therefore, after checking the ID and then retrieving the ITEM, we call the **item_set_relevance** setter, changing one of the ADT values.
+### (EXTRA) 5 - Imprimir a lista de Sites
+Mostra-se na tela o conteúdo do TAD Lista, ou seja, todos os websites armazenados até então, mostrando cada um de seus atributos, em ordem de ID.
 
-### (EXTRA) 5 - Printing website list
-This function, that was not required by the activity's plan, prints all registered websites from the list.
+### 6 - Buscar sites por Palavra-chave
+Dado uma palavra-chave, iteramos pela lista. Para cada website, roda-se um loop na matriz de palavras-chave, ate que se encontre o termo desejado. Se sim, adicionamos esse website em uma lista auxiliar <key_lista>. Em seguida, imprimimos na tela o conteudo dessa lista, exibindo apenas nome e URL de cada registro.
 
-### 6 - Searching websites by keyword
-...
+### 7 - Sugestão de sites
+A função de Sugestão de Sites funciona em conjunto com a função de busca por palavra chave, pois primeiro recebe uma palavra-chave para que todos os sites que possuem essa palavra-chave sejam copiados para dentro de outra lista auxiliar <key_lista>, que servirá para fornecer as demais palavras chaves utilizadas nesta função. Em seguida a função <lista_sugerir_sites> é chamada para que todas as palavras chaves dos itens em <key_lista> sejam selecionadas.
 
-### 7 - Suggesting websites
-...
+Por fim, todos os sites que contém pelo menos uma das palavras-chaves selecionadas são inseridos em uma lista. Em seguida são retidadas as possíveis repetições de sites (através da função <lista_tirar_repeticoes>) e exibidos os 5 sites mais relevantes dos encontrados (função <lista_imprimir_short>).
 
-### 8 - Exit Application
-Ends the application and then calls **lista_apagar** and closes the file, which frees all heap memory allocated.
+### 8 - Sair
+Fecha o menu e chama a função <lista_apagar> e <fclose()>, liberando toda a memória dinamicamente alocada.
 
 ### Input Format
-These pieces of information must be read on a .txt file named "googlebot.txt", following the CSV format (*Comma Separated Value*) - meaning that all the data on a website is separated using commas. Here's an example:
+Os registros contidos no arquivo .txt seguem o formato CSV (*Comma Separated Value*), o que significa que todos os campos de um dado website estão separados por vírgulass. Segue abaixo um exemplo: 
 ```
 0001,YouTube,900,https://www.youtube.com/,youtube,videos,online
 0002,Netflix,800,https://www.netflix.com/br/,netflix,videos,streaming
 ```
-The data present in this .txt is inserted into the data structure prior to the user interaction. It's important to mention that all input is treated as if it's **not already sorted**.
-
-## Extra
-For more details regarding this project (in pt-br), please read [this](https://ae4.tidia-ae.usp.br/access/content/group/a1128994-3797-49cb-8f1f-08ecfe0ced63/Projeto%20-%20parte%20I.pdf)
+Os dados presentes neste .txt são depositados na estrutura de dados antes da interação com o usuário. Vale mencionar que todo o *input* é tratado como se *não fosse necessariamente ordenado*.
