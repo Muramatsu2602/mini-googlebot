@@ -11,14 +11,14 @@
 
 // REMEMBER ME: typedef struct item_ ITEM;
 
-struct item_ // each item represents a website
+struct item_ // Cada item representa um site
 {
     int id;
     char name[50];
     int relevance;
     char mainUrl[100];
-    int numKeyWords; // Limit = 10 key words
-    char **keyWords; //  Limit = 50 char per word
+    int numKeyWords; // Limite = 10 palavras-chave 
+    char **keyWords; //  Limite = 50 caracteres por palavra
 };
 
 ITEM *item_criar(void)
@@ -112,13 +112,13 @@ ITEM *item_criar_CSV(char *string)
         }
     }
 
-    // it will return NULL if alocation doesnt work
+    // Retorna NULL se a alocação não for bem sucedida
     return (item);
 }
 
-boolean item_apagar(ITEM **item) // pointer to a pointer
+boolean item_apagar(ITEM **item) // Ponteiro de ponteiro
 {
-    // we can only erase existing items
+    // Verifica se o item enviado existe
     if ((*item) != NULL)
     {
         for (int i = 0; i < (*item)->numKeyWords; i++)
@@ -128,9 +128,11 @@ boolean item_apagar(ITEM **item) // pointer to a pointer
         (*item)->keyWords = NULL;
 
         free(*item);
-        *item = NULL; // --> variable still exists, so it will be NULL (disables its future usage post-erase)
-                      // this is why we use a double pointer, so we can alter its value (by reference) too
-                      // It is an extra precaution
+        *item = NULL; /*
+                            Quando é feito o free() a variavel continua existindo, terá o valor NULL
+                            Este é o motivo de enviar um ponteiro duplo do item para a função, pois assim este valor pode ser também alterado (por referencia)
+                            É uma precaução extra
+                    */
         return (TRUE);
     }
     return (FALSE);
@@ -142,16 +144,16 @@ void item_imprimir(ITEM *item)
 
     if (item == NULL)
     {
-        printf("CANNOT PRINT! Item is empty!\n");
+        printf("O item enviado é NULO!\n");
         return;
     }
 
     printf("ID:%d\n", item_get_id(item));
-    printf("NAME:%s\n", item_get_name(item));
-    printf("RELEVANCE:%04d\n", item_get_relevance(item));
+    printf("Nome:%s\n", item_get_name(item));
+    printf("Relevância:%04d\n", item_get_relevance(item));
     printf("URL:%s\n", item_get_mainUrl(item));
-    printf("NUM KEYWORDS:%02d\n", item_get_numKeyWords(item));
-    printf("KEYWORDS:\n");
+    printf("Num palavras-chave:%02d\n", item_get_numKeyWords(item));
+    printf("Palavras-chave:\n");
 
     aux = item_get_keyWords(item);
     for (int j = 0; j < item_get_numKeyWords(item); j++)
@@ -225,7 +227,7 @@ ITEM *item_copy(ITEM *source)
     ITEM *destiny = NULL;
     destiny = item_criar();
 
-    // copying content from source to destiny items
+    // Copia o conteúdo do item origem para o item destino
     item_set_id(destiny, item_get_id(source));
     memcpy(item_get_name(destiny), item_get_name(source), strlen(item_get_name(source)) + 1);
     item_set_relevance(destiny, item_get_relevance(source));
@@ -248,13 +250,12 @@ boolean item_set_id(ITEM *item, int id)
 {
     if (id < 0 || id > 9999)
     {
-        printf("ID range is 0-9999!");
+        printf("Valor de ID inválido! Intervalo: 0 a 9999!");
         return FALSE;
     }
 
     if (item != NULL)
     {
-        // we use (*item) to force the system to first analyse the item content (pointer) before the -> operator
         (item)->id = id;
 
         return TRUE;
@@ -276,7 +277,7 @@ boolean item_set_relevance(ITEM *item, int rel)
 {
     if (rel < 0 || rel > 1000)
     {
-        printf("0-1000 is the range for relevance!");
+        printf("O valor da relevância pode variar de 0 a 1000!");
         return FALSE;
     }
 
@@ -292,7 +293,7 @@ boolean item_set_mainUrl(ITEM *item, char *url)
 {
     if (url == NULL || strlen(url) > 100)
     {
-        printf("100 characters max for URL!\n");
+        printf("O limite de caracteres para a URL do site é de 100 caracteres!\n");
         return FALSE;
     }
 
@@ -304,7 +305,7 @@ boolean item_set_numKeyWords(ITEM *item, int num)
 {
     if (num < 0 || num > 10)
     {
-        printf("10 is the max number for keywords!");
+        printf("Não é possível adicionar mais de 10 palavras-chave em um site!");
         return FALSE;
     }
 
@@ -314,7 +315,7 @@ boolean item_set_numKeyWords(ITEM *item, int num)
 
 boolean item_set_keyWords(ITEM *item, char *word)
 {
-    // initializing the field
+    // Inicializando os campos
     if (word == NULL)
     {
         item->keyWords = NULL;
@@ -322,14 +323,14 @@ boolean item_set_keyWords(ITEM *item, char *word)
         return FALSE;
     }
 
-    // max 50carac na keyword
+    // Cada palavra-chave pode ter no máximo 50 caracteres
     if (strlen(word) > 50)
     {
-        printf("5o character limit for each keyword\n");
+        printf("O limite de caracteres para palavras-chave é de 50 caracteres!\n");
         return FALSE;
     }
 
-    // Sets the limit of 10 keywords max
+    // O número máximo de palavras-chave por site é de 10 palavras-chaves
     if ((item) != NULL && (item)->numKeyWords < 10)
     {
         item->numKeyWords++;

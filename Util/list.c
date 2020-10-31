@@ -111,7 +111,7 @@ void lista_imprimir_short(LISTA *l, int n)
     if (n <= 0 || n > lista_tamanho(l))
         n = lista_tamanho(l);
 
-    printf("\nNAME\tURL\n");
+    printf("\nNOME\tURL\n");
     for (int i = 0; i < n; i++)
     {
         printf("%s\t", item_get_name(noAtual->item));
@@ -258,30 +258,6 @@ void lista_apagar(LISTA **lista)
     }
 }
 
-void lista_inverter(LISTA **lista)
-{
-    // Tem vários algoritmos para inverter a lista
-    NO *noAtual = (*lista)->inicio;
-    (*lista)->fim = noAtual; // Já define o primeiro nó agora como o último nó da lista
-    NO *noAnterior = NULL;
-    NO *noProximo = NULL;
-
-    while (noAtual != NULL)
-    {
-        noProximo = noAtual->proximo; // Pega o próximo nó da lista (1 iteração: será NULL)
-        /*
-            Na primeira vez o nó atual é o primeiro da lista e seu ponteiro próximo é deverá ser nulo. Como vamos inverter a ordem dos nós
-            o primeiro nó será agora o último da lista e o ponteiro de seu próximo pontará para ele.
-        */
-        noAtual->proximo = noAnterior;
-        noAnterior = noAtual; // Pega o nó atual para que seja utilizado na proximo iteração do while
-        noAtual = noProximo;  // O nó a ser manipulado agora será o proximo da lista original
-    }
-
-    // Redefine o inicio da lista como o último nó da original
-    (*lista)->inicio = noAnterior;
-}
-
 // Busca sequencial de itens, para listas não ordenadas
 ITEM *lista_busca_sequencial(LISTA *lista, int chave)
 {
@@ -343,12 +319,12 @@ void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)
     ITEM *item = NULL;
     char **mat = NULL;
 
-    // sequential search
+    // Busca sequencial
     aux = lista->inicio;
     while (aux != NULL)
     {
-        // each site has up to ten keywords
-        // one of them has to be *keyword
+        // Cada site possui até 10 palavras-chave
+        // Alguma dessas pode ser a palavra buscada
         mat = item_get_keyWords(aux->item);
         for (int i = 0; i < item_get_numKeyWords(aux->item); i++)
         {
@@ -426,49 +402,6 @@ boolean lista_remover(LISTA *lista, int chave)
     return FALSE;
 }
 
-boolean lista_verifica_no(NO *n1, NO *n2)
-{
-    // Os 2 nós tem que terminar juntos
-    if (n1 == NULL && n2 == NULL)
-    {
-        return TRUE;
-    }
-
-    // Verifica se as chaves de cada item são iguais
-    if (item_get_id(n1->item) != item_get_id(n2->item))
-    {
-        return FALSE;
-    }
-    else
-    {
-        // Chamada recursiva para o próximo nó
-        lista_verifica_no(n1->proximo, n2->proximo);
-    }
-    return TRUE;
-}
-
-boolean lista_verifica_igual(LISTA *lista1, LISTA *lista2)
-{
-    // Verificar se o tamanho das listas são iguais
-    if (lista1->tamanho != lista2->tamanho)
-    {
-        return FALSE;
-    }
-
-    NO *noAtual1 = lista1->inicio;
-    NO *noAtual2 = lista2->inicio;
-
-    // A função lista_verifica_no é uma função recursiva que verifica os nós a partir do primeiro nó
-    if (lista_verifica_no(noAtual1, noAtual2))
-    {
-        return TRUE;
-    }
-    else
-    {
-        return FALSE;
-    }
-}
-
 void lista_tirar_repeticoes(LISTA *lista)
 {
     NO *noAtual = lista->inicio;
@@ -493,6 +426,10 @@ void lista_tirar_repeticoes(LISTA *lista)
 
 void lista_sugerir_sites(LISTA *lista)
 {
+    if(lista == NULL || lista_vazia(lista))
+    {
+        return;
+    }
     // Primeiro passo: coletar todas as palavras-chave dos sites selecionados no passo anterior
     char **keywords = NULL;
 
@@ -522,13 +459,28 @@ void lista_sugerir_sites(LISTA *lista)
     LISTA *key_lista = NULL;
     key_lista = lista_criar();
 
+    // Inserir em key_lista todos os itens que possuem as palavras-chaves encontradas
     for (int i = 0; i < total; i++)
     {
         lista_busca_keyword(lista, key_lista, keywords[i]);
     }
 
+    if(key_lista == NULL || lista_vazia(key_lista))
+    {
+        // Liberar memória HEAP
+        lista_apagar(&key_lista);
+        for (int i = 0; i < total; i++)
+        {
+            free(keywords[i]);
+        }
+        free(keywords);
+        return;
+    }
+
+    // Tirar as repetições na lista <key_lista>
     lista_tirar_repeticoes(key_lista);
 
+    // Imprime o nome e o link dos 5 sites mais relevantes (se encontrar menos de 5 sites imprime apenas os que encontrou)
     lista_imprimir_short(key_lista, TOP_RELEVANCE_NUM);
 
     // Liberar a memória HEAP alocada para a matriz de strings <keywords> e para a lista <key_lista>
