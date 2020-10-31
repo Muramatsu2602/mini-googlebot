@@ -48,6 +48,7 @@ boolean inserirSite(LISTA *lista)
 
     newsite = item_criar();
 
+    // ID
     printf("Digite o código do site a ser inserido: ");
     scanf("%d", &aux);
     if (lista_busca(lista, aux) != NULL)
@@ -58,6 +59,7 @@ boolean inserirSite(LISTA *lista)
     if (!item_set_id(newsite, aux))
         return FALSE;
 
+    // NOME
     printf("Digite o nome do Site: ");
     getchar(); // Consome o \n do scanf anterior
     text_aux = readline(stdin);
@@ -68,11 +70,13 @@ boolean inserirSite(LISTA *lista)
     }
     free(text_aux);
 
+    // RELEVANCIA
     printf("Digite o valor da relevância do site: ");
     scanf("%d", &aux);
     if (!item_set_relevance(newsite, aux))
         return FALSE;
 
+    // URL
     printf("Digite a URL do Site: ");
     getchar(); // Consome o \n do scanf anterior
     text_aux = readline(stdin);
@@ -83,9 +87,12 @@ boolean inserirSite(LISTA *lista)
     }
     free(text_aux);
 
+    // NUM_KEYWORDS
     printf("Digite o número de palavras-chave que deseja adicionar: ");
     scanf("%d", &aux);
+    // o num_keywords ja eh incrementado automaticamente a medida que se executa item_set_keywords
 
+    // KEYWORDS
     item_set_keyWords(newsite, NULL);
     getchar(); // Consome o \n do scanf anterior
     for (int i = 0; i < aux; i++)
@@ -100,10 +107,10 @@ boolean inserirSite(LISTA *lista)
         free(text_aux);
     }
 
+    // ERRO NA INSERCAO
     if (!lista_inserir_ordenado(lista, newsite))
-    {
         return FALSE;
-    }
+    
 
     printf("Novo site de id: %d inserido com sucesso!\n\nPressione qualquer botão para continuar...", item_get_id(newsite));
     getchar();
@@ -203,7 +210,8 @@ void buscarPorKeyword(LISTA *lista)
 
     keyword = readline(stdin);
 
-    lista_busca_keyword(lista, key_lista,keyword);
+    // armazena em key_lista sites que contem a keyword
+    lista_busca_keyword(lista, key_lista, keyword);
     lista_imprimir_short(key_lista, 0);
 
     free(keyword);
@@ -280,42 +288,42 @@ int main(void)
 
         switch (opcao)
         {
-        case 1:
-            if (!inserirSite(lista))
-            {
-                printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+            case 1:
+                if (!inserirSite(lista))
+                {
+                    printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+                    getchar();
+                    getchar();
+                }
+                break;
+
+            case 2:
+                removerSite(lista);
+                break;
+
+            case 3:
+                inserirPalavraChave(lista);
+                break;
+
+            case 4:
+                atualizarRelevancia(lista);
+                break;
+
+            case 5:
+                lista_imprimir(lista);
+                printf("\n\nPressione qualquer botão para continuar...");
                 getchar();
                 getchar();
-            }
-            break;
-
-        case 2:
-            removerSite(lista);
-            break;
-
-        case 3:
-            inserirPalavraChave(lista);
-            break;
-
-        case 4:
-            atualizarRelevancia(lista);
-            break;
-
-        case 5:
-            lista_imprimir(lista);
-            printf("\n\nPressione qualquer botão para continuar...");
-            getchar();
-            getchar();
-            break;
-        case 6:
-            buscarPorKeyword(lista);
-            break;
-        case 7:
-            sugerirSites(lista);
-            break;
-        case 8:
-            system("clear");
-            break;
+                break;
+            case 6:
+                buscarPorKeyword(lista);
+                break;
+            case 7:
+                sugerirSites(lista);
+                break;
+            case 8:
+                system("clear");
+                break;
         }
     }
 

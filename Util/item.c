@@ -225,6 +225,7 @@ ITEM *item_copy(ITEM *source)
         return NULL;
 
     ITEM *destiny = NULL;
+
     destiny = item_criar();
 
     // Copia o conteúdo do item origem para o item destino
@@ -234,6 +235,7 @@ ITEM *item_copy(ITEM *source)
     memcpy(item_get_mainUrl(destiny), item_get_mainUrl(source), strlen(item_get_mainUrl(source)) + 1);
     item_set_numKeyWords(destiny, item_get_numKeyWords(source));
 
+    // copiando o vetor de key-words
     destiny->keyWords = (char **) malloc((item_get_numKeyWords(destiny)) * sizeof(char *));
     for (int i = 0; i < item_get_numKeyWords(destiny); i++)
     {
