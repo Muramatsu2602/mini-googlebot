@@ -35,8 +35,6 @@
 	void lista_imprimir_short(LISTA *l, int n); // Imprime apenas o nome e o link dos sites da lista enviada
 
 	void lista_apagar(LISTA **lista);
-	void lista_inverter(LISTA **lista);
-	boolean lista_verifica_igual(LISTA *lista1, LISTA *lista2);
 
 	void lista_sugerir_sites(LISTA *lista);
 	void lista_tirar_repeticoes(LISTA *lista);

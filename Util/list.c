@@ -258,30 +258,6 @@ void lista_apagar(LISTA **lista)
     }
 }
 
-void lista_inverter(LISTA **lista)
-{
-    // Existem vários algoritmos para inverter a lista
-    NO *noAtual = (*lista)->inicio;
-    (*lista)->fim = noAtual; // Já define o primeiro nó agora como o último nó da lista
-    NO *noAnterior = NULL;
-    NO *noProximo = NULL;
-
-    while (noAtual != NULL)
-    {
-        noProximo = noAtual->proximo; // Pega o próximo nó da lista (1 iteração: será NULL)
-        /*
-            Na primeira vez o nó atual é o primeiro da lista e seu ponteiro próximo é deverá ser nulo. Como vamos inverter a ordem dos nós
-            o primeiro nó será agora o último da lista e o ponteiro de seu próximo pontará para ele.
-        */
-        noAtual->proximo = noAnterior;
-        noAnterior = noAtual; // Pega o nó atual para que seja utilizado na proximo iteração do while
-        noAtual = noProximo;  // O nó a ser manipulado agora será o proximo da lista original
-    }
-
-    // Redefine o inicio da lista como o último nó da original
-    (*lista)->inicio = noAnterior;
-}
-
 // Busca sequencial de itens, para listas não ordenadas
 ITEM *lista_busca_sequencial(LISTA *lista, int chave)
 {
@@ -426,49 +402,6 @@ boolean lista_remover(LISTA *lista, int chave)
     return FALSE;
 }
 
-boolean lista_verifica_no(NO *n1, NO *n2)
-{
-    // Os 2 nós tem que terminar juntos
-    if (n1 == NULL && n2 == NULL)
-    {
-        return TRUE;
-    }
-
-    // Verifica se as chaves de cada item são iguais
-    if (item_get_id(n1->item) != item_get_id(n2->item))
-    {
-        return FALSE;
-    }
-    else
-    {
-        // Chamada recursiva para o próximo nó
-        lista_verifica_no(n1->proximo, n2->proximo);
-    }
-    return TRUE;
-}
-
-boolean lista_verifica_igual(LISTA *lista1, LISTA *lista2)
-{
-    // Verificar se o tamanho das listas são iguais
-    if (lista1->tamanho != lista2->tamanho)
-    {
-        return FALSE;
-    }
-
-    NO *noAtual1 = lista1->inicio;
-    NO *noAtual2 = lista2->inicio;
-
-    // A função lista_verifica_no é uma função recursiva que verifica os nós a partir do primeiro nó
-    if (lista_verifica_no(noAtual1, noAtual2))
-    {
-        return TRUE;
-    }
-    else
-    {
-        return FALSE;
-    }
-}
-
 void lista_tirar_repeticoes(LISTA *lista)
 {
     NO *noAtual = lista->inicio;
@@ -534,6 +467,13 @@ void lista_sugerir_sites(LISTA *lista)
 
     if(key_lista == NULL || lista_vazia(key_lista))
     {
+        // Liberar memória HEAP
+        lista_apagar(&key_lista);
+        for (int i = 0; i < total; i++)
+        {
+            free(keywords[i]);
+        }
+        free(keywords);
         return;
     }
 
