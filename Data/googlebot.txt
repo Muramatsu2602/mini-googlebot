@@ -21,3 +21,8 @@
 0008,Samsung,787,https://www.samsung.com/br/,smartphone,korea,galaxy
 0009,Apple,100,https://www.apple.com/,expensive,iphone,ipad,iTunes,iWatch
 0098,Reddit,842,https://www.reddit.com/,upvote,downvote,frontpage
+0058,Notion,432,https://www.notion.so/,organization,worksapces,plans,kanban,productivity
+0100,Duolingo,888,https://www.duolingo.com/,owl,languages,smart,polyglot,duo
+0065,Dictionary,543,https://www.dictionary.com/,exams,online,search,practice
+0420,GeeksForGeeks,998,https://www.geeksforgeeks.org/,coding,indian,videos,java,c,programming
+0084,Crunchyroll,762,https://www.crunchyroll.com/,online,videos,japanese,weaboo

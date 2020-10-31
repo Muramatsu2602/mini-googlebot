@@ -21,21 +21,16 @@
 	boolean lista_inserir_fim(LISTA *lista, ITEM* item);
 	boolean lista_inserir_ordenado(LISTA *lista, ITEM *item); // Inserir itens de forma ordenada através do ID
 	boolean lista_inserir_by_relevance(LISTA *lista, ITEM *item); // Inserir itens de forma ordenada através da relevância
-
-	void lista_apagar(LISTA **lista); 						        		// erases whole list
-	boolean lista_remover(LISTA *lista, int chave);							// removes item given an ID
-	ITEM* lista_busca(LISTA *lista, int chave); 							// Searches for an item that has and ID x and returns it
-	void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword); // Searches for an item given a keyword
-
-
+	void lista_apagar(LISTA **lista); 						        		
+	boolean lista_remover(LISTA *lista, int chave);
+	ITEM* lista_busca(LISTA *lista, int chave); 							
+	void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword);
 	int lista_tamanho(LISTA *lista);
 	boolean lista_vazia(LISTA *lista);
 	boolean lista_cheia(void);
 	void lista_imprimir(LISTA *lista);
-	void lista_imprimir_short(LISTA *l, int n); // Imprime apenas o nome e o link dos sites da lista enviada
-
+	void lista_imprimir_short(LISTA *l, int n); 
 	void lista_apagar(LISTA **lista);
-
 	void lista_sugerir_sites(LISTA *lista);
 	void lista_tirar_repeticoes(LISTA *lista);
 

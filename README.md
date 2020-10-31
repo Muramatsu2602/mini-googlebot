@@ -82,7 +82,7 @@ Por fim, todos os sites que contém pelo menos uma das palavras-chaves seleciona
 ### 8 - Sair
 Fecha o menu e chama a função <lista_apagar> e <fclose()>, liberando toda a memória dinamicamente alocada.
 
-### Input Format
+### Formato da Entrada
 Os registros contidos no arquivo .txt seguem o formato CSV (*Comma Separated Value*), o que significa que todos os campos de um dado website estão separados por vírgulass. Segue abaixo um exemplo: 
 ```
 0001,YouTube,900,https://www.youtube.com/,youtube,videos,online
