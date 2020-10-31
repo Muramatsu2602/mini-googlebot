@@ -28,7 +28,7 @@ Utilizou-se o conceito de **Lista Simplesmente Encadeada** para a elaboração d
 
 
 ## Manual de Uso
-No repositorio deste projeto, ha dois diretórios principais, juntamente ao arquivo principal **main-bot.c**. No diretorio **Data**, podemos encontrar o arquivo de entrada **googlebot.txt** que contem a coleção de websites dispostos em formato CSV. Em **Util**, por sua vez, estão guardados todos os arquivos de extensões *.c* e *.h* relacionados a implementação e definição do TAD escolhido.
+No repositorio deste projeto, há dois diretórios principais, juntamente ao arquivo principal **main-bot.c**. No diretorio **Data**, podemos encontrar o arquivo de entrada **googlebot.txt** que contem a coleção de websites dispostos em formato CSV. Em **Util**, por sua vez, estão guardados todos os arquivos de extensões *.c* e *.h* relacionados a implementação e definição do TAD escolhido.
 
 De modo a compilar e executar o programa, voce deve utilizar os seguintes comandos no terminal Linux:
 ```
@@ -53,11 +53,10 @@ Digite no teclado o número correspondente a operação desejada e pressione 8 p
 OBS: se deseja remover os arquivos gerados na execução, digite <make clean>.
 
 ## Sobre as Funcionalidades do GoogleBot
-Heres what each option does and its implementation choices:
 Segue abaixo a explicação sobre cada operação e sua implementação:
 
 ### 1 - Inserir um site
-Existem duas maneiras de inserir um novo website no TAD Lista: o primeiro le diretamente do arquivo .txt em formato CSV, extraindo de la os dados de uma linha e a partir disso criando o ITEM, lidando tambem com a formatação da string (por meio do strtok); o outro recebe o input do teclado, preenche e cria o ITEM. Ambos invocam a função <lista_inserir_ordenado>, que adiciona o ITEM na lista de acordo com seu ID.
+Existem duas maneiras de inserir um novo website no TAD Lista: o primeiro lê diretamente do arquivo .txt em formato CSV, extraindo de lá os dados de uma linha e a partir disso criando o ITEM, lidando também com a formatação da string (por meio do strtok); o outro recebe o input do teclado, preenche e cria o ITEM. Ambos invocam a função <lista_inserir_ordenado>, que adiciona o ITEM na lista de acordo com seu ID.
 
 ### 2 - Remover um site
 A partir de um ID fornecido pelo usuario, apaga esse item da lista. Se o ID de fato existe, invoca-se a função <lista_remover>, a qual itera sobre a lista ordenada, encontra o ponto correto e assim atualiza os nós adjacentes apos deleta-lo.
