@@ -493,6 +493,10 @@ void lista_tirar_repeticoes(LISTA *lista)
 
 void lista_sugerir_sites(LISTA *lista)
 {
+    if(lista == NULL || lista_vazia(lista))
+    {
+        return;
+    }
     // Primeiro passo: coletar todas as palavras-chave dos sites selecionados no passo anterior
     char **keywords = NULL;
 
@@ -526,6 +530,11 @@ void lista_sugerir_sites(LISTA *lista)
     for (int i = 0; i < total; i++)
     {
         lista_busca_keyword(lista, key_lista, keywords[i]);
+    }
+
+    if(key_lista == NULL || lista_vazia(key_lista))
+    {
+        return;
     }
 
     // Tirar as repetições na lista <key_lista>

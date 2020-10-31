@@ -14,9 +14,9 @@ VFLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes
 all:
 	@echo "Welcome to Part 2 of the Google MiniBot Project!"
 	@echo "Compiling all ./Util!"
-	@gcc $(CFLAGS2) -c $(OBJ1) -I Util/
-	@gcc $(CFLAGS2) -c $(OBJ2) -I Util/
-	@gcc $(CFLAGS2) $(MAIN) $(UTIL) -o $(BINARY) -I Util/
+	@gcc $(CFLAGS) -c $(OBJ1) -I Util/
+	@gcc $(CFLAGS) -c $(OBJ2) -I Util/
+	@gcc $(CFLAGS) $(MAIN) $(UTIL) -o $(BINARY) -I Util/
 
 run:
 	@echo "Running the Application!"
