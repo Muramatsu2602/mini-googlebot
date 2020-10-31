@@ -23,7 +23,7 @@ FILE *openReadFile(char *fileName, FILE *fp, char *mode)
     return fp;
 }
 
-// You can read file lines using this function
+// Realiza a leitura das linhas do arquivo de entrada
 char *readline(FILE *stream)
 {
     char *string = NULL;
@@ -153,7 +153,7 @@ void inserirPalavraChave(LISTA *lista)
     printf("Digite a palavra-chave a ser adicionada: ");
     string = readline(stdin);
 
-    // Adding new Keyword
+    // adicionando a nova palavra-chave
     if (!item_set_keyWords(lista_busca(lista, id), string))
         printf("Erro ao inserir nova Palavra-Chave!\n\nPressione qualquer botão para continuar...");
     else
@@ -184,7 +184,7 @@ void atualizarRelevancia(LISTA *lista)
     getchar();
     printf("\n");
 
-    // Updating Relevance
+    // Atualizando relevância do site
     if (!item_set_relevance(lista_busca(lista, id), relevancia))
         printf("Erro ao atualizar relevancia!\n\nPressione qualquer botão para continuar...");
     else
@@ -248,7 +248,7 @@ int main(void)
     lista = lista_criar();
     fp = openReadFile("Data/googlebot.txt", fp, "r+");
 
-    // Reading text from file
+    // Leitura do arquivo de entrada
     string = readline(fp);
     while (!feof(fp))
     {

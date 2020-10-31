@@ -111,7 +111,7 @@ void lista_imprimir_short(LISTA *l, int n)
     if (n <= 0 || n > lista_tamanho(l))
         n = lista_tamanho(l);
 
-    printf("\nNAME\tURL\n");
+    printf("\nNOME\tURL\n");
     for (int i = 0; i < n; i++)
     {
         printf("%s\t", item_get_name(noAtual->item));
@@ -260,7 +260,7 @@ void lista_apagar(LISTA **lista)
 
 void lista_inverter(LISTA **lista)
 {
-    // Tem vários algoritmos para inverter a lista
+    // Existem vários algoritmos para inverter a lista
     NO *noAtual = (*lista)->inicio;
     (*lista)->fim = noAtual; // Já define o primeiro nó agora como o último nó da lista
     NO *noAnterior = NULL;
@@ -343,12 +343,12 @@ void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)
     ITEM *item = NULL;
     char **mat = NULL;
 
-    // sequential search
+    // Busca sequencial
     aux = lista->inicio;
     while (aux != NULL)
     {
-        // each site has up to ten keywords
-        // one of them has to be *keyword
+        // Cada site possui até 10 palavras-chave
+        // Alguma dessas pode ser a palavra buscada
         mat = item_get_keyWords(aux->item);
         for (int i = 0; i < item_get_numKeyWords(aux->item); i++)
         {
