@@ -286,6 +286,8 @@ boolean lista_inserir_ordenado_inicio(LISTA *lista, ITEM *item)
 
 boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 {
+    printf("lista_inserir_ordenado\n");
+
     if (lista == NULL || item == NULL)
         return FALSE;
 
@@ -341,7 +343,7 @@ void lista_apagar(LISTA **lista)
     }
 }
 
-NO *lista_busca_ordenada(LISTA *lista, int chave)
+ITEM *lista_busca_ordenada(LISTA *lista, int chave)
 {
     NO *aux;
     if (lista != NULL)
@@ -359,7 +361,7 @@ NO *lista_busca_ordenada(LISTA *lista, int chave)
         {
             if (item_get_id(aux->item) == chave)
             {
-                return aux;
+                return aux->item;
             }
             aux = aux->proximo;
         }
