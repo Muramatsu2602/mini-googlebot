@@ -168,110 +168,152 @@ boolean lista_inserir_by_relevance(LISTA *lista, ITEM *item)
     return TRUE;
 }
 
-// Insere o item enviado do fim para o inicio da lista, pois a chave do item enviado está mais próxima
-// Do fim do que o inicio da lista, realizando menos operações
-boolean lista_inserir_ordenado_fim()
+// Função auxiliar para a decisão de inserção/busca quanto a qual será a extremidade escolhida
+boolean lista_decidir_extremidade(LISTA *lista, int chave)
 {
-    NO *pnovo = (NO *)malloc(sizeof(NO));
-    pnovo->item = item;
+    int distInicio = abs(chave - item_get_id(lista->inicio->item));
+    int distFim = abs(chave - item_get_id(lista->fim->item));
 
-    
+    if(distInicio < distFim)
+    {  
+        // TRUE = inicio
+        return TRUE;
+    }
+    // FALSE = fim
+    return FALSE;
 }
 
-// Insere o item enviado do inicio para o fim da lista, pois a chave do item enviado está mais próxima
-// Do inicio do que o fim da lista, relizando menos operações
-boolean lista_inserir_ordenado_inicio()
+boolean lista_inserir_inicio(LISTA *lista, ITEM *item)
 {
-    NO *pnovo = (NO *)malloc(sizeof(NO));
-    pnovo->item = item;
-
-
-}
-
-boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
-{
-    // Decidir se a inserção acontecerá a partir do inicio ou a partir do fim da lista a partir do calculo da
-    // distancia entre as chaves do item a ser inserido e do item presente no inicio e no fim da lista
-
-    if (lista == NULL || item == NULL)
+    if(lista == NULL || item == NULL)
+    {
         return FALSE;
+    }
 
-    // Se a lista for vazia (ou seja, lista->inicio == NULL) ou a chave do item a ser inserido for menor 
-    // do que o item do primerio NÓ da lista, ele se tornará o primeiro
-    if (lista->inicio == NULL || item_get_id(lista->inicio->item) < item_get_id(pnovo->item))
+    NO *pnovo = (NO *) malloc(sizeof(NO));
+    pnovo->item = item;
+
+    if(lista->inicio == NULL)
     {
-        pnovo->proximo = lista->inicio;
         lista->inicio = pnovo;
+        lista->fim = pnovo;
     }
     else
     {
-        // Decidir se irá buscar a posição em que o item será inserido a partir do inicio
-        // ou a partir do fim da lista
-
-        // Calcular as distâncias entre as chaves do inicio e fim com a chave do item a ser inserido
-        int distInicio = abs(item_get_id(item) - item_get_id(lista->inicio->item));
-        int distFim = abs(item_get_id(item) - item_get_id(lista->fim->item));
-
-        if(distInicio < distFim)
-        {
-            return lista_inserir_ordenado_inicio(lista, item);
-        }
-        else
-        {
-            return lista_inserir_ordenado_fim(lista, item);
-        }
+        lista->inicio->anterior = pnovo;
+        pnovo->proximo = lista->inicio;
     }
 
-    return TRUE;
-
-
-    NO *noAtual;
-
-    else
-    {
-        noAtual = lista->inicio;
-
-        while (noAtual->proximo != NULL && item_get_id(noAtual->proximo->item) < item_get_id(pnovo->item))
-        {
-            noAtual = noAtual->proximo;
-        }
-        pnovo->proximo = noAtual->proximo;
-        noAtual->proximo = pnovo;
-    }
+    lista->inicio = pnovo;
+    pnovo->anterior = NULL;
     lista->tamanho++;
     return TRUE;
 }
 
 boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 {
-    if (item == NULL)
+    if(lista == NULL || item == NULL)
     {
-        printf("item enviado é nulo!");
         return FALSE;
     }
-    if ((!lista_cheia()) && (lista != NULL))
-    {
-        NO *pnovo = (NO *)malloc(sizeof(NO));
-        // Testar se a lista está vazia
-        if (lista->inicio == NULL)
-        {
-            pnovo->item = item;
-            lista->inicio = pnovo;
-            pnovo->proximo = NULL;
-        }
-        // Se não estiver vazia pega o NÓ que está no fim da lista
-        else
-        {
-            lista->fim->proximo = pnovo;
-            pnovo->item = item;
-            pnovo->proximo = NULL;
-        }
-        lista->fim = pnovo;
-        lista->tamanho++;
 
-        return TRUE;
+    NO *pnovo = (NO *) malloc(sizeof(NO));
+    pnovo->item = item;
+
+    // Se for o primeiro nó da lista
+    if(lista->inicio == NULL)
+    {
+        lista->inicio = pnovo;
+        lista->fim = pnovo;
     }
-    return FALSE;
+    else
+    {
+        lista->fim->proximo = pnovo;
+        pnovo->anterior = lista->fim;
+    }
+    pnovo->proximo = NULL;
+    lista->fim = pnovo;
+    lista->tamanho++;
+    return TRUE;
+}
+
+// Insere o item enviado do fim para o inicio da lista, pois a chave do item enviado está mais próxima
+// Do fim do que o inicio da lista, realizando menos operações
+boolean lista_inserir_ordenado_fim(LISTA *lista, ITEM *item)
+{
+    NO *pnovo = (NO *)malloc(sizeof(NO));
+    pnovo->item = item;
+
+    NO *noAtual;
+    noAtual = lista->fim;
+
+    // Anda até que o noAtual seja menor do que o nó a ser inserido
+    while(item_get_id(pnovo->item) < item_get_id(noAtual->item))
+    {
+        noAtual = noAtual->anterior;
+    }
+
+    noAtual->anterior->proximo = pnovo;
+    pnovo->anterior = noAtual->anterior;
+    pnovo->proximo = noAtual;
+    noAtual->anterior = pnovo;
+    lista->tamanho++;
+    return TRUE;
+}
+
+// Insere o item enviado do inicio para o fim da lista, pois a chave do item enviado está mais próxima
+// Do inicio do que o fim da lista, relizando menos operações
+boolean lista_inserir_ordenado_inicio(LISTA *lista, ITEM *item)
+{
+    NO *pnovo = (NO *)malloc(sizeof(NO));
+    pnovo->item = item;
+
+    NO *noAtual;
+    noAtual = lista->inicio;
+
+    while(item_get_id(pnovo->item) > item_get_id(noAtual->item))
+    {
+        noAtual = noAtual->proximo;
+    }
+
+    noAtual->anterior->proximo = pnovo;
+    pnovo->anterior = noAtual->anterior;
+    pnovo->proximo = noAtual;
+    noAtual->anterior = pnovo;
+    lista->tamanho++;
+    return TRUE;
+}
+
+boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
+{
+    if (lista == NULL || item == NULL)
+        return FALSE;
+
+    // Caso 1: inserir no inicio da lista
+    if(lista->inicio == NULL || item_get_id(item) < item_get_id(lista->inicio->item))
+    {
+        return lista_inserir_inicio(lista, item);
+    }
+
+    // Caso 2: inserir no fim da lista
+    if(item_get_id(item) > item_get_id(lista->fim->item))
+    {
+        return lista_inserir_fim(lista, item);
+    }
+
+    // Caso 3: inserir no meio da lista
+
+    // Decidir se irá buscar a posição em que o item será inserido a partir do inicio
+    // ou a partir do fim da lista
+    if(lista_decidir_extremidade(lista, item_get_id(item)))
+    {
+        return lista_inserir_ordenado_inicio(lista, item);
+    }
+    else
+    {
+        return lista_inserir_ordenado_fim(lista, item); 
+    }
+    return TRUE;
 }
 
 // Enviar o primeiro nó da lista
