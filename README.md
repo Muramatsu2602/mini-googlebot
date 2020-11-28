@@ -15,7 +15,7 @@ Seu propósito é simular um algoritmo de coleta de dados criado pela Google, o 
 O compilador escolhido foi o GCC (Gnu C Compiler) e o código-fonte fora compilado e testado utilizando a flag -std=c99, para garantir o padrão C99. Cada desenvolvedor optou por editores de textos distintos e utilizou-se a ferramenta de versionamento de codigo GitHub.
 
 ## Sobre a Estrutura de Dados Escolhida
-DLL -> 
+Como salienta a proposta do projeto, a "Busca por palavra-chave" é a operação mais importante e frequente no sistema Mini Googlebot. Assim, de modo a reduzir a quantidade de operações realizadas nas buscas
 
 ## Manual de Uso
 No repositorio deste projeto, há dois diretórios principais, juntamente ao arquivo principal **main-bot.c**. No diretorio **Data**, podemos encontrar o arquivo de entrada **googlebot.txt** que contem a coleção de websites dispostos em formato CSV. Em **Util**, por sua vez, estão guardados todos os arquivos de extensões *.c* e *.h* relacionados a implementação e definição do TAD escolhido.
