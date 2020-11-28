@@ -36,6 +36,29 @@ ITEM *item_criar(void)
     return (item);
 }
 
+// Algoritmo de ordenação InsertionSort para ordenar em ordem alfabética
+// As palavras chaves de cada site
+// Porque insertionSort? Pois o número de elementos a serem ordenadas é pequeno, e o insertion Sort não
+// requere memória adicionar para que a ordenação seja feita
+void insertionSort(char **array, int size)
+{
+    char *key;
+    int j;
+    for(int i=1; i<size; i++)
+    {
+        key = array[i];
+        j = i - 1;
+
+        // Move os elementos que sÃ£o maiores do que a chave para uma posiÃ§Ã£o a frente
+        while(j >= 0 && strcmp(array[j],key) > 0)
+        {
+            array[j+1] = array[j];
+            j = j - 1;
+        }
+        array[j + 1] = key;
+    }
+}
+
 // formata string recebida e preenche um item
 boolean item_set_CSV(char *string, ITEM *item)
 {
@@ -92,6 +115,7 @@ boolean item_set_CSV(char *string, ITEM *item)
 
         ptr = strtok(NULL, ",");
     }
+    insertionSort(item->keyWords, item->numKeyWords);
     return TRUE;
 }
 
@@ -340,7 +364,9 @@ boolean item_set_keyWords(ITEM *item, char *word)
         item->keyWords = (char **)realloc(item->keyWords, (item->numKeyWords) * sizeof(char *));
         item->keyWords[item->numKeyWords - 1] = (char *)malloc((1 + strlen(word)) * sizeof(char));
         strcpy(item->keyWords[item->numKeyWords - 1], word);
-
+        
+        // Após inserir uma nova palavra chave ordenar as palavras-chave novamente
+        insertionSort(item->keyWords, item->numKeyWords);        
         return TRUE;
     }
     return FALSE;
