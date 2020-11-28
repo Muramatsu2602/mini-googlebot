@@ -250,8 +250,6 @@ boolean lista_inserir_ordenado_fim(LISTA *lista, ITEM *item)
     // Anda até que o noAtual seja menor do que o nó a ser inserido
     while(item_get_id(pnovo->item) < item_get_id(noAtual->item))
     {
-    printf("%d com %d",item_get_id(pnovo->item),item_get_id(noAtual->item));
-    getchar();
         noAtual = noAtual->anterior;
     }
 
