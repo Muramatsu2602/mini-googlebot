@@ -349,7 +349,7 @@ boolean lista_remover(LISTA *lista, int chave)
     NO *noProximo = NULL;
 
     noAtual = lista->inicio;
-    while (noAtual != NULL && item_get_id(noAtual->item) != chave)
+    while (noAtual != NULL && item_get_id(noAtual->item) != chave) // BUSCA CEGA!
     {
         noAnterior = noAtual;
         noAtual = noAtual->proximo;
