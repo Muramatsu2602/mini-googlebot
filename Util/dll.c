@@ -259,13 +259,16 @@ boolean lista_inserir_ordenado_fim(LISTA *lista, ITEM *item)
     // Anda até que o noAtual seja menor do que o nó a ser inserido
     while (item_get_id(pnovo->item) < item_get_id(noAtual->item))
     {
+    printf("%d com %d",item_get_id(pnovo->item),item_get_id(noAtual->item));
+    getchar();
         noAtual = noAtual->anterior;
     }
 
+    // O NÓ entrará após o noAtual, então o proximo nó->anterior irá agora apontar para o pnovo
     noAtual->proximo->anterior = pnovo;
-    noAtual->proximo = pnovo;
     pnovo->anterior = noAtual;
     pnovo->proximo = noAtual->proximo;
+    noAtual->proximo = pnovo;
     lista->tamanho++;
     return TRUE;
 }
