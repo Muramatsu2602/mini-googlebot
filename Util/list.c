@@ -14,6 +14,7 @@ typedef struct no_ NO;
 struct no_
 {
     ITEM *item;
+    NO *anterior;
     NO *proximo;
 };
 
@@ -32,6 +33,7 @@ NO *no_criar(ITEM *item)
     {
         n->item = item;
         n->proximo = NULL;
+        n->anterior = NULL;
         return n;
     }
     return NULL;
@@ -65,7 +67,7 @@ boolean lista_cheia()
         return FALSE;
     }
     return TRUE;
-}
+} 
 
 int lista_tamanho(LISTA *lista)
 {
@@ -258,25 +260,6 @@ void lista_apagar(LISTA **lista)
     }
 }
 
-// Busca sequencial de itens, para listas não ordenadas
-ITEM *lista_busca_sequencial(LISTA *lista, int chave)
-{
-    NO *aux;
-    if (lista != NULL)
-    {
-        aux = lista->inicio;
-        while (aux != NULL)
-        {
-            if (item_get_id(aux->item) == chave)
-            {
-                return aux->item;
-            }
-            aux = aux->proximo;
-        }
-    }
-    return NULL;
-}
-
 ITEM *lista_busca_ordenada(LISTA *lista, int chave)
 {
     NO *aux;
@@ -293,21 +276,6 @@ ITEM *lista_busca_ordenada(LISTA *lista, int chave)
         }
     }
     return NULL;
-}
-
-ITEM *lista_busca(LISTA *lista, int chave)
-{
-    ITEM *x;
-
-    if (!ORDENADA)
-    {
-        x = lista_busca_sequencial(lista, chave);
-    }
-    else
-    {
-        x = lista_busca_ordenada(lista, chave);
-    }
-    return x;
 }
 
 void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)
@@ -345,54 +313,36 @@ void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)
 boolean lista_remover(LISTA *lista, int chave)
 {
     NO *noAtual;
-    NO *noAnterior = NULL;
-    NO *noProximo = NULL;
 
-    noAtual = lista->inicio;
-    while (noAtual != NULL && item_get_id(noAtual->item) != chave) // BUSCA CEGA!
+    if(lista != NULL && !lista_vazia(lista))
     {
-        noAnterior = noAtual;
-        noAtual = noAtual->proximo;
-    }
+        noAtual = lista_busca_ordenada(lista, chave);
 
-    if (noAtual != NULL)
-    {
-        // Achou o nó a ser removido
-        if (noAtual == lista->inicio)
+        if(noAtual != NULL)
         {
-            // É o primeiro nó da lista
-
-            noAnterior = noAtual;
-            noAtual = noAtual->proximo;
-
-            lista->inicio = noAtual;
-
-            // Excluir o nó anterior (que era o atual)
-            item_apagar(&noAnterior->item);
-            free(noAnterior);
-            noAnterior = NULL;
-            lista->tamanho--;
-            return TRUE;
-        }
-        else
-        {
-            if (noAtual == lista->fim)
+            // Se este nó for o primeiro da lista
+            if(noAtual == lista->inicio)
             {
-                // É o último nó da lista
-
-                noAnterior->proximo = NULL;
-                lista->fim = noAnterior;
+                lista->inicio = lista->inicio->proximo;
+                lista->inicio->anterior = NULL;
             }
             else
             {
-                // É um nó no meio da lista
-
-                noProximo = noAtual->proximo;
-                noAnterior->proximo = noProximo;
+                noAtual->anterior->proximo = noAtual->proximo;
             }
 
-            // Excluir o nó
+            if(noAtual == lista->fim)
+            {
+                lista->fim = noAtual->anterior;
+            }
+            else
+            {
+                noAtual->proximo->anterior = noAtual->anterior;
+            }
+
             item_apagar(&noAtual->item);
+            noAtual->proximo = NULL;
+            noAtual->anterior = NULL;
             free(noAtual);
             noAtual = NULL;
             lista->tamanho--;
