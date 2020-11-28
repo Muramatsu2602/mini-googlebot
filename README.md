@@ -15,17 +15,7 @@ Seu propósito é simular um algoritmo de coleta de dados criado pela Google, o 
 O compilador escolhido foi o GCC (Gnu C Compiler) e o código-fonte fora compilado e testado utilizando a flag -std=c99, para garantir o padrão C99. Cada desenvolvedor optou por editores de textos distintos e utilizou-se a ferramenta de versionamento de codigo GitHub.
 
 ## Sobre a Estrutura de Dados Escolhida
-
-Utilizou-se o conceito de **Lista Simplesmente Encadeada** para a elaboração do TAD para armazenar os websites. Sabendo que o contexto de uso do TAD pressupõe grande volume de operações busca, inserção e remoção essa estrutura de dados foi escolhida por utilizar a alocação dinâmica (permite maleabilidade do tamanho da memória dutante a execução) e encadeamento (itens do TAD Lista não ocupam posições contíguas na memória heap). além disso, enumeram-se a seguintes vantagens:
- 
- * Permite inserção e remoção de items em qualquer posição da lista, não restrita política LIFO (Pilha) /FIFO (Fila)
- * Facil visualização do estado atual do TAD, não necessitando de operações de pop/deque para acessar elementos em qualquer ponto da lista.
-
-**Por que não utilizar DLL?**
-- Todo no da DLL precisa de espaço extra na memória
-- Todas operacoes requerem um ponteiro extra, o chamado ponteiro anterior (a inserção demanda  modificar o ponteiro anterior e o proximo, enquanto que na lista simplismente encadeada, so se modifica o ponteiro atual)
-- Não é predominante no contexto do projeto um comportamento tipico de Skip and Back, mas sim de inserção sequencial em uma direção.
-
+DLL -> 
 
 ## Manual de Uso
 No repositorio deste projeto, há dois diretórios principais, juntamente ao arquivo principal **main-bot.c**. No diretorio **Data**, podemos encontrar o arquivo de entrada **googlebot.txt** que contem a coleção de websites dispostos em formato CSV. Em **Util**, por sua vez, estão guardados todos os arquivos de extensões *.c* e *.h* relacionados a implementação e definição do TAD escolhido.
