@@ -296,8 +296,6 @@ boolean lista_inserir_ordenado_inicio(LISTA *lista, ITEM *item)
 
 boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 {
-    printf("lista_inserir_ordenado\n");
-
     if (lista == NULL || item == NULL)
         return FALSE;
 

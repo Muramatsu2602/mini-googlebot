@@ -46,8 +46,6 @@ boolean inserirSite(LISTA *lista)
     char *text_aux = NULL;
     int aux = 0;
 
-    newsite = item_criar();
-
     // ID
     printf("Digite o código do site a ser inserido: ");
     scanf("%d", &aux);
@@ -56,8 +54,12 @@ boolean inserirSite(LISTA *lista)
         printf("Codigo ja cadastrado!\n");
         return FALSE;
     }
+
+    newsite = item_criar();
     if (!item_set_id(newsite, aux))
+    {
         return FALSE;
+    }
 
     // NOME
     printf("Digite o nome do Site: ");
@@ -65,6 +67,7 @@ boolean inserirSite(LISTA *lista)
     text_aux = readline(stdin);
     if (!item_set_name(newsite, text_aux))
     {
+        item_apagar(&newsite);
         free(text_aux);
         return FALSE;
     }
@@ -74,7 +77,10 @@ boolean inserirSite(LISTA *lista)
     printf("Digite o valor da relevância do site: ");
     scanf("%d", &aux);
     if (!item_set_relevance(newsite, aux))
+    {
+        item_apagar(&newsite);
         return FALSE;
+    }
 
     // URL
     printf("Digite a URL do Site: ");
@@ -83,6 +89,7 @@ boolean inserirSite(LISTA *lista)
     if (!item_set_mainUrl(newsite, text_aux))
     {
         free(text_aux);
+        item_apagar(&newsite);
         return FALSE;
     }
     free(text_aux);
@@ -102,6 +109,7 @@ boolean inserirSite(LISTA *lista)
         if (!item_set_keyWords(newsite, text_aux))
         {
             free(text_aux);
+            item_apagar(&newsite);
             return FALSE;
         }
         free(text_aux);
@@ -109,7 +117,10 @@ boolean inserirSite(LISTA *lista)
 
     // ERRO NA INSERCAO
     if (!lista_inserir_ordenado(lista, newsite))
+    {
+        item_apagar(&newsite);
         return FALSE;
+    }
     
 
     printf("Novo site de id: %d inserido com sucesso!\n\nPressione qualquer botão para continuar...", item_get_id(newsite));
