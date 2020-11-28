@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "list.h"
+#include "dll.h"
 
 typedef struct no_ NO;
 
@@ -170,8 +170,26 @@ boolean lista_inserir_by_relevance(LISTA *lista, ITEM *item)
     return TRUE;
 }
 
+
+// Insere o item enviado do fim para o inicio da lista, pois a chave do item enviado está mais próxima
+// Do fim do que o inicio da lista, realizando menos operações
+boolean lista_inserir_ordenado_fim()
+{
+
+}
+
+// Insere o item enviado do inicio para o fim da lista, pois a chave do item enviado está mais próxima
+// Do inicio do que o fim da lista, relizando menos operações
+boolean lista_inserir_ordenado_inicio()
+{
+
+}
+
 boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 {
+    // Decidir se a inserção acontecerá a partir do inicio ou a partir do fim da lista a partir do calculo da
+    // distancia entre as chaves do item a ser inserido e do item presente no inicio e no fim da lista
+
     if (lista == NULL || item == NULL)
         return FALSE;
 
@@ -180,7 +198,7 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 
     NO *noAtual;
 
-    if (lista->inicio == NULL || item_get_id(lista->inicio->item) >= item_get_id(pnovo->item))
+    if (lista->inicio == NULL || item_get_id(lista->inicio->item) < item_get_id(pnovo->item))
     {
         pnovo->proximo = lista->inicio;
         lista->inicio = pnovo;
@@ -265,6 +283,14 @@ ITEM *lista_busca_ordenada(LISTA *lista, int chave)
     NO *aux;
     if (lista != NULL)
     {
+        // Se a chave a ser buscada for maior do que a chave do último item da lista ou for menor do que a chave
+        // do primeiro item da lista já se sabe que o ITEM buscado não existe (Funciona para listas ordenadas de
+        // forma crescente).
+        if(chave > item_get_chave(lista->fim->item) || chave < item_get_chave(lista->inicio->item))
+        {
+            return NULL;
+        }
+
         aux = lista->inicio;
         while (aux != NULL && item_get_id(aux->item) <= chave)
         {

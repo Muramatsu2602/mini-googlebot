@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "Util/list.h"
+#include "Util/dll.h"
 
 #define BUFFER 100
 
