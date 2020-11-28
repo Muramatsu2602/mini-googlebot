@@ -523,8 +523,10 @@ void lista_sugerir_sites(LISTA *lista, LISTA *key_lista)
     }
 
     // Primeiro passo: coletar todas as palavras-chave dos sites selecionados no passo anterior
+    // no vetor de strings <keywords>
     char **keywords = NULL;
 
+    // key_Lista contém todos os sites com as palavra-chave buscada inicialmente
     NO *noAtual = key_lista->inicio;
 
     char **aux;
@@ -552,7 +554,7 @@ void lista_sugerir_sites(LISTA *lista, LISTA *key_lista)
     LISTA *key_lista2 = NULL;
     key_lista2 = lista_criar();
 
-    // Inserir em key_lista todos os itens que possuem as palavras-chaves encontradas
+    // Inserir em key_lista2 todos os itens que possuem as palavras-chaves encontradas
     for (int i = 0; i < total; i++)
     {
         lista_busca_keyword(lista, key_lista2, keywords[i]);
