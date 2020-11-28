@@ -9,8 +9,6 @@
 
 #include "dll.h"
 
-typedef struct no_ NO;
-
 struct no_
 {
     ITEM *item;
@@ -67,7 +65,7 @@ boolean lista_cheia()
         return FALSE;
     }
     return TRUE;
-} 
+}
 
 int lista_tamanho(LISTA *lista)
 {
@@ -321,13 +319,12 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 // Enviar o primeiro nó da lista
 void lista_apagar(LISTA **lista)
 {
-
     NO *noAtual = (*lista)->inicio;
     // Caso base: no Atual é nulo, ou seja, a lista inteira já foi apagada
-    NO *noProximo;
     if (noAtual != NULL)
     {
-        noProximo = noAtual->proximo;
+        (*lista)->tamanho--;
+        (*lista)->inicio = noAtual->proximo;
         if (!item_apagar(&noAtual->item))
         {
             printf("Erro ao apagar item!\n");
@@ -335,8 +332,6 @@ void lista_apagar(LISTA **lista)
         }
         free(noAtual);
         noAtual = NULL;
-        (*lista)->tamanho--;
-        (*lista)->inicio = noProximo;
         lista_apagar(lista);
     }
     else
@@ -346,7 +341,7 @@ void lista_apagar(LISTA **lista)
     }
 }
 
-ITEM *lista_busca_ordenada(LISTA *lista, int chave)
+NO *lista_busca_ordenada(LISTA *lista, int chave)
 {
     NO *aux;
     if (lista != NULL)
@@ -364,7 +359,7 @@ ITEM *lista_busca_ordenada(LISTA *lista, int chave)
         {
             if (item_get_id(aux->item) == chave)
             {
-                return aux->item;
+                return aux;
             }
             aux = aux->proximo;
         }
@@ -432,18 +427,23 @@ void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)
         printf("Nenhum site encontrado para a keyword: %s\n", keyword);
 }
 
+//
+
 boolean lista_remover(LISTA *lista, int chave)
 {
     NO *noAtual;
 
-    if(lista != NULL && !lista_vazia(lista))
+    if (lista != NULL && !lista_vazia(lista))
     {
         noAtual = lista_busca_ordenada2(lista, chave);
 
-        if(noAtual != NULL)
+        if (noAtual != NULL)
         {
+            // decidindo em que regiao procurar o local pra remocao
+            
+
             // Se este nó for o primeiro da lista
-            if(noAtual == lista->inicio)
+            if (noAtual == lista->inicio)
             {
                 lista->inicio = lista->inicio->proximo;
                 lista->inicio->anterior = NULL;
@@ -453,7 +453,7 @@ boolean lista_remover(LISTA *lista, int chave)
                 noAtual->anterior->proximo = noAtual->proximo;
             }
 
-            if(noAtual == lista->fim)
+            if (noAtual == lista->fim)
             {
                 lista->fim = noAtual->anterior;
             }
@@ -498,7 +498,7 @@ void lista_tirar_repeticoes(LISTA *lista)
 
 void lista_sugerir_sites(LISTA *lista)
 {
-    if(lista == NULL || lista_vazia(lista))
+    if (lista == NULL || lista_vazia(lista))
     {
         return;
     }
@@ -537,7 +537,7 @@ void lista_sugerir_sites(LISTA *lista)
         lista_busca_keyword(lista, key_lista, keywords[i]);
     }
 
-    if(key_lista == NULL || lista_vazia(key_lista))
+    if (key_lista == NULL || lista_vazia(key_lista))
     {
         // Liberar memória HEAP
         lista_apagar(&key_lista);
