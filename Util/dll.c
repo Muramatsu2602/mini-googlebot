@@ -37,6 +37,15 @@ NO *no_criar(ITEM *item)
     return NULL;
 }
 
+ITEM *no_get_item(NO *no)
+{
+    if (no != NULL)
+    {
+        return no->item;
+    }
+    return NULL;
+}
+
 /*
     Verifica se a lista está vazia. Retorna TRUE em caso positivo e FALSE
     caso contrário
@@ -174,8 +183,8 @@ boolean lista_decidir_extremidade(LISTA *lista, int chave)
     int distInicio = abs(chave - item_get_id(lista->inicio->item));
     int distFim = abs(chave - item_get_id(lista->fim->item));
 
-    if(distInicio < distFim)
-    {  
+    if (distInicio < distFim)
+    {
         // TRUE = inicio
         return TRUE;
     }
@@ -185,15 +194,15 @@ boolean lista_decidir_extremidade(LISTA *lista, int chave)
 
 boolean lista_inserir_inicio(LISTA *lista, ITEM *item)
 {
-    if(lista == NULL || item == NULL)
+    if (lista == NULL || item == NULL)
     {
         return FALSE;
     }
 
-    NO *pnovo = (NO *) malloc(sizeof(NO));
+    NO *pnovo = (NO *)malloc(sizeof(NO));
     pnovo->item = item;
 
-    if(lista->inicio == NULL)
+    if (lista->inicio == NULL)
     {
         lista->inicio = pnovo;
         lista->fim = pnovo;
@@ -212,16 +221,16 @@ boolean lista_inserir_inicio(LISTA *lista, ITEM *item)
 
 boolean lista_inserir_fim(LISTA *lista, ITEM *item)
 {
-    if(lista == NULL || item == NULL)
+    if (lista == NULL || item == NULL)
     {
         return FALSE;
     }
 
-    NO *pnovo = (NO *) malloc(sizeof(NO));
+    NO *pnovo = (NO *)malloc(sizeof(NO));
     pnovo->item = item;
 
     // Se for o primeiro nó da lista
-    if(lista->inicio == NULL)
+    if (lista->inicio == NULL)
     {
         lista->inicio = pnovo;
         lista->fim = pnovo;
@@ -248,7 +257,7 @@ boolean lista_inserir_ordenado_fim(LISTA *lista, ITEM *item)
     noAtual = lista->fim;
 
     // Anda até que o noAtual seja menor do que o nó a ser inserido
-    while(item_get_id(pnovo->item) < item_get_id(noAtual->item))
+    while (item_get_id(pnovo->item) < item_get_id(noAtual->item))
     {
         noAtual = noAtual->anterior;
     }
@@ -272,7 +281,7 @@ boolean lista_inserir_ordenado_inicio(LISTA *lista, ITEM *item)
     NO *noAtual;
     noAtual = lista->inicio;
 
-    while(item_get_id(pnovo->item) > item_get_id(noAtual->item))
+    while (item_get_id(pnovo->item) > item_get_id(noAtual->item))
     {
         noAtual = noAtual->proximo;
     }
@@ -293,13 +302,13 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
         return FALSE;
 
     // Caso 1: inserir no inicio da lista
-    if(lista->inicio == NULL || item_get_id(item) < item_get_id(lista->inicio->item))
+    if (lista->inicio == NULL || item_get_id(item) < item_get_id(lista->inicio->item))
     {
         return lista_inserir_inicio(lista, item);
     }
 
     // Caso 2: inserir no fim da lista
-    if(item_get_id(item) > item_get_id(lista->fim->item))
+    if (item_get_id(item) > item_get_id(lista->fim->item))
     {
         return lista_inserir_fim(lista, item);
     }
@@ -308,13 +317,13 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
 
     // Decidir se irá buscar a posição em que o item será inserido a partir do inicio
     // ou a partir do fim da lista
-    if(lista_decidir_extremidade(lista, item_get_id(item)))
+    if (lista_decidir_extremidade(lista, item_get_id(item)))
     {
         return lista_inserir_ordenado_inicio(lista, item);
     }
     else
     {
-        return lista_inserir_ordenado_fim(lista, item); 
+        return lista_inserir_ordenado_fim(lista, item);
     }
     return TRUE;
 }
@@ -344,58 +353,64 @@ void lista_apagar(LISTA **lista)
     }
 }
 
-ITEM *lista_busca_ordenada(LISTA *lista, int chave)
+// Igual a função lista_busca_ordenada, porém retorna o NÓ encontrado
+// É interna do .c, ou seja, não há declaração de cabeçalho no arquivo .h
+NO *lista_busca_ordenada2(LISTA *lista, int chave)
 {
-    NO *aux;
+    NO *aux = NULL;
+
     if (lista != NULL)
     {
         // Se a chave a ser buscada for maior do que a chave do último item da lista ou for menor do que a chave
         // do primeiro item da lista já se sabe que o ITEM buscado não existe (Funciona para listas ordenadas de
         // forma crescente).
-        if(chave > item_get_id(lista->fim->item) || chave < item_get_id(lista->inicio->item))
+        if (chave > item_get_id(lista->fim->item) || chave < item_get_id(lista->inicio->item))
         {
             return NULL;
         }
 
-        aux = lista->inicio;
-        while (aux != NULL && item_get_id(aux->item) <= chave)
+        // onde comecar a busca vai depender da relacao da chave com os valores do id na lista
+
+        // procurando do inicio (esq-->dir)
+        if (lista_decidir_extremidade(lista, chave))
         {
-            if (item_get_id(aux->item) == chave)
+            aux = lista->inicio;
+            while (aux != NULL && item_get_id(aux->item) <= chave)
             {
-                return aux->item;
+                if (item_get_id(aux->item) == chave)
+                    return aux;
+
+                aux = aux->proximo;
             }
-            aux = aux->proximo;
+        }
+        // procurando do fim (dir-->esq)
+        else
+        {
+            aux = lista->fim;
+            while (aux != NULL && item_get_id(aux->item) >= chave)
+            {
+                if (item_get_id(aux->item) == chave)
+                    return aux;
+
+                aux = aux->anterior;
+            }
         }
     }
     return NULL;
 }
 
-// Igual a função lista_busca_ordenada, porém retorna o NÓ encontrado
-// É interna do .c, ou seja, não há declaração de cabeçalho no arquivo .h
-NO *lista_busca_ordenada2(LISTA *lista, int chave)
+ITEM *lista_busca_ordenada(LISTA *lista, int chave)
 {
-    NO *aux;
-    if (lista != NULL)
-    {
-        // Se a chave a ser buscada for maior do que a chave do último item da lista ou for menor do que a chave
-        // do primeiro item da lista já se sabe que o ITEM buscado não existe (Funciona para listas ordenadas de
-        // forma crescente).
-        if(chave > item_get_id(lista->fim->item) || chave < item_get_id(lista->inicio->item))
-        {
-            return NULL;
-        }
+    NO *no = NULL;
 
-        aux = lista->inicio;
-        while (aux != NULL && item_get_id(aux->item) <= chave)
-        {
-            if (item_get_id(aux->item) == chave)
-            {
-                return aux;
-            }
-            aux = aux->proximo;
-        }
+    no = lista_busca_ordenada2(lista, chave);
+    if (no == NULL)
+    {
+        printf("Erro em lista_busca_ordenada");
+        return NULL;
     }
-    return NULL;
+
+    return no_get_item(no);
 }
 
 void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)
@@ -434,7 +449,7 @@ void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)
 
 boolean lista_remover(LISTA *lista, int chave)
 {
-    NO *noAtual;
+    NO *noAtual = NULL;
 
     if (lista != NULL && !lista_vazia(lista))
     {
@@ -443,7 +458,6 @@ boolean lista_remover(LISTA *lista, int chave)
         if (noAtual != NULL)
         {
             // decidindo em que regiao procurar o local pra remocao
-            
 
             // Se este nó for o primeiro da lista
             if (noAtual == lista->inicio)
