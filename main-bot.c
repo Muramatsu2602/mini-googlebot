@@ -51,7 +51,7 @@ boolean inserirSite(LISTA *lista)
     // ID
     printf("Digite o código do site a ser inserido: ");
     scanf("%d", &aux);
-    if (lista_busca(lista, aux) != NULL)
+    if (lista_busca_ordenada(lista, aux) != NULL)
     {
         printf("Codigo ja cadastrado!\n");
         return FALSE;
@@ -126,7 +126,7 @@ void removerSite(LISTA *lista)
     scanf("%d", &id);
     getchar();
 
-    if (lista_busca(lista, id) == NULL)
+    if (lista_busca_ordenada(lista, id) == NULL)
     {
         printf("Site não encontrado na lista!!\n\nPressione qualquer botão para continuar...");
         getchar();
@@ -150,7 +150,7 @@ void inserirPalavraChave(LISTA *lista)
     scanf("%d", &id);
     getchar();
 
-    if (lista_busca(lista, id) == NULL)
+    if (lista_busca_ordenada(lista, id) == NULL)
     {
         printf("Site não encontrado na lista!!\n\nPressione qualquer botão para continuar...");
         getchar();
@@ -161,7 +161,7 @@ void inserirPalavraChave(LISTA *lista)
     string = readline(stdin);
 
     // adicionando a nova palavra-chave
-    if (!item_set_keyWords(lista_busca(lista, id), string))
+    if (!item_set_keyWords(lista_busca_ordenada(lista, id), string))
         printf("Erro ao inserir nova Palavra-Chave!\n\nPressione qualquer botão para continuar...");
     else
         printf("Palavra-Chave adicionada com sucesso!\n\nPressione qualquer botão para continuar...");
@@ -178,7 +178,7 @@ void atualizarRelevancia(LISTA *lista)
     printf("Digite o código do site que deseja atualizar a relevancia: ");
     scanf("%d", &id);
 
-    if (lista_busca(lista, id) == NULL)
+    if (lista_busca_ordenada(lista, id) == NULL)
     {
         printf("Site não encontrado na lista!!\n\nPressione qualquer botão para continuar...");
         getchar();
@@ -192,7 +192,7 @@ void atualizarRelevancia(LISTA *lista)
     printf("\n");
 
     // Atualizando relevância do site
-    if (!item_set_relevance(lista_busca(lista, id), relevancia))
+    if (!item_set_relevance(lista_busca_ordenada(lista, id), relevancia))
         printf("Erro ao atualizar relevancia!\n\nPressione qualquer botão para continuar...");
     else
         printf("Relevancia atualizada com sucesso!\n\nPressione qualquer botão para continuar...");

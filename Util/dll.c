@@ -250,15 +250,15 @@ boolean lista_inserir_ordenado_fim(LISTA *lista, ITEM *item)
     noAtual = lista->fim;
 
     // Anda até que o noAtual seja menor do que o nó a ser inserido
-    while(item_get_chave(pnovo->item) < item_get_chave(noAtual->item))
+    while(item_get_id(pnovo->item) < item_get_id(noAtual->item))
     {
         noAtual = noAtual->anterior;
     }
 
-    noAtual->anterior->proximo = pnovo;
-    pnovo->anterior = noAtual->anterior;
-    pnovo->proximo = noAtual;
-    noAtual->anterior = pnovo;
+    noAtual->proximo->anterior = pnovo;
+    noAtual->proximo = pnovo;
+    pnovo->anterior = noAtual;
+    pnovo->proximo = noAtual->proximo;
     lista->tamanho++;
     return TRUE;
 }
@@ -273,7 +273,7 @@ boolean lista_inserir_ordenado_inicio(LISTA *lista, ITEM *item)
     NO *noAtual;
     noAtual = lista->inicio;
 
-    while(item_get_chave(pnovo->item) > item_get_chave(noAtual->item))
+    while(item_get_id(pnovo->item) > item_get_id(noAtual->item))
     {
         noAtual = noAtual->proximo;
     }
@@ -292,13 +292,13 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
         return FALSE;
 
     // Caso 1: inserir no inicio da lista
-    if(lista->inicio == NULL || item_get_chave(item) < item_get_chave(lista->inicio->item))
+    if(lista->inicio == NULL || item_get_id(item) < item_get_id(lista->inicio->item))
     {
         return lista_inserir_inicio(lista, item);
     }
 
     // Caso 2: inserir no fim da lista
-    if(item_get_chave(item) > item_get_chave(lista->fim->item))
+    if(item_get_id(item) > item_get_id(lista->fim->item))
     {
         return lista_inserir_fim(lista, item);
     }
@@ -354,7 +354,7 @@ ITEM *lista_busca_ordenada(LISTA *lista, int chave)
         // Se a chave a ser buscada for maior do que a chave do último item da lista ou for menor do que a chave
         // do primeiro item da lista já se sabe que o ITEM buscado não existe (Funciona para listas ordenadas de
         // forma crescente).
-        if(chave > item_get_chave(lista->fim->item) || chave < item_get_chave(lista->inicio->item))
+        if(chave > item_get_id(lista->fim->item) || chave < item_get_id(lista->inicio->item))
         {
             return NULL;
         }
@@ -365,6 +365,34 @@ ITEM *lista_busca_ordenada(LISTA *lista, int chave)
             if (item_get_id(aux->item) == chave)
             {
                 return aux->item;
+            }
+            aux = aux->proximo;
+        }
+    }
+    return NULL;
+}
+
+// Igual a função lista_busca_ordenada, porém retorna o NÓ encontrado
+// É interna do .c, ou seja, não há declaração de cabeçalho no arquivo .h
+NO *lista_busca_ordenada2(LISTA *lista, int chave)
+{
+    NO *aux;
+    if (lista != NULL)
+    {
+        // Se a chave a ser buscada for maior do que a chave do último item da lista ou for menor do que a chave
+        // do primeiro item da lista já se sabe que o ITEM buscado não existe (Funciona para listas ordenadas de
+        // forma crescente).
+        if(chave > item_get_id(lista->fim->item) || chave < item_get_id(lista->inicio->item))
+        {
+            return NULL;
+        }
+
+        aux = lista->inicio;
+        while (aux != NULL && item_get_id(aux->item) <= chave)
+        {
+            if (item_get_id(aux->item) == chave)
+            {
+                return aux;
             }
             aux = aux->proximo;
         }
@@ -410,7 +438,7 @@ boolean lista_remover(LISTA *lista, int chave)
 
     if(lista != NULL && !lista_vazia(lista))
     {
-        noAtual = lista_busca_ordenada(lista, chave);
+        noAtual = lista_busca_ordenada2(lista, chave);
 
         if(noAtual != NULL)
         {

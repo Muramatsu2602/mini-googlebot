@@ -1,5 +1,5 @@
 OBJ1 = Util/item.c -o Util/item.o
-OBJ2 = Util/list.c -o Util/list.o
+OBJ2 = Util/dll.c -o Util/dll.o
 MAIN= main-bot.c
 UTIL= Util/*.o
 BINARY= main
