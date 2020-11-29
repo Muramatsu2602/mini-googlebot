@@ -27,6 +27,8 @@ ITEM *item_criar(void)
 
     item = (ITEM *)malloc(sizeof(ITEM));
 
+    item_set_numKeyWords(item,0);
+
     if (item == NULL)
     {
         printf("Erro ao alocar ITEM!\n");
@@ -145,12 +147,14 @@ boolean item_apagar(ITEM **item) // Ponteiro de ponteiro
     // Verifica se o item enviado existe
     if ((*item) != NULL)
     {
-        for (int i = 0; i < (*item)->numKeyWords; i++)
-            free((*item)->keyWords[i]);
-
-        free((*item)->keyWords);
-        (*item)->keyWords = NULL;
-
+        if((*item)->numKeyWords != 0)
+        {
+            for (int i = 0; i < (*item)->numKeyWords; i++)
+                free((*item)->keyWords[i]);
+            
+            free((*item)->keyWords);
+            (*item)->keyWords = NULL;
+        }
         free(*item);
         *item = NULL; /*
                             Quando é feito o free() a variavel continua existindo, terá o valor NULL
@@ -303,7 +307,8 @@ boolean item_set_relevance(ITEM *item, int rel)
 {
     if (rel < 0 || rel > 1000)
     {
-        printf("O valor da relevância pode variar de 0 a 1000!");
+        item->relevance = 0;
+        printf("O valor da relevância pode variar de 0 a 1000!\n");
         return FALSE;
     }
 
@@ -312,6 +317,7 @@ boolean item_set_relevance(ITEM *item, int rel)
         (item)->relevance = rel;
         return TRUE;
     }
+    item->relevance = 0;
     return FALSE;
 }
 

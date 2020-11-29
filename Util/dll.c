@@ -168,6 +168,11 @@ boolean lista_inserir_by_relevance(LISTA *lista, ITEM *item)
 
         while (noAtual->proximo != NULL && item_get_relevance(noAtual->proximo->item) >= item_get_relevance(pnovo->item))
         {
+            // Se a relevância entre dois websites são iguais, o critério de desempate será feito através de seus nomes (em ordem alfabética)
+            if(item_get_relevance(noAtual->proximo->item) == item_get_relevance(pnovo->item) && (strcmp(item_get_name(noAtual->proximo->item),item_get_name(pnovo->item)) < 0))
+            {
+                break;
+            }
             noAtual = noAtual->proximo;
         }
         pnovo->proximo = noAtual->proximo;
@@ -404,7 +409,6 @@ ITEM *lista_busca_ordenada(LISTA *lista, int chave)
     no = lista_busca_ordenada2(lista, chave);
     if (no == NULL)
     {
-        printf("Erro em lista_busca_ordenada");
         return NULL;
     }
 

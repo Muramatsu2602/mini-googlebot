@@ -56,6 +56,7 @@ boolean inserirSite(LISTA *lista)
     }
 
     newsite = item_criar();
+
     if (!item_set_id(newsite, aux))
     {
         return FALSE;
@@ -98,6 +99,13 @@ boolean inserirSite(LISTA *lista)
     printf("Digite o número de palavras-chave que deseja adicionar: ");
     scanf("%d", &aux);
     // o num_keywords ja eh incrementado automaticamente a medida que se executa item_set_keywords
+
+    if(aux > 10 || aux < 0)
+    {
+        printf("O número de palavras chave deve variar entre 0 e 10!\n");
+        item_apagar(&newsite);
+        return FALSE;
+    }
 
     // KEYWORDS
     item_set_keyWords(newsite, NULL);
@@ -246,8 +254,8 @@ void sugerirSites(LISTA *lista)
     // Buscas a palavra fornecida entre as palavras-chave de cada site
     lista_busca_keyword(lista, key_lista, keyword);
 
-    // Função que executa os próximos passos do sugerirSites no arquivo list.c
-    // Está no arquivo list.c pois a função necessita do acesso aos ponteiros lista->inicio e no->proximo
+    // Função que executa os próximos passos do sugerirSites no arquivo dll.c
+    // Está no arquivo dll.c pois a função necessita do acesso aos ponteiros lista->inicio e no->proximo
     lista_sugerir_sites(lista, key_lista);
 
     free(keyword);
