@@ -54,6 +54,7 @@ boolean inserirSite(LISTA *lista, AVL *avl)
     if (lista_busca_ordenada(lista, aux) != NULL)
     {
         printf("Codigo ja cadastrado!\n");
+        free(newsite);
         return FALSE;
     }
 
@@ -61,6 +62,8 @@ boolean inserirSite(LISTA *lista, AVL *avl)
 
     if (!item_set_id(newsite->item, aux))
     {
+        item_apagar(&newsite->item);
+        free(newsite);
         return FALSE;
     }
 
@@ -70,7 +73,9 @@ boolean inserirSite(LISTA *lista, AVL *avl)
     text_aux = readline(stdin);
     if (!item_set_name(newsite->item, text_aux))
     {
+        printf("Nome de site inválido!\n");
         item_apagar(&newsite->item);
+        free(newsite);
         free(text_aux);
         return FALSE;
     }
@@ -82,6 +87,7 @@ boolean inserirSite(LISTA *lista, AVL *avl)
     if (!item_set_relevance(newsite->item, aux))
     {
         item_apagar(&newsite->item);
+        free(newsite);
         return FALSE;
     }
 
@@ -93,6 +99,7 @@ boolean inserirSite(LISTA *lista, AVL *avl)
     {
         free(text_aux);
         item_apagar(&newsite->item);
+        free(newsite);
         return FALSE;
     }
     free(text_aux);
@@ -106,6 +113,7 @@ boolean inserirSite(LISTA *lista, AVL *avl)
     {
         printf("O número de palavras chave deve variar entre 0 e 10!\n");
         item_apagar(&newsite->item);
+        free(newsite);
         return FALSE;
     }
 
@@ -120,6 +128,7 @@ boolean inserirSite(LISTA *lista, AVL *avl)
         {
             free(text_aux);
             item_apagar(&newsite->item);
+            free(newsite);
             return FALSE;
         }
         free(text_aux);
@@ -130,6 +139,7 @@ boolean inserirSite(LISTA *lista, AVL *avl)
     if (newsite == NULL)
     {
         item_apagar(&newsite->item);
+        free(newsite);
         return FALSE;
     }
 
