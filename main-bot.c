@@ -44,7 +44,7 @@ char *readline(FILE *stream)
 boolean inserirSite(LISTA *lista, AVL *avl)
 {
 
-    NO *newsite = (NO *) malloc (sizeof(NO));
+    NO *newsite = (NO *)malloc(sizeof(NO));
     char *text_aux = NULL;
     int aux = 0;
 
@@ -102,7 +102,7 @@ boolean inserirSite(LISTA *lista, AVL *avl)
     scanf("%d", &aux);
     // o num_keywords ja eh incrementado automaticamente a medida que se executa item_set_keywords
 
-    if(aux > 10 || aux < 0)
+    if (aux > 10 || aux < 0)
     {
         printf("O número de palavras chave deve variar entre 0 e 10!\n");
         item_apagar(&newsite->item);
@@ -127,22 +127,22 @@ boolean inserirSite(LISTA *lista, AVL *avl)
 
     // ERRO NA INSERCAO
     newsite = lista_inserir_ordenado(lista, newsite->item);
-    if(newsite == NULL)
+    if (newsite == NULL)
     {
         item_apagar(&newsite->item);
         return FALSE;
     }
-    
+
     // Depois de inserir o item na lista, atualizar AVL de palavras-chave
     char **keys = item_get_keyWords(newsite->item);
     int qtd_keys = item_get_numKeyWords(newsite->item);
     ITEM2 *aux2 = NULL;
     ITEM2 *item_novo = NULL;
 
-    for(int i=0; i<qtd_keys; i++)
+    for (int i = 0; i < qtd_keys; i++)
     {
         aux2 = avl_busca(avl, keys[i]);
-        if(aux2 != NULL)
+        if (aux2 != NULL)
         {
             // Encontrou a palavra-chave na AVL, então inserir o pnovo na lista de nós que contém tal palavra chave
             item2_add_no(aux2, newsite);
@@ -164,19 +164,39 @@ boolean inserirSite(LISTA *lista, AVL *avl)
     return TRUE;
 }
 
-void removerSite(LISTA *lista)
+void removerSite(LISTA *lista, AVL *avl)
 {
     int id;
+    NO *temp_no = NULL;
 
     printf("Digite o código do site que deseja remover: ");
     scanf("%d", &id);
     getchar();
 
-    if (lista_busca_ordenada(lista, id) == NULL)
+    if ((temp_no = lista_busca_ordenada(lista, id)) == NULL)
     {
         printf("Site não encontrado na lista!!\n\nPressione qualquer botão para continuar...");
         getchar();
         return;
+    }
+
+    // antes de remover o site, teremos que lidar com o AVL
+    char **temp_keywords = NULL;
+    temp_keywords = item_get_keyWords(no_get_item(temp_no));
+    ITEM2 *temp_item2 = NULL;
+
+    for (int i = 0; i < item_get_numKeyWords(no_get_item(temp_no)); i++)
+    {
+        // busca key_word atual na AVL
+        if ((temp_item2 = avl_busca(avl, temp_keywords[i])) != NULL)
+        {
+            // nesse caso, so tinha esse site
+            // Assim, podemos remover o no da AVL
+            if (item2_get_qtd_nos(temp_item2) == 1)
+            {
+                avl_remover(avl, item2_get_keyWord(temp_item2));
+            }
+        }
     }
 
     if (lista_remover(lista, id))
@@ -217,7 +237,7 @@ void inserirPalavraChave(LISTA *lista, AVL *avl)
     ITEM2 *item_novo = NULL;
 
     aux2 = avl_busca(avl, string);
-    if(aux2 != NULL)
+    if (aux2 != NULL)
     {
         // Encontrou a palavra-chave na AVL, então inserir o pnovo na lista de nós que contém tal palavra chave
         item2_add_no(aux2, noSite);
@@ -275,7 +295,7 @@ void buscarPorKeyword(LISTA *lista, AVL *avl)
 
     keyword = readline(stdin);
 
-    if(avl_busca(avl, keyword) == NULL)
+    if (avl_busca(avl, keyword) == NULL)
     {
         printf("Nenhum site encontrado.\n");
         printf("\n\nPressione qualquer botão para continuar...");
@@ -307,7 +327,7 @@ void sugerirSites(LISTA *lista, AVL *avl)
     keyword = readline(stdin);
 
     int qtd_nos = 0;
-    if(avl_busca(avl, keyword) == NULL)
+    if (avl_busca(avl, keyword) == NULL)
     {
         printf("Nenhum site encontrado.\n");
         printf("\n\nPressione qualquer botão para continuar...");
@@ -324,15 +344,15 @@ void sugerirSites(LISTA *lista, AVL *avl)
     int numKeyWords = 0;
     int total = 0;
     // Pegar todas as palavras-chave
-    for(int i=0; i<qtd_nos; i++)
+    for (int i = 0; i < qtd_nos; i++)
     {
-        if(nos[i] != NULL)
+        if (nos[i] != NULL)
         {
             numKeyWords = item_get_numKeyWords(nos[i]->item);
             aux = item_get_keyWords(nos[i]->item);
             total += numKeyWords;
             keywords = (char **)realloc(keywords, (total) * sizeof(char *));
-            
+
             for (int j = (total - numKeyWords), k = 0; j < total; j++, k++)
             {
                 keywords[j] = (char *)malloc((strlen(aux[k]) + 1) * sizeof(char));
@@ -345,11 +365,11 @@ void sugerirSites(LISTA *lista, AVL *avl)
 
     // Agora, pegar todos os nós que contém essas palavras chave e inserir em uma lista
     // Ordenada pela relevância de cada site
-    for(int i=0; i<total; i++)
+    for (int i = 0; i < total; i++)
     {
         qtd_nos = item2_get_qtd_nos(avl_busca(avl, keywords[i]));
         nos = item2_get_nos(avl_busca(avl, keywords[i]));
-        for(int j=0; j<qtd_nos; j++)
+        for (int j = 0; j < qtd_nos; j++)
         {
             lista_inserir_by_relevance(key_lista, item_copy(nos[j]->item));
         }
@@ -365,7 +385,7 @@ void sugerirSites(LISTA *lista, AVL *avl)
     // E para o vetor de keyWords
     free(keyword);
     lista_apagar(&key_lista);
-    for(int i=0; i<total; i++)
+    for (int i = 0; i < total; i++)
     {
         free(keywords[i]);
     }
@@ -406,10 +426,10 @@ int main(void)
         ITEM2 *aux2 = NULL;
         ITEM2 *item_novo = NULL;
 
-        for(int i=0; i<qtd_keys; i++)
+        for (int i = 0; i < qtd_keys; i++)
         {
             aux2 = avl_busca(avl, keys[i]);
-            if(aux2 != NULL)
+            if (aux2 != NULL)
             {
                 // Encontrou a palavra-chave na AVL, então inserir o pnovo na lista de nós que contém tal palavra chave
                 item2_add_no(aux2, newsite);
@@ -450,42 +470,42 @@ int main(void)
 
         switch (opcao)
         {
-            case 1:
-                if (!inserirSite(lista, avl))
-                {
-                    printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
-                    getchar();
-                    getchar();
-                }
-                break;
-
-            case 2:
-                removerSite(lista);
-                break;
-
-            case 3:
-                inserirPalavraChave(lista, avl);
-                break;
-
-            case 4:
-                atualizarRelevancia(lista);
-                break;
-
-            case 5:
-                lista_imprimir(lista);
-                printf("\n\nPressione qualquer botão para continuar...");
+        case 1:
+            if (!inserirSite(lista, avl))
+            {
+                printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
                 getchar();
                 getchar();
-                break;
-            case 6:
-                buscarPorKeyword(lista, avl);
-                break;
-            case 7:
-                sugerirSites(lista, avl);
-                break;
-            case 8:
-                system("clear");
-                break;
+            }
+            break;
+
+        case 2:
+            removerSite(lista, avl);
+            break;
+
+        case 3:
+            inserirPalavraChave(lista, avl);
+            break;
+
+        case 4:
+            atualizarRelevancia(lista);
+            break;
+
+        case 5:
+            lista_imprimir(lista);
+            printf("\n\nPressione qualquer botão para continuar...");
+            getchar();
+            getchar();
+            break;
+        case 6:
+            buscarPorKeyword(lista, avl);
+            break;
+        case 7:
+            sugerirSites(lista, avl);
+            break;
+        case 8:
+            system("clear");
+            break;
         }
     }
 

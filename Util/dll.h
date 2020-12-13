@@ -32,6 +32,8 @@
 	NO *lista_busca_ordenada(LISTA *lista, int chave);							
 	void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword);
 	int lista_tamanho(LISTA *lista);
+	ITEM *no_get_item(NO *no);
+
 	
 	boolean lista_vazia(LISTA *lista);
 	boolean lista_cheia(void);
