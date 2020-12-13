@@ -9,13 +9,6 @@
 
 #include "dll.h"
 
-struct no_
-{
-    ITEM *item;
-    NO *anterior;
-    NO *proximo;
-};
-
 struct Lista
 {
     NO *inicio;
@@ -197,11 +190,11 @@ boolean lista_decidir_extremidade(LISTA *lista, int chave)
     return FALSE;
 }
 
-boolean lista_inserir_inicio(LISTA *lista, ITEM *item)
+NO *lista_inserir_inicio(LISTA *lista, ITEM *item)
 {
     if (lista == NULL || item == NULL)
     {
-        return FALSE;
+        return NULL;
     }
 
     NO *pnovo = (NO *)malloc(sizeof(NO));
@@ -221,14 +214,14 @@ boolean lista_inserir_inicio(LISTA *lista, ITEM *item)
     lista->inicio = pnovo;
     pnovo->anterior = NULL;
     lista->tamanho++;
-    return TRUE;
+    return pnovo;
 }
 
-boolean lista_inserir_fim(LISTA *lista, ITEM *item)
+NO *lista_inserir_fim(LISTA *lista, ITEM *item)
 {
     if (lista == NULL || item == NULL)
     {
-        return FALSE;
+        return NULL;
     }
 
     NO *pnovo = (NO *)malloc(sizeof(NO));
@@ -248,12 +241,12 @@ boolean lista_inserir_fim(LISTA *lista, ITEM *item)
     pnovo->proximo = NULL;
     lista->fim = pnovo;
     lista->tamanho++;
-    return TRUE;
+    return pnovo;
 }
 
 // Insere o item enviado do fim para o inicio da lista, pois a chave do item enviado está mais próxima
 // Do fim do que o inicio da lista, realizando menos operações
-boolean lista_inserir_ordenado_fim(LISTA *lista, ITEM *item)
+NO *lista_inserir_ordenado_fim(LISTA *lista, ITEM *item)
 {
     NO *pnovo = (NO *)malloc(sizeof(NO));
     pnovo->item = item;
@@ -273,12 +266,12 @@ boolean lista_inserir_ordenado_fim(LISTA *lista, ITEM *item)
     pnovo->proximo = noAtual->proximo;
     noAtual->proximo = pnovo;
     lista->tamanho++;
-    return TRUE;
+    return pnovo;
 }
 
 // Insere o item enviado do inicio para o fim da lista, pois a chave do item enviado está mais próxima
 // Do inicio do que o fim da lista, relizando menos operações
-boolean lista_inserir_ordenado_inicio(LISTA *lista, ITEM *item)
+NO *lista_inserir_ordenado_inicio(LISTA *lista, ITEM *item)
 {
     NO *pnovo = (NO *)malloc(sizeof(NO));
     pnovo->item = item;
@@ -296,10 +289,10 @@ boolean lista_inserir_ordenado_inicio(LISTA *lista, ITEM *item)
     pnovo->proximo = noAtual;
     noAtual->anterior = pnovo;
     lista->tamanho++;
-    return TRUE;
+    return pnovo;
 }
 
-boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
+NO *lista_inserir_ordenado(LISTA *lista, ITEM *item)
 {
     if (lista == NULL || item == NULL)
         return FALSE;
@@ -328,7 +321,7 @@ boolean lista_inserir_ordenado(LISTA *lista, ITEM *item)
     {
         return lista_inserir_ordenado_fim(lista, item);
     }
-    return TRUE;
+    return NULL;
 }
 
 // Enviar o primeiro nó da lista
@@ -402,7 +395,7 @@ NO *lista_busca_ordenada2(LISTA *lista, int chave)
     return NULL;
 }
 
-ITEM *lista_busca_ordenada(LISTA *lista, int chave)
+NO *lista_busca_ordenada(LISTA *lista, int chave)
 {
     NO *no = NULL;
 
@@ -412,7 +405,7 @@ ITEM *lista_busca_ordenada(LISTA *lista, int chave)
         return NULL;
     }
 
-    return no_get_item(no);
+    return no;
 }
 
 void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword)

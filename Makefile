@@ -1,5 +1,7 @@
 OBJ1 = Util/item.c -o Util/item.o
 OBJ2 = Util/dll.c -o Util/dll.o
+OBJ3 = Util/item2.c -o Util/item2.o
+OBJ4 = Util/AVL.c -o Util/AVL.o
 MAIN= main-bot.c
 UTIL= Util/*.o
 BINARY= main
@@ -16,6 +18,8 @@ all:
 	@echo "Compiling all ./Util!"
 	@gcc $(CFLAGS) -c $(OBJ1) -I Util/
 	@gcc $(CFLAGS) -c $(OBJ2) -I Util/
+	@gcc $(CFLAGS) -c $(OBJ3) -I Util/
+	@gcc $(CFLAGS) -c $(OBJ4) -I Util/
 	@gcc $(CFLAGS) $(MAIN) $(UTIL) -o $(BINARY) -I Util/
 
 run:

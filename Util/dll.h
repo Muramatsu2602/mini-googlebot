@@ -17,13 +17,19 @@
 
 	typedef struct Lista LISTA;
 	typedef struct no_ NO;
+	struct no_
+	{
+    	ITEM *item;
+    	NO *anterior;
+    	NO *proximo;
+	};
 
 	LISTA* lista_criar(void);
-	boolean lista_inserir_ordenado(LISTA *lista, ITEM *item); // Inserir itens de forma ordenada através do ID
+	NO *lista_inserir_ordenado(LISTA *lista, ITEM *item); // Inserir itens de forma ordenada através do ID
 	boolean lista_inserir_by_relevance(LISTA *lista, ITEM *item); // Inserir itens de forma ordenada através da relevância
 	void lista_apagar(LISTA **lista); 						        		
 	boolean lista_remover(LISTA *lista, int chave);
-	ITEM *lista_busca_ordenada(LISTA *lista, int chave);							
+	NO *lista_busca_ordenada(LISTA *lista, int chave);							
 	void lista_busca_keyword(LISTA *lista, LISTA *key_list, char *keyword);
 	int lista_tamanho(LISTA *lista);
 	
