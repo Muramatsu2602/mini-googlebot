@@ -24,6 +24,7 @@
     boolean item2_add_no(ITEM2 *item, NO *no);
     char *item2_get_keyWord(ITEM2 *item);
     int item2_get_qtd_nos(ITEM2 *item);
+    void item2_set_qtd_nos(ITEM2*item, int qnd);
     NO **item2_get_nos(ITEM2 *item);
     void item2_set_keyWord(ITEM2 *item, char *word);
 

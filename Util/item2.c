@@ -111,6 +111,12 @@ NO **item2_get_nos(ITEM2 *item)
     return NULL;
 }
 
+void item2_set_qtd_nos(ITEM2*item, int qnd){
+    if(item!=NULL){
+        item->qtd_nos = qnd;
+    }
+}
+
 void item2_set_keyWord(ITEM2 *item, char *word)
 {
     if (item != NULL)

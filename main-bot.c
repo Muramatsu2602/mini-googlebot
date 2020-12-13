@@ -205,6 +205,7 @@ void removerSite(LISTA *lista, AVL *avl)
             if (item2_get_qtd_nos(temp_item2) == 1)
             {
                 avl_remover(avl, item2_get_keyWord(temp_item2));
+                item2_set_qtd_nos(temp_item2,0);
             }
         }
     }
@@ -458,9 +459,6 @@ int main(void)
         string = readline(fp);
     }
 
-    // Para debug
-    //avl_printa_arvore(avl);
-
     while (opcao != 8)
     {
         system("clear");
@@ -480,42 +478,42 @@ int main(void)
 
         switch (opcao)
         {
-        case 1:
-            if (!inserirSite(lista, avl))
-            {
-                printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+            case 1:
+                if (!inserirSite(lista, avl))
+                {
+                    printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+                    getchar();
+                    getchar();
+                }
+                break;
+
+            case 2:
+                removerSite(lista, avl);
+                break;
+
+            case 3:
+                inserirPalavraChave(lista, avl);
+                break;
+
+            case 4:
+                atualizarRelevancia(lista);
+                break;
+
+            case 5:
+                lista_imprimir(lista);
+                printf("\n\nPressione qualquer botão para continuar...");
                 getchar();
                 getchar();
-            }
-            break;
-
-        case 2:
-            removerSite(lista, avl);
-            break;
-
-        case 3:
-            inserirPalavraChave(lista, avl);
-            break;
-
-        case 4:
-            atualizarRelevancia(lista);
-            break;
-
-        case 5:
-            lista_imprimir(lista);
-            printf("\n\nPressione qualquer botão para continuar...");
-            getchar();
-            getchar();
-            break;
-        case 6:
-            buscarPorKeyword(lista, avl);
-            break;
-        case 7:
-            sugerirSites(lista, avl);
-            break;
-        case 8:
-            system("clear");
-            break;
+                break;
+            case 6:
+                buscarPorKeyword(lista, avl);
+                break;
+            case 7:
+                sugerirSites(lista, avl);
+                break;
+            case 8:
+                system("clear");
+                break;
         }
     }
 
