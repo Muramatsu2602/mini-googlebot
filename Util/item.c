@@ -295,7 +295,7 @@ boolean item_set_id(ITEM *item, int id)
 
 boolean item_set_name(ITEM *item, char *name)
 {
-    if ((item) != NULL && name != NULL)
+    if ((item) != NULL && name != NULL && strlen(name) <= 50)
     {
         strcpy((item)->name, name);
         return TRUE;
