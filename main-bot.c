@@ -264,7 +264,7 @@ void atualizarRelevancia(LISTA *lista)
     getchar();
 }
 
-void buscarPorKeyword(LISTA *lista)
+void buscarPorKeyword(LISTA *lista, AVL *avl)
 {
     char *keyword = NULL;
     LISTA *key_lista = NULL;
@@ -275,9 +275,20 @@ void buscarPorKeyword(LISTA *lista)
 
     keyword = readline(stdin);
 
-    // armazena em key_lista sites que contem a keyword
-    lista_busca_keyword(lista, key_lista, keyword);
-    lista_imprimir_short(key_lista, 0);
+    if(avl_busca(avl, keyword) == NULL)
+    {
+        printf("Nenhum site encontrado.\n");
+        printf("\n\nPressione qualquer botão para continuar...");
+        getchar();
+        free(keyword);
+        return;
+    }
+    int qtd = item2_get_qtd_nos(avl_busca(avl, keyword));
+    NO **nos; // Lista de todos os nós que contém a palavra chave
+    nos = item2_get_nos(avl_busca(avl, keyword));
+
+    // Imprime os sites que contém a palavra-chave buscada
+    lista_imprimir_short2(nos, qtd);
 
     free(keyword);
     lista_apagar(&key_lista);
@@ -286,26 +297,79 @@ void buscarPorKeyword(LISTA *lista)
     getchar();
 }
 
-void sugerirSites(LISTA *lista)
+void sugerirSites(LISTA *lista, AVL *avl)
 {
     char *keyword = NULL;
-    LISTA *key_lista = NULL;
-    key_lista = lista_criar();
 
     printf("insira a palavra-chave desejada: ");
     getchar();
 
     keyword = readline(stdin);
 
-    // Buscas a palavra fornecida entre as palavras-chave de cada site
-    lista_busca_keyword(lista, key_lista, keyword);
+    int qtd_nos = 0;
+    if(avl_busca(avl, keyword) == NULL)
+    {
+        printf("Nenhum site encontrado.\n");
+        printf("\n\nPressione qualquer botão para continuar...");
+        getchar();
+        free(keyword);
+        return;
+    }
+    qtd_nos = item2_get_qtd_nos(avl_busca(avl, keyword));
+    NO **nos; // Lista de todos os nós que contém a palavra chave
+    nos = item2_get_nos(avl_busca(avl, keyword));
 
-    // Função que executa os próximos passos do sugerirSites no arquivo dll.c
-    // Está no arquivo dll.c pois a função necessita do acesso aos ponteiros lista->inicio e no->proximo
-    lista_sugerir_sites(lista, key_lista);
+    char **aux = NULL;
+    char **keywords = NULL;
+    int numKeyWords = 0;
+    int total = 0;
+    // Pegar todas as palavras-chave
+    for(int i=0; i<qtd_nos; i++)
+    {
+        if(nos[i] != NULL)
+        {
+            numKeyWords = item_get_numKeyWords(nos[i]->item);
+            aux = item_get_keyWords(nos[i]->item);
+            total += numKeyWords;
+            keywords = (char **)realloc(keywords, (total) * sizeof(char *));
+            
+            for (int j = (total - numKeyWords), k = 0; j < total; j++, k++)
+            {
+                keywords[j] = (char *)malloc((strlen(aux[k]) + 1) * sizeof(char));
+                strcpy(keywords[j], aux[k]);
+            }
+        }
+    }
 
+    LISTA *key_lista = lista_criar();
+
+    // Agora, pegar todos os nós que contém essas palavras chave e inserir em uma lista
+    // Ordenada pela relevância de cada site
+    for(int i=0; i<total; i++)
+    {
+        qtd_nos = item2_get_qtd_nos(avl_busca(avl, keywords[i]));
+        nos = item2_get_nos(avl_busca(avl, keywords[i]));
+        for(int j=0; j<qtd_nos; j++)
+        {
+            lista_inserir_by_relevance(key_lista, item_copy(nos[j]->item));
+        }
+    }
+
+    // Tirar as repetições de sites da lista
+    lista_tirar_repeticoes(key_lista);
+
+    // Printar os 5 sites mais relevantes encontrados
+    lista_imprimir_short(key_lista, TOP_RELEVANCE_NUM);
+
+    // Liberar memória HEAP alocada para a lista, para a palavra-chave digitada
+    // E para o vetor de keyWords
     free(keyword);
     lista_apagar(&key_lista);
+    for(int i=0; i<total; i++)
+    {
+        free(keywords[i]);
+    }
+    free(keywords);
 
     printf("\n\nPressione qualquer botão para continuar...");
     getchar();
@@ -364,7 +428,8 @@ int main(void)
         string = readline(fp);
     }
 
-    avl_printa_arvore(avl);
+    // Para debug
+    //avl_printa_arvore(avl);
 
     while (opcao != 8)
     {
@@ -416,7 +481,7 @@ int main(void)
                 buscarPorKeyword(lista, avl);
                 break;
             case 7:
-                sugerirSites(lista);
+                sugerirSites(lista, avl);
                 break;
             case 8:
                 system("clear");

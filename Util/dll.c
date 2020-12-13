@@ -125,6 +125,19 @@ void lista_imprimir_short(LISTA *l, int n)
     return;
 }
 
+void lista_imprimir_short2(NO **nos, int n)
+{
+    for(int i=0; i<n; i++)
+    {
+        if(nos[i] != NULL)
+        {
+            printf("%s\t", item_get_name(nos[i]->item));
+            printf("%s\t", item_get_mainUrl(nos[i]->item));
+            printf("\n");
+        }
+    }
+}
+
 LISTA *lista_criar(void)
 {
     // Alocar espaço na memória para os itens
@@ -510,76 +523,4 @@ void lista_tirar_repeticoes(LISTA *lista)
             noAtual = noAtual->proximo;
         }
     }
-}
-
-void lista_sugerir_sites(LISTA *lista, LISTA *key_lista)
-{
-    if (key_lista == NULL || lista_vazia(key_lista))
-    {
-        return;
-    }
-
-    // Primeiro passo: coletar todas as palavras-chave dos sites selecionados no passo anterior
-    // no vetor de strings <keywords>
-    char **keywords = NULL;
-
-    // key_Lista contém todos os sites com as palavra-chave buscada inicialmente
-    NO *noAtual = key_lista->inicio;
-
-    char **aux;
-    int numKeyWords = 0;
-    int total = 0;
-
-    // Copiar as palavras-chave para o vetor de strings keywords
-    for (int i = 0; i < key_lista->tamanho; i++)
-    {
-        aux = item_get_keyWords(noAtual->item);
-        numKeyWords = item_get_numKeyWords(noAtual->item);
-
-        keywords = (char **)realloc(keywords, (total + numKeyWords) * sizeof(char *));
-        total += numKeyWords;
-
-        for (int j = (total - numKeyWords), k = 0; j < total; j++, k++)
-        {
-            keywords[j] = (char *)malloc((strlen(aux[k]) + 1) * sizeof(char));
-            strcpy(keywords[j], aux[k]);
-        }
-        noAtual = noAtual->proximo;
-    }
-
-    // key_lista2 conterá todos os sites com as palavras chaves encontradas na lista
-    LISTA *key_lista2 = NULL;
-    key_lista2 = lista_criar();
-
-    // Inserir em key_lista2 todos os itens que possuem as palavras-chaves encontradas
-    for (int i = 0; i < total; i++)
-    {
-        lista_busca_keyword(lista, key_lista2, keywords[i]);
-    }
-
-    if (key_lista2 == NULL || lista_vazia(key_lista2))
-    {
-        // Liberar memória HEAP
-        lista_apagar(&key_lista2);
-        for (int i = 0; i < total; i++)
-        {
-            free(keywords[i]);
-        }
-        free(keywords);
-        return;
-    }
-
-    // Tirar as repetições na lista <key_lista2>
-    lista_tirar_repeticoes(key_lista2);
-
-    // Imprime o nome e o link dos 5 sites mais relevantes (se encontrar menos de 5 sites imprime apenas os que encontrou)
-    lista_imprimir_short(key_lista2, TOP_RELEVANCE_NUM);
-
-    // Liberar a memória HEAP alocada para a matriz de strings <keywords> e para a lista <key_lista2>
-    for (int i = 0; i < total; i++)
-    {
-        free(keywords[i]);
-    }
-    free(keywords);
-    lista_apagar(&key_lista2);
 }

@@ -38,8 +38,8 @@
 
 	void lista_imprimir(LISTA *lista);
 	void lista_imprimir_short(LISTA *l, int n); 
+	void lista_imprimir_short2(NO **nos, int n);
 	void lista_apagar(LISTA **lista);
-	void lista_sugerir_sites(LISTA *lista, LISTA *key_lista);
 	void lista_tirar_repeticoes(LISTA *lista);
 
 #endif
