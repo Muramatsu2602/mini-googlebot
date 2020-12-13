@@ -11,7 +11,7 @@ CFLAGS = -Werror -std=c99
 # Flags for nitpicking compilation 
 CFLAGS2 = -Wall -Wextra -Wpedantic -Wpointer-arith -O3 -march=native -std=c99
 # Valgrind Flags
-VFLAGS=--leak-check=full --show-leak-kinds=all --track-origins=yes
+VFLAGS= --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 all:
 	@echo "Welcome to Part 2 of the Google MiniBot Project!"
