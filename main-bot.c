@@ -135,11 +135,13 @@ boolean inserirSite(LISTA *lista, AVL *avl)
     }
 
     // ERRO NA INSERCAO
-    newsite = lista_inserir_ordenado(lista, newsite->item);
+    ITEM *novoItem = item_copy(newsite->item);
+    item_apagar(&newsite->item);
+    free(newsite);
+    newsite = lista_inserir_ordenado(lista, novoItem);
     if (newsite == NULL)
     {
-        item_apagar(&newsite->item);
-        free(newsite);
+        item_apagar(&novoItem);
         return FALSE;
     }
 
@@ -205,9 +207,13 @@ void removerSite(LISTA *lista, AVL *avl)
             if (item2_get_qtd_nos(temp_item2) == 1)
             {
                 avl_remover(avl, item2_get_keyWord(temp_item2));
-                item2_set_qtd_nos(temp_item2, 0);
+                item2_apagar(&temp_item2);
             }
+
+            // Se não conter apenas o site deletado é preciso deletar este nó na lista de nós da AVL
+            item2_remover_no_lista(temp_item2, temp_no);
         }
+
     }
 
     if (lista_remover(lista, id))
@@ -312,6 +318,7 @@ void buscarPorKeyword(LISTA *lista, AVL *avl)
         printf("\n\nPressione qualquer botão para continuar...");
         getchar();
         free(keyword);
+        lista_apagar(&key_lista);
         return;
     }
     int qtd = item2_get_qtd_nos(avl_busca(avl, keyword));
