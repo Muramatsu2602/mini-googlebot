@@ -111,6 +111,7 @@ NO **item2_get_nos(ITEM2 *item)
     return NULL;
 }
 
+// new function
 void item2_set_qtd_nos(ITEM2*item, int qnd){
     if(item!=NULL){
         item->qtd_nos = qnd;
