@@ -213,7 +213,6 @@ void removerSite(LISTA *lista, AVL *avl)
             // Se não conter apenas o site deletado é preciso deletar este nó na lista de nós da AVL
             item2_remover_no_lista(temp_item2, temp_no);
         }
-
     }
 
     if (lista_remover(lista, id))
@@ -336,14 +335,15 @@ void buscarPorKeyword(LISTA *lista, AVL *avl)
 void sugerirSites(LISTA *lista, AVL *avl)
 {
     char *keyword = NULL;
-
+    int qtd_nos = 0;
+    ITEM2 *item2_aux = NULL;
+    
     printf("insira a palavra-chave desejada: ");
     getchar();
 
     keyword = readline(stdin);
 
-    int qtd_nos = 0;
-    ITEM2 *item2_aux = avl_busca(avl, keyword);
+    item2_aux = avl_busca(avl, keyword);
     if (item2_aux == NULL)
     {
         printf("Nenhum site encontrado.\n");
@@ -464,9 +464,6 @@ int main(void)
         free(string);
         string = readline(fp);
     }
-
-    // Para debug
-    //avl_printa_arvore(avl);
 
     while (opcao != 9)
     {
