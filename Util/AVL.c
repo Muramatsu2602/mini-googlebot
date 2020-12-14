@@ -437,12 +437,14 @@ NO2 *avl_remover_aux(NO2 **raiz, char *chave)
 		{
 			if(avl_altura_no((*raiz)->dir->esq) - avl_altura_no((*raiz)->dir->dir) <= 0)
 			{
-				printf("\nRodar esquerda...\n");
+				// Para debug
+				//printf("\nRodar esquerda...\n");
 				*raiz = avl_rotacao_esquerda(*raiz);
 			}
 			else
 			{
-				printf("\nRodar direita-esquerda...\n");
+				// Para debug
+				//printf("\nRodar direita-esquerda...\n");
 				*raiz = avl_rotacao_direita_esquerda(*raiz);
 			}
 		}	
@@ -451,12 +453,14 @@ NO2 *avl_remover_aux(NO2 **raiz, char *chave)
 		{
 			if(avl_altura_no((*raiz)->esq->esq) - avl_altura_no((*raiz)->esq->dir) >= 0)
 			{
-				printf("\nRodar direita...\n");
+				// Para debug
+				//printf("\nRodar direita...\n");
 				*raiz = avl_rotacao_direita(*raiz);
 			}
 			else
 			{
-				printf("\nRodar esquerda-direita...\n");
+				// Para debug
+				//printf("\nRodar esquerda-direita...\n");
 				*raiz = avl_rotacao_esquerda_direita(*raiz);
 			}
 		}

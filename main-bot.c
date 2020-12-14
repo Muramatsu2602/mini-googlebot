@@ -282,6 +282,7 @@ void atualizarRelevancia(LISTA *lista)
 
     if (lista_busca_ordenada(lista, id) == NULL)
     {
+        getchar();
         printf("Site não encontrado na lista!!\n\nPressione qualquer botão para continuar...");
         getchar();
         return;

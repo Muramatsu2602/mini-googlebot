@@ -160,6 +160,7 @@ void item2_remover_no_lista(ITEM2 *item, NO *noAtual)
                 item->qtd_nos--;
                 item->nos = (NO **)realloc(item->nos, (item->qtd_nos) * sizeof(NO *));
             }
+            break;
         }
     }
 }
