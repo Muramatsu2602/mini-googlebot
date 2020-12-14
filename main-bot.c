@@ -305,8 +305,6 @@ void atualizarRelevancia(LISTA *lista)
 void buscarPorKeyword(LISTA *lista, AVL *avl)
 {
     char *keyword = NULL;
-    LISTA *key_lista = NULL;
-    key_lista = lista_criar();
 
     printf("insira a palavra-chave desejada: ");
     getchar();
@@ -320,7 +318,6 @@ void buscarPorKeyword(LISTA *lista, AVL *avl)
         printf("\n\nPressione qualquer botão para continuar...");
         getchar();
         free(keyword);
-        lista_apagar(&key_lista);
         return;
     }
     int qtd = item2_get_qtd_nos(item2_aux);
@@ -331,7 +328,6 @@ void buscarPorKeyword(LISTA *lista, AVL *avl)
     lista_imprimir_short2(nos, qtd);
 
     free(keyword);
-    lista_apagar(&key_lista);
 
     printf("\n\nPressione qualquer botão para continuar...");
     getchar();
