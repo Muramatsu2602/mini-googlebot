@@ -343,7 +343,8 @@ void sugerirSites(LISTA *lista, AVL *avl)
     keyword = readline(stdin);
 
     int qtd_nos = 0;
-    if (avl_busca(avl, keyword) == NULL)
+    ITEM2 *item2_aux = avl_busca(avl, keyword);
+    if (item2_aux == NULL)
     {
         printf("Nenhum site encontrado.\n");
         printf("\n\nPressione qualquer botão para continuar...");
@@ -351,9 +352,9 @@ void sugerirSites(LISTA *lista, AVL *avl)
         free(keyword);
         return;
     }
-    qtd_nos = item2_get_qtd_nos(avl_busca(avl, keyword));
+    qtd_nos = item2_get_qtd_nos(item2_aux);
     NO **nos; // Lista de todos os nós que contém a palavra chave
-    nos = item2_get_nos(avl_busca(avl, keyword));
+    nos = item2_get_nos(item2_aux);
 
     char **aux = NULL;
     char **keywords = NULL;
