@@ -346,23 +346,6 @@ ITEM2 *avl_busca(AVL *T, char *chave)
 	return (avl_busca2(T->raiz, chave));
 }
 
-/*ITEM2 *avl_busca_iterativa(AVL *T, int chave)
-{
-	NO2 *noAtual = T->raiz;
-
-	while(1)
-	{	
-		if(chave == item_get_chave(noAtual->item))
-			return noAtual->item;
-
-		// Se a chave for menor, ir para o filho da esquerda
-		if(chave < item_get_chave(noAtual->item))
-			noAtual = noAtual->esq;
-		else
-			noAtual = noAtual->dir;
-	}
-}*/
-
 void troca_max_esq(NO2 *troca,  NO2 *raiz, NO2 *noAnterior)
 {
 	if(troca->dir != NULL)
@@ -476,7 +459,6 @@ boolean avl_remover(AVL *T, char *chave)
 	return TRUE;
 }
 
-// Exercício 6!!
 /*
 	Função que verifica se uma árvore de busca está perfeitamente balanceada
 	Para isso o número de nós de suas subárvores pode diferir no máximo 1

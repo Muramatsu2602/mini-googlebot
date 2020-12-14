@@ -192,7 +192,7 @@ void removerSite(LISTA *lista, AVL *avl)
         return;
     }
 
-    // antes de remover o site, teremos que lidar com o AVL
+    // Antes de remover o site, teremos que lidar com o AVL
     char **temp_keywords = NULL;
     temp_keywords = item_get_keyWords(no_get_item(temp_no));
     ITEM2 *temp_item2 = NULL;
