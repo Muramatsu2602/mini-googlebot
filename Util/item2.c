@@ -42,6 +42,7 @@ boolean item2_add_no(ITEM2 *item, NO *no)
     item->nos[(item->qtd_nos - 1)] = no;
     // Ordenar nós por relevância
     item2_ordenar_nos(item->nos, item->qtd_nos);
+    return TRUE;
 }
 
 // Algoritmo de ordenação InsertionSort para ordenar nós por relevância
@@ -83,8 +84,6 @@ boolean item2_apagar(ITEM2 **item) // Ponteiro de ponteiro
 
 void item2_imprimir(ITEM2 *item)
 {
-    char **aux = NULL;
-
     if (item == NULL)
     {
         printf("O item enviado é NULO!\n");
