@@ -205,7 +205,7 @@ void removerSite(LISTA *lista, AVL *avl)
             if (item2_get_qtd_nos(temp_item2) == 1)
             {
                 avl_remover(avl, item2_get_keyWord(temp_item2));
-                item2_set_qtd_nos(temp_item2,0);
+                item2_set_qtd_nos(temp_item2, 0);
             }
         }
     }
@@ -459,7 +459,10 @@ int main(void)
         string = readline(fp);
     }
 
-    while (opcao != 8)
+    // Para debug
+    //avl_printa_arvore(avl);
+
+    while (opcao != 9)
     {
         system("clear");
         printf("\nOpções:\n");
@@ -470,7 +473,8 @@ int main(void)
         printf("5 - Imprimir a lista de Sites;\n");
         printf("6 - Buscar sites por Palavra-chave;\n");
         printf("7 - Sugestão de sites;\n");
-        printf("8 - Sair.\n");
+        printf("8 - Mostrar árvore AVL de palavras-chave;\n");
+        printf("9 - Sair.\n");
         printf("Insira a Opção: ");
 
         scanf("%d", &opcao);
@@ -478,42 +482,48 @@ int main(void)
 
         switch (opcao)
         {
-            case 1:
-                if (!inserirSite(lista, avl))
-                {
-                    printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
-                    getchar();
-                    getchar();
-                }
-                break;
-
-            case 2:
-                removerSite(lista, avl);
-                break;
-
-            case 3:
-                inserirPalavraChave(lista, avl);
-                break;
-
-            case 4:
-                atualizarRelevancia(lista);
-                break;
-
-            case 5:
-                lista_imprimir(lista);
-                printf("\n\nPressione qualquer botão para continuar...");
+        case 1:
+            if (!inserirSite(lista, avl))
+            {
+                printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
                 getchar();
                 getchar();
-                break;
-            case 6:
-                buscarPorKeyword(lista, avl);
-                break;
-            case 7:
-                sugerirSites(lista, avl);
-                break;
-            case 8:
-                system("clear");
-                break;
+            }
+            break;
+
+        case 2:
+            removerSite(lista, avl);
+            break;
+
+        case 3:
+            inserirPalavraChave(lista, avl);
+            break;
+
+        case 4:
+            atualizarRelevancia(lista);
+            break;
+
+        case 5:
+            lista_imprimir(lista);
+            printf("\n\nPressione qualquer botão para continuar...");
+            getchar();
+            getchar();
+            break;
+        case 6:
+            buscarPorKeyword(lista, avl);
+            break;
+        case 7:
+            sugerirSites(lista, avl);
+            break;
+        case 8:
+            avl_printa_arvore(avl);
+            printf("\n\nPressione qualquer botão para continuar...");
+            getchar();
+            getchar();
+            break;
+        case 9:
+            system("clear");
+            break;
         }
     }
 
