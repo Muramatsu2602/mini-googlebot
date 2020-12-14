@@ -77,9 +77,10 @@ Essa função funciona de modo semelhante a anterior, visto que ambas, utilizam 
 Mostra-se na tela o conteúdo do TAD Lista, ou seja, todos os websites armazenados até então, mostrando cada um de seus atributos, em ordem de ID.
 
 ### 6 - Buscar sites por Palavra-chave
-Primeiramente, busca-se o nó da AVL que contém a palavra-chave procurada. Assim, a referência para todos os nós da DLL São armazenados em um vetor do tipo NO **nos, impressos na tela por meio da funcao <imprimir_>
+Primeiramente, busca-se o nó da AVL que contém a palavra-chave procurada. Assim, a referência para todos os nós da DLL São armazenados em um vetor do tipo NO **nos, impressos na tela por meio da funcao <lista_imprimir_short2>. 
 
 ### 7 - Sugestão de sites
+Inicialmente, realiza as mesmas acoes da operacao acima (com exceção do <lista_imprimir_short2>). A seguir, todas as palavras-chave dos nós da DLL armazenados (em vetor do tipo NO** nos) são coletados e buscadas na AVL. Dessa forma, todos os sites que possuem ao menos uma das palavras encontradas, são ordenados em ordem decrescene com base no valor de suas relevâncias e, assim, exibindo na tela os 5 *websites* mais relevantes ( utilizando-se da função <lista_imprimir_short>).
 
 ### 8 - Mostrar árvore AVL de palavras-chave; (EXTRA)
 Imprime, em-ordem, cada um dos nós (cada um dos quais contem uma palavra chave) da árvore AVL. 
