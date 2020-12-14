@@ -111,8 +111,10 @@ NO **item2_get_nos(ITEM2 *item)
 }
 
 // new function
-void item2_set_qtd_nos(ITEM2*item, int qnd){
-    if(item!=NULL){
+void item2_set_qtd_nos(ITEM2 *item, int qnd)
+{
+    if (item != NULL)
+    {
         item->qtd_nos = qnd;
     }
 }
@@ -135,12 +137,12 @@ void item2_remover_no_lista(ITEM2 *item, NO *noAtual)
 {
     int qtd = item2_get_qtd_nos(item);
     NO *aux = NULL;
-    for(int i=0; i<qtd; i++)
+    for (int i = 0; i < qtd; i++)
     {
-        if(item->nos[i] == noAtual)
+        if (item->nos[i] == noAtual)
         {
             // Ver se é o ultimo nó da lista de nós
-            if( i == (item->qtd_nos-1))
+            if (i == (item->qtd_nos - 1))
             {
                 item->qtd_nos--;
                 item->nos = (NO **)realloc(item->nos, (item->qtd_nos) * sizeof(NO *));
@@ -149,10 +151,10 @@ void item2_remover_no_lista(ITEM2 *item, NO *noAtual)
             {
                 // Este nó deve ser tirado da lista de nós
                 // Enviar este nó para o fim da lista de nós
-                for(int j=i; j<(qtd-1); j++)
+                for (int j = i; j < (qtd - 1); j++)
                 {
-                    aux = item->nos[j+1];
-                    item->nos[j+1] = item->nos[j];
+                    aux = item->nos[j + 1];
+                    item->nos[j + 1] = item->nos[j];
                     item->nos[j] = aux;
                 }
                 // Agora, ajustar o tamanho da lista de nós

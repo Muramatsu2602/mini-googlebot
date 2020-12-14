@@ -17,7 +17,7 @@ struct item_ // Cada item representa um site
     char name[50];
     int relevance;
     char mainUrl[100];
-    int numKeyWords; // Limite = 10 palavras-chave 
+    int numKeyWords; // Limite = 10 palavras-chave
     char **keyWords; //  Limite = 50 caracteres por palavra
 };
 
@@ -27,7 +27,7 @@ ITEM *item_criar(void)
 
     item = (ITEM *)malloc(sizeof(ITEM));
 
-    item_set_numKeyWords(item,0);
+    item_set_numKeyWords(item, 0);
 
     if (item == NULL)
     {
@@ -46,15 +46,15 @@ void insertionSort(char **array, int size)
 {
     char *key;
     int j;
-    for(int i=1; i<size; i++)
+    for (int i = 1; i < size; i++)
     {
         key = array[i];
         j = i - 1;
 
         // Move os elementos que sÃ£o maiores do que a chave para uma posiÃ§Ã£o a frente
-        while(j >= 0 && strcmp(array[j],key) > 0)
+        while (j >= 0 && strcmp(array[j], key) > 0)
         {
-            array[j+1] = array[j];
+            array[j + 1] = array[j];
             j = j - 1;
         }
         array[j + 1] = key;
@@ -147,11 +147,11 @@ boolean item_apagar(ITEM **item) // Ponteiro de ponteiro
     // Verifica se o item enviado existe
     if ((*item) != NULL)
     {
-        if((*item)->numKeyWords != 0)
+        if ((*item)->numKeyWords != 0)
         {
             for (int i = 0; i < (*item)->numKeyWords; i++)
                 free((*item)->keyWords[i]);
-            
+
             free((*item)->keyWords);
             (*item)->keyWords = NULL;
         }
@@ -264,7 +264,7 @@ ITEM *item_copy(ITEM *source)
     item_set_numKeyWords(destiny, item_get_numKeyWords(source));
 
     // copiando o vetor de key-words
-    destiny->keyWords = (char **) malloc((item_get_numKeyWords(destiny)) * sizeof(char *));
+    destiny->keyWords = (char **)malloc((item_get_numKeyWords(destiny)) * sizeof(char *));
     for (int i = 0; i < item_get_numKeyWords(destiny); i++)
     {
         destiny->keyWords[i] = (char *)malloc((strlen(source->keyWords[i]) + 1) * sizeof(char));
@@ -370,9 +370,9 @@ boolean item_set_keyWords(ITEM *item, char *word)
         item->keyWords = (char **)realloc(item->keyWords, (item->numKeyWords) * sizeof(char *));
         item->keyWords[item->numKeyWords - 1] = (char *)malloc((1 + strlen(word)) * sizeof(char));
         strcpy(item->keyWords[item->numKeyWords - 1], word);
-        
+
         // Após inserir uma nova palavra chave ordenar as palavras-chave novamente
-        insertionSort(item->keyWords, item->numKeyWords);        
+        insertionSort(item->keyWords, item->numKeyWords);
         return TRUE;
     }
     return FALSE;

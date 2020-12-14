@@ -1,6 +1,6 @@
 /*
-	Giovanni Shibaki Camargo
-	Nusp: 11796444
+    11796444 - Giovanni Shibaki Camargo
+    11796451 - Pedro Kenzo Muramatsu Carmo
 */
 
 #ifndef _AVL_H

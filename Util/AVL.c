@@ -1,6 +1,6 @@
 /*
-	Giovanni Shibaki Camargo
-	Nusp: 11796444
+    11796444 - Giovanni Shibaki Camargo
+    11796451 - Pedro Kenzo Muramatsu Carmo
 */
 
 #include <stdio.h>
@@ -17,15 +17,16 @@ struct no2_
 	int altura;
 };
 
-struct avl_{
+struct avl_
+{
 	NO2 *raiz;
 	int profundidade;
 };
 
 AVL *avl_criar(void)
 {
-	AVL *r = (AVL *) malloc(sizeof(AVL));
-	if(r != NULL)
+	AVL *r = (AVL *)malloc(sizeof(AVL));
+	if (r != NULL)
 	{
 		r->raiz = NULL;
 		r->profundidade = -1;
@@ -35,7 +36,7 @@ AVL *avl_criar(void)
 
 int avl_altura_no(NO2 *raiz)
 {
-	if(raiz == NULL)
+	if (raiz == NULL)
 		return -1;
 	return raiz->altura;
 }
@@ -86,9 +87,9 @@ NO2 *avl_rotacao_esquerda_direita(NO2 *raiz)
 
 NO2 *avl_cria_no(ITEM2 *item)
 {
-	NO2 *n = (NO2 *) malloc(sizeof(NO2));
+	NO2 *n = (NO2 *)malloc(sizeof(NO2));
 
-	if((n != NULL) && (item != NULL))
+	if ((n != NULL) && (item != NULL))
 	{
 		n->altura = 0;
 		n->item = item;
@@ -102,15 +103,15 @@ NO2 *avl_cria_no(ITEM2 *item)
 // Mesmos critérios de ABB para a inserção de nós
 NO2 *avl_inserir_no(NO2 *raiz, ITEM2 *item)
 {
-	if(raiz == NULL)
+	if (raiz == NULL)
 	{
 		raiz = avl_cria_no(item);
 	}
-	else if(strcmp(item2_get_keyWord(raiz->item), item2_get_keyWord(item)) < 0)
+	else if (strcmp(item2_get_keyWord(raiz->item), item2_get_keyWord(item)) < 0)
 	{
 		raiz->dir = avl_inserir_no(raiz->dir, item);
 	}
-	else if(strcmp(item2_get_keyWord(raiz->item), item2_get_keyWord(item)) > 0)
+	else if (strcmp(item2_get_keyWord(raiz->item), item2_get_keyWord(item)) > 0)
 	{
 		raiz->esq = avl_inserir_no(raiz->esq, item);
 	}
@@ -118,12 +119,12 @@ NO2 *avl_inserir_no(NO2 *raiz, ITEM2 *item)
 	raiz->altura = max(avl_altura_no(raiz->esq), avl_altura_no(raiz->dir)) + 1;
 
 	// Se for negativo é rotação esquerda (lado direito está desbalanceado) ou direita/esquerda
-	if(avl_altura_no(raiz->esq) - avl_altura_no(raiz->dir) == -2)
+	if (avl_altura_no(raiz->esq) - avl_altura_no(raiz->dir) == -2)
 	{
 		// Ou posso verificar também se os fatores de balanceamento tem sinais opostos
 		// Vendo assim se o novo nó foi inserido a direita ou a esquerda do raiz->dir
 		// Para assim realizar a rotação
-		if(strcmp(item2_get_keyWord(item), item2_get_keyWord(raiz->dir->item)) > 0)
+		if (strcmp(item2_get_keyWord(item), item2_get_keyWord(raiz->dir->item)) > 0)
 		{
 			// Item entrou a direita de raiz->dir
 			raiz = avl_rotacao_esquerda(raiz);
@@ -136,9 +137,9 @@ NO2 *avl_inserir_no(NO2 *raiz, ITEM2 *item)
 	}
 
 	// Se for positivo é rotação direita (lado esquerdo está desbalanceado) ou esquerda/direita
-	if(avl_altura_no(raiz->esq) - avl_altura_no(raiz->dir) == 2)
+	if (avl_altura_no(raiz->esq) - avl_altura_no(raiz->dir) == 2)
 	{
-		if(strcmp(item2_get_keyWord(item), item2_get_keyWord(raiz->esq->item)) < 0)
+		if (strcmp(item2_get_keyWord(item), item2_get_keyWord(raiz->esq->item)) < 0)
 		{
 			// Item entrou a esquerda de raiz->esq
 			raiz = avl_rotacao_direita(raiz);
@@ -158,20 +159,19 @@ boolean avl_inserir(AVL *T, ITEM2 *item)
 	return ((T->raiz = avl_inserir_no(T->raiz, item)) != NULL);
 }
 
-
 /*
 	https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
 	Printa conforme entra, printa raiz, no esquerdo, no direito
 */
 void printPreorder(NO2 *no)
 {
-	if(no == NULL)
+	if (no == NULL)
 	{
 		return;
 	}
 
 	// Printa o valor do item atual
-	printf("%s ",item2_get_keyWord(no->item));
+	printf("%s ", item2_get_keyWord(no->item));
 
 	// Chamada recursiva para o filho esquerdo
 	printPreorder(no->esq);
@@ -186,7 +186,7 @@ void printPreorder(NO2 *no)
 */
 void printInorder(NO2 *no)
 {
-	if(no == NULL)
+	if (no == NULL)
 	{
 		return;
 	}
@@ -195,7 +195,7 @@ void printInorder(NO2 *no)
 	printPreorder(no->esq);
 
 	// Printa o valor do item atual
-	printf("%s ",item2_get_keyWord(no->item));
+	printf("%s ", item2_get_keyWord(no->item));
 
 	// Chamada recursiva para o filho direito
 	printPreorder(no->dir);
@@ -206,7 +206,7 @@ void printInorder(NO2 *no)
 */
 void printPostorder(NO2 *no)
 {
-	if(no == NULL)
+	if (no == NULL)
 	{
 		return;
 	}
@@ -218,12 +218,12 @@ void printPostorder(NO2 *no)
 	printPreorder(no->dir);
 
 	// Printa o valor do item atual
-	printf("%s ",item2_get_keyWord(no->item));
+	printf("%s ", item2_get_keyWord(no->item));
 }
 
 int avl_profundidade(NO2 *no)
 {
-	if(no == NULL)
+	if (no == NULL)
 		return -1;
 	int esq = avl_profundidade(no->esq);
 	int dir = avl_profundidade(no->dir);
@@ -238,7 +238,7 @@ int get_profundidade(AVL *arv)
 
 void apagar_arvore(NO2 **raiz)
 {
-	if(*raiz != NULL)
+	if (*raiz != NULL)
 	{
 		apagar_arvore(&(*raiz)->esq);
 		apagar_arvore(&(*raiz)->dir);
@@ -257,7 +257,7 @@ void avl_apagar_arvore(AVL **T)
 
 void printa_arvore(NO2 *raiz, int espacamento)
 {
-	if(raiz == NULL)
+	if (raiz == NULL)
 		return;
 
 	espacamento += 10;
@@ -265,7 +265,7 @@ void printa_arvore(NO2 *raiz, int espacamento)
 	printa_arvore(raiz->dir, espacamento);
 
 	printf("\n");
-	for(int i = 10; i < espacamento; i++)
+	for (int i = 10; i < espacamento; i++)
 	{
 		printf(" ");
 	}
@@ -281,13 +281,13 @@ void avl_printa_arvore(AVL *arv)
 
 int conta_folhas(NO2 *raiz)
 {
-	if(raiz == NULL)
+	if (raiz == NULL)
 		return 0;
 
-	if(raiz->esq == NULL && raiz->dir == NULL)
+	if (raiz->esq == NULL && raiz->dir == NULL)
 	{
 		return 1;
-	}	
+	}
 	else
 	{
 		// Contar recursivamente o número de nós no lado esquerdo
@@ -303,7 +303,7 @@ int avl_conta_folhas(AVL *arv)
 
 int conta_nos(NO2 *raiz)
 {
-	if(raiz == NULL)
+	if (raiz == NULL)
 		return 0;
 
 	int total = 1;
@@ -322,14 +322,14 @@ int avl_conta_nos(AVL *arv)
 
 ITEM2 *avl_busca2(NO2 *raiz, char *chave)
 {
-	if(raiz == NULL)
+	if (raiz == NULL)
 		return NULL;
 
-	if(strcmp(chave, item2_get_keyWord(raiz->item)) == 0)
-			return (raiz->item);
+	if (strcmp(chave, item2_get_keyWord(raiz->item)) == 0)
+		return (raiz->item);
 
 	// Está em preorder, pode ser feito em posorder ou inorder também
-	if(strcmp(chave, item2_get_keyWord(raiz->item)) < 0)
+	if (strcmp(chave, item2_get_keyWord(raiz->item)) < 0)
 	{
 		return (avl_busca2(raiz->esq, chave));
 	}
@@ -346,25 +346,25 @@ ITEM2 *avl_busca(AVL *T, char *chave)
 	return (avl_busca2(T->raiz, chave));
 }
 
-void troca_max_esq(NO2 *troca,  NO2 *raiz, NO2 *noAnterior)
+void troca_max_esq(NO2 *troca, NO2 *raiz, NO2 *noAnterior)
 {
-	if(troca->dir != NULL)
+	if (troca->dir != NULL)
 	{
 		// Andar até não existir mais valores a direita
 		troca_max_esq(troca->dir, raiz, troca);
 		return;
 	}
 
-	if(raiz == noAnterior)
+	if (raiz == noAnterior)
 	{
 		// Não javia nenhum nó a direita do primeiro nó a esquerda depois da raiz
-		// Então a raiz->esq simplesmente recebe o nó a esquerda do nó que será removido 
+		// Então a raiz->esq simplesmente recebe o nó a esquerda do nó que será removido
 		// Ou seja, o nó a ser removido será a RAIZ
 		noAnterior->esq = troca->esq;
 	}
 	else
 	{
-		// Chegou aqui quando não tem mais nenhum nó a direita E EXISTIA UM NÓ A DIREITA DO PRIMEIRO NÓ A ESQUERDA DA RAIZ, 
+		// Chegou aqui quando não tem mais nenhum nó a direita E EXISTIA UM NÓ A DIREITA DO PRIMEIRO NÓ A ESQUERDA DA RAIZ,
 		// então a direita do noAnterior será o que está a esquerda do nó que será removido
 		noAnterior->dir = troca->esq;
 	}
@@ -386,16 +386,16 @@ NO2 *avl_remover_aux(NO2 **raiz, char *chave)
 	// Ou o maior nó da árvore esquerda
 
 	NO2 *noAtual;
-	if((*raiz) == NULL)
+	if ((*raiz) == NULL)
 		return (NULL);
-	
-	if(strcmp(chave,item2_get_keyWord((*raiz)->item)) == 0)
+
+	if (strcmp(chave, item2_get_keyWord((*raiz)->item)) == 0)
 	{
-		if((*raiz)->esq == NULL || (*raiz)->dir == NULL)
+		if ((*raiz)->esq == NULL || (*raiz)->dir == NULL)
 		{
 			// Caso 1 se resume ao caso 2: há um filho ou nenhum filho
 			noAtual = *raiz;
-			if((*raiz)->esq == NULL)
+			if ((*raiz)->esq == NULL)
 				*raiz = (*raiz)->dir;
 			else
 				*raiz = (*raiz)->esq;
@@ -408,17 +408,17 @@ NO2 *avl_remover_aux(NO2 **raiz, char *chave)
 			troca_max_esq((*raiz)->esq, (*raiz), (*raiz));
 		}
 	}
-	else if(strcmp(chave, item2_get_keyWord((*raiz)->item)) < 0)
-			return avl_remover_aux(&(*raiz)->esq, chave);
-	else if(strcmp(chave, item2_get_keyWord((*raiz)->item)) > 0)
-			return avl_remover_aux(&(*raiz)->dir, chave);
-	
-	if(*raiz != NULL)
+	else if (strcmp(chave, item2_get_keyWord((*raiz)->item)) < 0)
+		return avl_remover_aux(&(*raiz)->esq, chave);
+	else if (strcmp(chave, item2_get_keyWord((*raiz)->item)) > 0)
+		return avl_remover_aux(&(*raiz)->dir, chave);
+
+	if (*raiz != NULL)
 	{
-		(*raiz)->altura = max(avl_altura_no((*raiz)->esq), avl_altura_no((*raiz)->dir))+1;
-		if(avl_altura_no((*raiz)->esq) - avl_altura_no((*raiz)->dir) == -2)
+		(*raiz)->altura = max(avl_altura_no((*raiz)->esq), avl_altura_no((*raiz)->dir)) + 1;
+		if (avl_altura_no((*raiz)->esq) - avl_altura_no((*raiz)->dir) == -2)
 		{
-			if(avl_altura_no((*raiz)->dir->esq) - avl_altura_no((*raiz)->dir->dir) <= 0)
+			if (avl_altura_no((*raiz)->dir->esq) - avl_altura_no((*raiz)->dir->dir) <= 0)
 			{
 				// Para debug
 				//printf("\nRodar esquerda...\n");
@@ -430,11 +430,11 @@ NO2 *avl_remover_aux(NO2 **raiz, char *chave)
 				//printf("\nRodar direita-esquerda...\n");
 				*raiz = avl_rotacao_direita_esquerda(*raiz);
 			}
-		}	
+		}
 
-		if(avl_altura_no((*raiz)->esq) - avl_altura_no((*raiz)->dir) == 2)
+		if (avl_altura_no((*raiz)->esq) - avl_altura_no((*raiz)->dir) == 2)
 		{
-			if(avl_altura_no((*raiz)->esq->esq) - avl_altura_no((*raiz)->esq->dir) >= 0)
+			if (avl_altura_no((*raiz)->esq->esq) - avl_altura_no((*raiz)->esq->dir) >= 0)
 			{
 				// Para debug
 				//printf("\nRodar direita...\n");
@@ -453,7 +453,7 @@ NO2 *avl_remover_aux(NO2 **raiz, char *chave)
 
 boolean avl_remover(AVL *T, char *chave)
 {
-	if(T == NULL)
+	if (T == NULL)
 		return FALSE;
 	avl_remover_aux(&T->raiz, chave);
 	return TRUE;
@@ -465,14 +465,14 @@ boolean avl_remover(AVL *T, char *chave)
 */
 boolean verifica_balanceada(NO2 *raiz)
 {
-	if(raiz == NULL)
+	if (raiz == NULL)
 		return 1;
 
 	int numDir = avl_profundidade(raiz->dir);
 	int numEsq = avl_profundidade(raiz->esq);
 
 	// Verifica se a diferença de nós a esquerda com os nós a direita é menor ou igual a 1
-	if(abs(numDir - numEsq) <= 1 && verifica_balanceada(raiz->dir) && verifica_balanceada(raiz->esq))
+	if (abs(numDir - numEsq) <= 1 && verifica_balanceada(raiz->dir) && verifica_balanceada(raiz->esq))
 	{
 		// Se for, retornar TRUE
 		return TRUE;
@@ -483,7 +483,7 @@ boolean verifica_balanceada(NO2 *raiz)
 
 boolean avl_verifica_balanceada(AVL *T)
 {
-	if(T == NULL)
+	if (T == NULL)
 		return FALSE;
 	return verifica_balanceada(T->raiz);
 }
