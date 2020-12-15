@@ -82,7 +82,7 @@ Primeiramente, busca-se o nó da AVL que contém a palavra-chave procurada. Assi
 ### 7 - Sugestão de sites
 Inicialmente, realiza as mesmas acoes da operacao acima (com exceção do <lista_imprimir_short2>). A seguir, todas as palavras-chave dos nós da DLL armazenados (em vetor do tipo NO** nos) são coletados e buscadas na AVL. Dessa forma, todos os sites que possuem ao menos uma das palavras encontradas, são ordenados em ordem decrescene com base no valor de suas relevâncias e, assim, exibindo na tela os 5 *websites* mais relevantes ( utilizando-se da função <lista_imprimir_short>).
 
-### 8 - Mostrar árvore AVL de palavras-chave; (EXTRA)
+### (EXTRA) 8 - Mostrar árvore AVL de palavras-chave
 Imprime, em-ordem, cada um dos nós (cada um dos quais contem uma palavra chave) da árvore AVL. 
 
 ### 9 - Sair
