@@ -15,6 +15,8 @@
 
     #define BUFFER 100
     
+    char *readline(FILE *stream);
+
     boolean inserirSite(LISTA *lista, AVL *avl);
     void removerSite(LISTA *lista, AVL *avl);
     void inserirPalavraChave(LISTA *lista, AVL *avl);

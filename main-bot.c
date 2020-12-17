@@ -11,23 +11,6 @@
 
 #pragma region Func Auxiares
 
-// Realiza a leitura das linhas do arquivo de entrada
-char *readline(FILE *stream)
-{
-    char *string = NULL;
-    int pont = 0;
-    do
-    {
-        if (pont % BUFFER == 0) // Se o ponteiro for divisivel pelo buffer ou é 0 é preciso alocar mais memória HEAP para receber a string
-        {
-            string = (char *)realloc(string, ((pont / BUFFER) + 1) * BUFFER);
-        }
-        string[pont] = (char)fgetc(stream);                                    // Recebe um dos caracteres da string
-    } while (string[pont] != '\n' && string[pont++] != '\t' && !feof(stream)); // A condição de parada é achar o \n ou encontrar o marcador de fim de arquivo
-    string[pont] = '\0';                                                       // Insere o terminador de string
-    return string;
-}
-
 FILE *openReadFile(char *fileName, FILE *fp, char *mode)
 {
     fp = fopen(fileName, mode);
