@@ -40,4 +40,4 @@ clean:
 zip:
 	@echo "Proudly made by: Giovanni Shibaki Camargo & Pedro Kenzo Muramatsu Carmo, from BCC 020 ICMC-USP"
 	@echo "Creating a zip folder with all important files!"
-	@zip -r proj1part2-bcc020.zip Data/*.txt Util/*.c Util/*.h $(MAIN) Makefile README.md README.txt
+	@zip -r proj1part2-bcc020-extras.zip Data/*.txt Util/*.c Util/*.h $(MAIN) Makefile README.md README.txt

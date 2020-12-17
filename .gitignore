@@ -1,2 +1,7 @@
 *.zip
 *.o
+*.lst
+*.eep
+*.lss
+*.map
+*.sym
