@@ -110,48 +110,52 @@ int main(void)
 
         switch (opcao)
         {
-        case 1:
-            if (!inserirSite(lista, avl))
-            {
-                printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+            case 1:
+                if (!inserirSite(lista, avl))
+                {
+                    printf("Erro ao inserir Site via teclado!\n\n\nPressione qualquer botão para continuar...");
+                    getchar();
+                    getchar();
+                }
+                break;
+
+            case 2:
+                removerSite(lista, avl);
+                break;
+
+            case 3:
+                inserirPalavraChave(lista, avl);
+                break;
+
+            case 4:
+                atualizarRelevancia(lista);
+                break;
+
+            case 5:
+                lista_imprimir(lista);
+                printf("\n\nPressione qualquer botão para continuar...");
                 getchar();
                 getchar();
-            }
-            break;
+                break;
 
-        case 2:
-            removerSite(lista, avl);
-            break;
+            case 6:
+                buscarPorKeyword(lista, avl);
+                break;
 
-        case 3:
-            inserirPalavraChave(lista, avl);
-            break;
+            case 7:
+                sugerirSites(lista, avl);
+                break;
 
-        case 4:
-            atualizarRelevancia(lista);
-            break;
-
-        case 5:
-            lista_imprimir(lista);
-            printf("\n\nPressione qualquer botão para continuar...");
-            getchar();
-            getchar();
-            break;
-        case 6:
-            buscarPorKeyword(lista, avl);
-            break;
-        case 7:
-            sugerirSites(lista, avl);
-            break;
-        case 8:
-            avl_printa_arvore(avl);
-            printf("\n\nPressione qualquer botão para continuar...");
-            getchar();
-            getchar();
-            break;
-        case 9:
-            system("clear");
-            break;
+            case 8:
+                avl_printa_arvore(avl);
+                printf("\n\nPressione qualquer botão para continuar...");
+                getchar();
+                getchar();
+                break;
+                
+            case 9:
+                system("clear");
+                break;
         }
     }
 
