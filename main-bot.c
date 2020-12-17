@@ -172,7 +172,7 @@ int main(void)
         }
     }
 
-    // LIBERANDO E MEM HEAP!
+    // LIBERANDO A MEM HEAP!
     free(string);
     lista_apagar(&lista);
     avl_apagar_arvore(&avl);

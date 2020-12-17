@@ -1,10 +1,17 @@
+/*
+    11796444 - Giovanni Shibaki Camargo
+    11796451 - Pedro Kenzo Muramatsu Carmo
+*/
+
 OBJ1 = Util/item.c -o Util/item.o
 OBJ2 = Util/dll.c -o Util/dll.o
 OBJ3 = Util/item2.c -o Util/item2.o
 OBJ4 = Util/AVL.c -o Util/AVL.o
 OBJ5 = Util/op.c -o Util/op.o
+
 MAIN= main-bot.c
 UTIL= Util/*.o
+
 BINARY= main
 
 # Flags for default compilation
