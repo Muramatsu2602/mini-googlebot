@@ -14,6 +14,7 @@
     #include <string.h>
 
     #define BUFFER 100
+    #define GOOGLEBOTDATA "Data/googlebot.txt"
     
     char *readline(FILE *stream);
 

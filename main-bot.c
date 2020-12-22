@@ -92,7 +92,7 @@ int main(void)
 
     // criando a lista para armazenar os websites e efetuar as ops da parte I
     lista = lista_criar();
-    fp = openReadFile("Data/googlebot.txt", fp, "r+");
+    fp = openReadFile(GOOGLEBOTDATA, fp, "r+");
 
     // Árvore AVL utilizada para busca de KeyWords e sugestão de sites
     avl = avl_criar();
